@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.RequestParameterName.LOGIN;
-import static by.etc.karamach.controller.RequestParameterName.MSG;
-import static by.etc.karamach.controller.RequestParameterName.PASSWORD;
+import static by.etc.karamach.controller.RequestParameterName.*;
 
 public class SignIn implements Command {
 
@@ -28,8 +26,8 @@ public class SignIn implements Command {
         String password;
 
 
-        login = (String) req.getParameter(LOGIN);
-        password = (String) req.getParameter(PASSWORD);
+        login = req.getParameter(LOGIN);
+        password = req.getParameter(PASSWORD);
 
 
         String status;
@@ -50,7 +48,7 @@ public class SignIn implements Command {
 
         try {
             isLoggedIn = ServiceFactory.getInstance().getUserService()
-                    .SignIn(login, password);
+                    .signIn(login, password);
 
         } catch (ServiceException e) {
             //TODO: LOG!

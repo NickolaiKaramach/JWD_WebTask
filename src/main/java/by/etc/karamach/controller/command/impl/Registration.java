@@ -11,12 +11,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
-import static by.etc.karamach.controller.RequestParameterName.LOGIN;
-import static by.etc.karamach.controller.RequestParameterName.MSG;
-import static by.etc.karamach.controller.RequestParameterName.PASSWORD;
+import static by.etc.karamach.controller.RequestParameterName.*;
 
 public class Registration implements Command {
     @Override
@@ -26,8 +23,8 @@ public class Registration implements Command {
         String password;
 
 
-        login = (String) req.getParameter(LOGIN);
-        password = (String) req.getParameter(PASSWORD);
+        login = req.getParameter(LOGIN);
+        password = req.getParameter(PASSWORD);
 
         User user = new User();
         user.setLogin(login);
@@ -46,7 +43,7 @@ public class Registration implements Command {
         boolean status;
 
         try {
-            status = ServiceFactory.getInstance().getUserService().Registration(user);
+            status = ServiceFactory.getInstance().getUserService().register(user);
         } catch (ServiceException e) {
             //TODO: LOG !
             throw  new CommandException("Invalid data", e);

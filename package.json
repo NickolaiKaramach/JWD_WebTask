@@ -1,0 +1,22 @@
+{
+  "name": "jwd-webtask",
+  "version": "1.0.0",
+  "description": "JWD_EPAM_TASK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NickolaiKaramach/JWD_WebTask.git"
+  },
+  "author": "Nickolai Karamach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NickolaiKaramach/JWD_WebTask/issues"
+  },
+  "homepage": "https://github.com/NickolaiKaramach/JWD_WebTask#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.3"
+  }
+}

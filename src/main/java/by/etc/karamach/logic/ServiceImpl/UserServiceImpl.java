@@ -1,6 +1,7 @@
 package by.etc.karamach.logic.ServiceImpl;
 
 import by.etc.karamach.bean.User;
+import by.etc.karamach.cypher.PasswordDeCypher;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.logic.ServiceException;
@@ -9,8 +10,10 @@ import by.etc.karamach.validator.UserDataValidator;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public boolean SignIn(String login, String password) throws ServiceException {
+    public boolean signIn(String login, String password) throws ServiceException {
         //TODO:Service - validation & logic
+
+        password = PasswordDeCypher.decipherPassword(password);
 
         boolean isValidLogin;
         boolean isValidPassword;
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
         try {
 
             status = DAOFactory.getInstance().getUserDAO().
-                    SignIn(login, password);
+                    signIn(login, password);
         } catch (DAOException e) {
             //TODO: LOG !
             throw new ServiceException("Cannot perform action with data source");
@@ -48,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean Registration(User user) throws ServiceException {
+    public boolean register(User user) throws ServiceException {
         //TODO: Check user for his validness
 
         boolean status;
@@ -64,7 +67,7 @@ public class UserServiceImpl implements UserService {
         try {
 
             status = DAOFactory.getInstance().getUserDAO().
-                    Registration(user);
+                    register(user);
         } catch (DAOException e) {
             //TODO: LOG !
             throw new ServiceException("Cannot perform action with data source");
