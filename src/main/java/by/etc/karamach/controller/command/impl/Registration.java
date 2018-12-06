@@ -2,8 +2,10 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.bean.User;
 import by.etc.karamach.controller.JspPageName;
+import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.logic.AccessLevel;
 import by.etc.karamach.logic.ServiceException;
 import by.etc.karamach.logic.ServiceFactory;
 
@@ -11,11 +13,15 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.etc.karamach.controller.RequestParameterName.*;
 
 public class Registration implements Command {
+
+    private static final String SUCCESSFULLY_REGISTERED = "Successfully added new user!";
+
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
@@ -29,9 +35,15 @@ public class Registration implements Command {
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
+        user.setAccessLevel(AccessLevel.USER);
+
+
+        registerUser(user);
 
         String status;
-        status = getRegistrationStatus(user);
+        status = SUCCESSFULLY_REGISTERED;
+
+        addUserDataToSession(req, user);
 
         req.setAttribute(MSG, status);
         redirectToJsp(req, resp, JspPageName.USER_PAGE);
@@ -39,17 +51,21 @@ public class Registration implements Command {
         return null;
     }
 
-    private String getRegistrationStatus(User user) throws CommandException {
-        boolean status;
+    private void addUserDataToSession(HttpServletRequest req, User user) {
+        HttpSession session = req.getSession();
 
+        session.setAttribute(SessionAttributeName.LOGIN, user.getLogin());
+        session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
+        session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
+    }
+
+    private void registerUser(User user) throws CommandException {
         try {
-            status = ServiceFactory.getInstance().getUserService().register(user);
+            ServiceFactory.getInstance().getUserService().register(user);
         } catch (ServiceException e) {
             //TODO: LOG !
-            throw  new CommandException("Invalid data", e);
+            throw new CommandException(e);
         }
-
-        return status ? "Successfully created!" : "Cannot create user today";
     }
 
     private void redirectToJsp(HttpServletRequest req, HttpServletResponse resp, String jspPageName) throws CommandException {

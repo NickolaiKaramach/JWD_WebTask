@@ -40,20 +40,23 @@
     }
 
     function holdForm(form) {
-        alert("come to");
         var elements = form.elements;
+        var noErrors = true;
 
         if (!elements.login.value) {
+            noErrors = false;
             showError(elements.login.parentNode, "Логин не может быть пустым!")
         }
 
         if (!elements.password.value) {
-            showError(elements.password.parentNode, "Логин не может быть пустым!")
+            noErrors = false;
+            showError(elements.password.parentNode, "Пароль не может быть пустым!")
         } else {
             elements.password.value = cypherText(elements.password.value);
         }
-
-        form.submit();
+        if (noErrors) {
+            form.submit();
+        }
     }
 </script>
 </body>

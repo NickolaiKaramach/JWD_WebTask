@@ -1,9 +1,12 @@
 package by.etc.karamach.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -6844576554904773999L;
+
     //TODO: Question - shell we on our own set id?
     private int id;
     private String login;

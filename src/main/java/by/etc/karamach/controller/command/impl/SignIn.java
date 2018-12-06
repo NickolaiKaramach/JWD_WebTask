@@ -1,8 +1,11 @@
 package by.etc.karamach.controller.command.impl;
 
+import by.etc.karamach.bean.User;
 import by.etc.karamach.controller.JspPageName;
+import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.logic.AccessLevel;
 import by.etc.karamach.logic.ServiceException;
 import by.etc.karamach.logic.ServiceFactory;
 
@@ -10,14 +13,15 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.etc.karamach.controller.RequestParameterName.*;
 
 public class SignIn implements Command {
 
-    private static final String USER_GREETING = "You have been logged in as a User!";
-    private static final String INVALID_PASSWORD = "Invalid password";
+    private static final String GREETING = "You have been logged in as a ";
+    private static final String INVALID_PASSWORD = "Invalid login or password";
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -30,9 +34,19 @@ public class SignIn implements Command {
         password = req.getParameter(PASSWORD);
 
 
-        String status;
-        status = getEnterStatus(login, password);
+        User user;
+        user = getUser(login, password);
 
+        String status;
+
+        if (user != null) {
+
+            addUserDataToSession(req, user);
+            status = GREETING + AccessLevel.getRoleName(user.getAccessLevel());
+
+        } else {
+            status = INVALID_PASSWORD;
+        }
 
         req.setAttribute(MSG, status);
         redirectToJsp(req, resp);
@@ -40,14 +54,20 @@ public class SignIn implements Command {
         return null;
     }
 
+    private void addUserDataToSession(HttpServletRequest req, User user) {
+        HttpSession session = req.getSession();
+
+        session.setAttribute(SessionAttributeName.LOGIN, user.getLogin());
+        session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
+        session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
+    }
 
 
-
-    private String getEnterStatus(String login, String password) throws CommandException {
-        boolean isLoggedIn;
+    private User getUser(String login, String password) throws CommandException {
+        User user;
 
         try {
-            isLoggedIn = ServiceFactory.getInstance().getUserService()
+            user = ServiceFactory.getInstance().getUserService()
                     .signIn(login, password);
 
         } catch (ServiceException e) {
@@ -56,10 +76,7 @@ public class SignIn implements Command {
             throw new CommandException("Incorrect data", e);
         }
 
-        String status;
-
-        status = isLoggedIn ? USER_GREETING : INVALID_PASSWORD;
-        return status;
+        return user;
     }
 
     //TODO: Equal methods
