@@ -1,7 +1,6 @@
 package by.etc.karamach.logic.ServiceImpl;
 
 import by.etc.karamach.bean.User;
-import by.etc.karamach.cypher.PasswordDeCypher;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.UserDao;
@@ -11,14 +10,13 @@ import by.etc.karamach.validator.UserDataValidator;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public User signIn(String login, String password) throws ServiceException {
+    public User signIn(String email, String password) throws ServiceException {
         //TODO:Service - validation & logic
-        password = PasswordDeCypher.decipherPassword(password);
 
         User user;
 
-        if (isValidData(login, password)) {
-            user = getSignInStatus(login, password);
+        if (isValidData(email, password)) {
+            user = getSignInStatus(email, password);
         } else {
             throw new ServiceException("Not valid data!");
         }
@@ -27,23 +25,23 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private boolean isValidData(String login, String password) {
-        boolean isValidLogin;
+    private boolean isValidData(String email, String password) {
+        boolean isValidEmail;
         boolean isValidPassword;
 
-        isValidLogin = UserDataValidator.isValidLogin(login);
+        isValidEmail = UserDataValidator.isValidEmail(email);
         isValidPassword = UserDataValidator.isValidPassword(password);
 
 
-        return isValidLogin && isValidPassword;
+        return isValidEmail && isValidPassword;
     }
 
-    private User getSignInStatus(String login, String password) throws ServiceException {
+    private User getSignInStatus(String email, String password) throws ServiceException {
         User user;
 
         try {
             user = DAOFactory.getInstance().getUserDAO().
-                    signIn(login, password);
+                    signIn(email, password);
         } catch (DAOException e) {
             //TODO: LOG !
             throw new ServiceException("Cannot perform action with data source", e);
@@ -56,24 +54,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(User user) throws ServiceException {
         //TODO: Check user for his validness
+        if (UserDataValidator.isValidUserData(user)) {
 
-        UserDao userDAO = DAOFactory.getInstance().getUserDAO();
+            UserDao userDAO = DAOFactory.getInstance().getUserDAO();
 
-        user.setPassword(PasswordDeCypher.decipherPassword(user.getPassword()));
+            try {
+                if (userDAO.findUserByEmail(user.getEmail()) == null) {
 
-
-        try {
-            if (userDAO.findUserByLogin(user.getLogin()) == null) {
-
-                userDAO.register(user);
-            } else {
-                throw new ServiceException("Login is already taken!");
+                    userDAO.register(user);
+                } else {
+                    throw new ServiceException("Email is already taken!");
+                }
+            } catch (DAOException e) {
+                //TODO: LOG !
+                throw new ServiceException("Cannot perform action with data source", e);
             }
-        } catch (DAOException e) {
-            //TODO: LOG !
-            throw new ServiceException("Cannot perform action with data source", e);
+        } else {
+            throw new ServiceException("Invalid user data");
         }
-
     }
 
 }

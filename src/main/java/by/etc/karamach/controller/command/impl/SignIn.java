@@ -22,30 +22,42 @@ public class SignIn implements Command {
 
     private static final String GREETING = "You have been logged in as a ";
     private static final String INVALID_PASSWORD = "Invalid login or password";
+    private static final boolean DONT_CREATE_NEW_SESSION = false;
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        //TODO:Command - implement
-        String login;
-        String password;
+        HttpSession session = req.getSession(DONT_CREATE_NEW_SESSION);
 
-
-        login = req.getParameter(LOGIN);
-        password = req.getParameter(PASSWORD);
-
-
-        User user;
-        user = getUser(login, password);
+        boolean isAlreadyLoggedIn = false;
+        if (session != null) {
+            isAlreadyLoggedIn = (session.getAttribute(SessionAttributeName.ACCESS_LEVEL) != null);
+        }
 
         String status;
 
-        if (user != null) {
+        if (!isAlreadyLoggedIn) {
+            String email;
+            String password;
 
-            addUserDataToSession(req, user);
-            status = GREETING + AccessLevel.getRoleName(user.getAccessLevel());
 
+            email = req.getParameter(EMAIL);
+            password = req.getParameter(PASSWORD);
+
+
+            User user;
+            user = getUser(email, password);
+
+
+            if (user != null) {
+
+                addUserDataToSession(req, user);
+                status = GREETING + AccessLevel.getRoleName(user.getAccessLevel());
+
+            } else {
+                status = INVALID_PASSWORD;
+            }
         } else {
-            status = INVALID_PASSWORD;
+            status = "Is already logged in!";
         }
 
         req.setAttribute(MSG, status);
@@ -57,9 +69,10 @@ public class SignIn implements Command {
     private void addUserDataToSession(HttpServletRequest req, User user) {
         HttpSession session = req.getSession();
 
-        session.setAttribute(SessionAttributeName.LOGIN, user.getLogin());
+        session.setAttribute(SessionAttributeName.EMAIL, user.getEmail());
         session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
         session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
+        session.setAttribute(SessionAttributeName.NAME, user.getName());
     }
 
 

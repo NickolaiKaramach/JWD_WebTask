@@ -9,17 +9,22 @@
 <html>
 <head>
     <title>Log In page</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<form action="/controller" method="post">
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+<form action="/controller" method="post" class="form-signin">
     <input type="hidden" name="command" value="sign_in"/>
-    Login<br>
-    <input type="text" name="login" value=""/>
-    <br>Password<br>
-    <input type="password" name="password" value=""/>
-    <br>
-    <input type="button" value="Отправить" onclick="holdForm(this.form)"/>
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in!</h1>
+    <label for="email" class="sr-only">Login</label>
+    <input type="text" name="email" id="email" class="form-control" placeholder="Email address" required autofocus/>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" name="pass" id="password" placeholder="Password" class="form-control" required/>
+    <button class="btn btn-lg btn-primary btn-block" onclick="holdForm(this.form)">Sign in</button>
 </form>
 
 <script type="text/javascript">
@@ -43,9 +48,9 @@
         var elements = form.elements;
         var noErrors = true;
 
-        if (!elements.login.value) {
+        if (!elements.email.value) {
             noErrors = false;
-            showError(elements.login.parentNode, "Логин не может быть пустым!")
+            showError(elements.email.parentNode, "Логин не может быть пустым!")
         }
 
         if (!elements.password.value) {

@@ -25,17 +25,19 @@ public class Registration implements Command {
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
-        String login;
+        String email;
         String password;
+        String name;
 
-
-        login = req.getParameter(LOGIN);
+        name = req.getParameter(NAME);
+        email = req.getParameter(EMAIL);
         password = req.getParameter(PASSWORD);
 
         User user = new User();
-        user.setLogin(login);
+        user.setEmail(email);
         user.setPassword(password);
         user.setAccessLevel(AccessLevel.USER);
+        user.setName(name);
 
 
         registerUser(user);
@@ -54,9 +56,10 @@ public class Registration implements Command {
     private void addUserDataToSession(HttpServletRequest req, User user) {
         HttpSession session = req.getSession();
 
-        session.setAttribute(SessionAttributeName.LOGIN, user.getLogin());
+        session.setAttribute(SessionAttributeName.EMAIL, user.getEmail());
         session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
         session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
+        session.setAttribute(SessionAttributeName.NAME, user.getName());
     }
 
     private void registerUser(User user) throws CommandException {

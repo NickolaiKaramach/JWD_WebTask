@@ -8,19 +8,61 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+
     <title>Registration</title>
 </head>
-<body>
+<body class="text-center">
 
-<form action="/controller" method="post">
-    <input type="hidden" name="command" value="registration"/>
-    Login<br>
-    <input type="text" name="login" value=""/>
-    <br>Password<br>
-    <input type="password" name="password" value=""/>
-    <br>
-    <input type="button" value="Отправить" onclick="holdRegForm(this.form)"/>
-</form>
+<div class="main">
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form method="POST" class="register-form" id="register-form" action="/controller">
+                        <input type="hidden" name="command" value="registration">
+
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Your Name"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="email" name="email" id="email" placeholder="Your Email"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="pass" id="pass" placeholder="Password"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
+                        </div>
+
+                        <div class="form-group form-button">
+                            <input type="button" name="signup" id="signup" class="form-submit"
+                                   value="Register" onclick="holdRegForm(this.form)"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="images/signup.jpeg" alt="sing up image"></figure>
+                    <a href="logIn.jsp" class="signup-image-link">I already have an account</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
 <script type="text/javascript">
     function cypherText(text) {
         var cypherText = "";
@@ -30,32 +72,60 @@
         return cypherText;
     }
 
-    function showError(container, errorMessage) {
-        container.className = 'error';
-        var msgElem = document.createElement('span');
-        msgElem.className = "error-message";
-        msgElem.innerHTML = errorMessage;
-        container.appendChild(msgElem);
-    }
+
 
     function holdRegForm(form) {
+        //TODO: Implement it
         var elements = form.elements;
+        var message = "Invalid data:\n";
         var noErrors = true;
 
-        if (!elements.login.value) {
+        if (!elements.name.value) {
             noErrors = false;
-            showError(elements.login.parentNode, "Логин не может быть пустым!")
+            message += "*   Name cannot be empty!\n";
         }
 
-        if (!elements.password.value) {
+        if (!elements.email.value) {
             noErrors = false;
-            showError(elements.password.parentNode, "Пароль не может быть пустым!")
+            message += "*   Email cannot be empty!\n";
         } else {
-            elements.password.value = cypherText(elements.password.value);
+            if (!validateEmail(elements.email.value)) {
+                message += "*   Invalid email!\n"
+            }
         }
-        if (noErrors) {
+
+        if (!elements.pass.value) {
+            noErrors = false;
+            message += "*   Password cannot be empty!\n";
+        } else {
+            //TODO: Validate: is simple pass?
+        }
+
+        if (!elements.re_pass.value) {
+            noErrors = false;
+            message += "*   Repeated password cannot be empty!\n";
+        }
+
+        if (!(elements.re_pass.value === elements.pass.value)) {
+            noErrors = false;
+            message += "*   Repeated password is not equal to password!\n";
+        } else {
+            if (noErrors) {
+                elements.pass.value = cypherText(elements.pass.value);
+            }
+        }
+
+        if (!noErrors) {
+            alert(message);
+        } else {
             form.submit();
         }
+
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 </script>
 </body>

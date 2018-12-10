@@ -9,18 +9,29 @@ public class User implements Serializable {
 
     //TODO: Question - shell we on our own set id?
     private int id;
-    private String login;
+    private String email;
     private String password;
+    private String name;
+
+    public User(int id, String email, String password, String name, int accessLevel) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.accessLevel = accessLevel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     private int accessLevel;
 
     public User() {
     }
 
-    public User(int id, String login, String password, int accessLevel) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.accessLevel = accessLevel;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -31,12 +42,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -68,20 +79,20 @@ public class User implements Serializable {
         User user = (User) o;
         return id == user.getId() &&
                 accessLevel == user.getAccessLevel() &&
-                Objects.equals(login, user.getLogin()) &&
+                Objects.equals(email, user.getEmail()) &&
                 Objects.equals(password, user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, accessLevel);
+        return Objects.hash(id, email, password, accessLevel);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("login='" + login + "'")
+                .add("email='" + email + "'")
                 .add("password='" + password + "'")
                 .add("accessLevel=" + accessLevel)
                 .toString();

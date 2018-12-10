@@ -17,7 +17,7 @@ public class SQLUserDAO implements UserDao {
     private static final int PASSWORD_PARAMETER_INDEX = 2;
 
     @Override
-    public User findUserByLogin(String login) throws DAOException {
+    public User findUserByEmail(String email) throws DAOException {
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -38,7 +38,7 @@ public class SQLUserDAO implements UserDao {
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN);
 
-            preparedStatement.setString(LOGIN_PARAMETER_INDEX, login);
+            preparedStatement.setString(LOGIN_PARAMETER_INDEX, email);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -66,12 +66,12 @@ public class SQLUserDAO implements UserDao {
     private void fillUserWithResultSet(User user, ResultSet resultSet) throws SQLException {
         user.setId(resultSet.getInt(SQLUserTableColumn.ID));
         user.setAccessLevel(resultSet.getInt(SQLUserTableColumn.ACCESS_LEVEL));
-        user.setLogin(resultSet.getString(SQLUserTableColumn.LOGIN));
+        user.setEmail(resultSet.getString(SQLUserTableColumn.EMAIL));
         user.setPassword(resultSet.getString(SQLUserTableColumn.PASSWORD));
     }
 
     @Override
-    public User signIn(String login, String password) throws DAOException {
+    public User signIn(String email, String password) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
 
@@ -89,7 +89,7 @@ public class SQLUserDAO implements UserDao {
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN_AND_PASSWORD);
 
-            preparedStatement.setString(LOGIN_PARAMETER_INDEX, login);
+            preparedStatement.setString(LOGIN_PARAMETER_INDEX, email);
             preparedStatement.setString(PASSWORD_PARAMETER_INDEX, password);
 
             resultSet = preparedStatement.executeQuery();
@@ -129,10 +129,19 @@ public class SQLUserDAO implements UserDao {
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SQLQuery.SAVE_USER_AS_REGISTERED);
 
-            preparedStatement.setString(SQLUserTableColumn.LOGIN, user.getLogin());
-            preparedStatement.setInt(SQLUserTableColumn.ID, user.getId());
-            preparedStatement.setString(SQLUserTableColumn.PASSWORD, user.getPassword());
-            preparedStatement.setInt(SQLUserTableColumn.ACCESS_LEVEL, user.getAccessLevel());
+            int id = user.getId();
+            int accessLevel = user.getAccessLevel();
+
+            String email = user.getEmail();
+            String password = user.getPassword();
+            String name = user.getName();
+
+            preparedStatement.setInt(SQLUserTableColumn.ID, id);
+            preparedStatement.setInt(SQLUserTableColumn.ACCESS_LEVEL, accessLevel);
+
+            preparedStatement.setString(SQLUserTableColumn.EMAIL, email);
+            preparedStatement.setString(SQLUserTableColumn.PASSWORD, password);
+            preparedStatement.setString(SQLUserTableColumn.NAME, name);
 
             preparedStatement.executeUpdate();
         } catch (ConnectionPoolException e) {
@@ -140,9 +149,12 @@ public class SQLUserDAO implements UserDao {
         } catch (SQLException e) {
             throw new DAOException("Couldn't execute query to data source", e);
         } finally {
+            //TODO: QUESTION: Chanege close condition?
             if ((connection != null) && (preparedStatement != null)) {
                 connectionPool.closeConnection(connection, preparedStatement);
             }
+
+
         }
     }
 }
