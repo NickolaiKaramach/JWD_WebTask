@@ -1,6 +1,6 @@
-package by.etc.karamach.logic;
+package by.etc.karamach.service;
 
-import by.etc.karamach.logic.ServiceImpl.UserServiceImpl;
+import by.etc.karamach.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
 

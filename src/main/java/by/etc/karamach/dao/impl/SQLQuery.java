@@ -1,4 +1,4 @@
-package by.etc.karamach.dao.DAOImpl;
+package by.etc.karamach.dao.impl;
 
 public class SQLQuery {
     public static final String FIND_USER_BY_LOGIN_AND_PASSWORD

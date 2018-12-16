@@ -1,4 +1,4 @@
-package by.etc.karamach.connectionpool;
+package by.etc.karamach.dao.pool;
 
 public final class DBParameter {
     public static final String DB_DRIVER = "db.driver";

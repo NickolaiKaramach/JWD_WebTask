@@ -1,4 +1,4 @@
-package by.etc.karamach.logic;
+package by.etc.karamach.service;
 
 public final class AccessLevel {
     public static final int GUEST = 0;
@@ -9,6 +9,7 @@ public final class AccessLevel {
     private static final String USER_ROLE = "User";
     private static final String GUEST_ROLE = "Guest";
 
+    //TODO: Remove
     public static String getRoleName(int accessLevel) {
         String roleName;
 

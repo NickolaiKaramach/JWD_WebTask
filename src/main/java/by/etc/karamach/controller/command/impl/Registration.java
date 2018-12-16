@@ -2,12 +2,12 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.bean.User;
 import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.logic.AccessLevel;
-import by.etc.karamach.logic.ServiceException;
-import by.etc.karamach.logic.ServiceFactory;
+import by.etc.karamach.service.AccessLevel;
+import by.etc.karamach.service.ServiceException;
+import by.etc.karamach.service.ServiceFactory;
+import by.etc.karamach.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +21,7 @@ import static by.etc.karamach.controller.RequestParameterName.*;
 public class Registration implements Command {
 
     private static final String SUCCESSFULLY_REGISTERED = "Successfully added new user!";
+    private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -45,7 +46,9 @@ public class Registration implements Command {
         String status;
         status = SUCCESSFULLY_REGISTERED;
 
-        addUserDataToSession(req, user);
+        HttpSession session = req.getSession();
+        userService.saveUserToSession(session, user);
+
 
         req.setAttribute(MSG, status);
         redirectToJsp(req, resp, JspPageName.USER_PAGE);
@@ -53,18 +56,9 @@ public class Registration implements Command {
         return null;
     }
 
-    private void addUserDataToSession(HttpServletRequest req, User user) {
-        HttpSession session = req.getSession();
-
-        session.setAttribute(SessionAttributeName.EMAIL, user.getEmail());
-        session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
-        session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
-        session.setAttribute(SessionAttributeName.NAME, user.getName());
-    }
-
     private void registerUser(User user) throws CommandException {
         try {
-            ServiceFactory.getInstance().getUserService().register(user);
+            userService.register(user);
         } catch (ServiceException e) {
             //TODO: LOG !
             throw new CommandException(e);

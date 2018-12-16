@@ -1,4 +1,4 @@
-package by.etc.karamach.connectionpool;
+package by.etc.karamach.dao.pool;
 
 import java.util.ResourceBundle;
 

@@ -1,4 +1,4 @@
-package by.etc.karamach.connectionpool;
+package by.etc.karamach.dao.pool;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String name;
+    private int accessLevel;
 
     public User(int id, String email, String password, String name, int accessLevel) {
         this.id = id;
@@ -21,13 +22,11 @@ public class User implements Serializable {
         this.accessLevel = accessLevel;
     }
 
-    public String getName() {
-        return name;
+    public User() {
     }
 
-    private int accessLevel;
-
-    public User() {
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {

@@ -5,9 +5,10 @@ import by.etc.karamach.controller.JspPageName;
 import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.logic.AccessLevel;
-import by.etc.karamach.logic.ServiceException;
-import by.etc.karamach.logic.ServiceFactory;
+import by.etc.karamach.service.AccessLevel;
+import by.etc.karamach.service.ServiceException;
+import by.etc.karamach.service.ServiceFactory;
+import by.etc.karamach.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class SignIn implements Command {
     private static final String GREETING = "You have been logged in as a ";
     private static final String INVALID_PASSWORD = "Invalid login or password";
     private static final boolean DONT_CREATE_NEW_SESSION = false;
+    private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -50,7 +52,9 @@ public class SignIn implements Command {
 
             if (user != null) {
 
-                addUserDataToSession(req, user);
+                HttpSession newSession = req.getSession();
+                userService.saveUserToSession(newSession, user);
+
                 status = GREETING + AccessLevel.getRoleName(user.getAccessLevel());
 
             } else {
@@ -66,22 +70,12 @@ public class SignIn implements Command {
         return null;
     }
 
-    private void addUserDataToSession(HttpServletRequest req, User user) {
-        HttpSession session = req.getSession();
-
-        session.setAttribute(SessionAttributeName.EMAIL, user.getEmail());
-        session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
-        session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
-        session.setAttribute(SessionAttributeName.NAME, user.getName());
-    }
-
 
     private User getUser(String login, String password) throws CommandException {
         User user;
 
         try {
-            user = ServiceFactory.getInstance().getUserService()
-                    .signIn(login, password);
+            user = userService.signIn(login, password);
 
         } catch (ServiceException e) {
             //TODO: LOG!

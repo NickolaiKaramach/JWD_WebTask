@@ -1,4 +1,4 @@
-package by.etc.karamach.logic;
+package by.etc.karamach.service;
 
 public class ServiceException extends Exception {
     private static final long serialVersionUID = 1705604319010526597L;

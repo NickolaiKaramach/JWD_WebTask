@@ -1,4 +1,4 @@
-package by.etc.karamach.dao.DAOImpl;
+package by.etc.karamach.dao.impl;
 
 public class SQLUserTableColumn {
     public static final int EMAIL = 1;

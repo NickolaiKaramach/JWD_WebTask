@@ -1,4 +1,4 @@
-package by.etc.karamach.connectionpool;
+package by.etc.karamach.dao.pool;
 
 import java.sql.*;
 import java.util.Locale;
@@ -20,7 +20,6 @@ public class ConnectionPool {
     private String user;
     private String password;
     private int poolSize;
-    private boolean isInitialized = false;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager;
@@ -34,57 +33,24 @@ public class ConnectionPool {
         try {
             String poolSizeProperty = dbResourceManager.getValue(DBParameter.DB_POOL_SIZE);
             this.poolSize = Integer.parseInt(poolSizeProperty);
+            initPoolData();
         } catch (NumberFormatException e) {
             //TODO: LOG !
             poolSize = DEFAULT_POOL_SIZE;
         }
+
+
     }
 
     public static ConnectionPool getInstance() {
         return instance;
     }
 
-    public boolean isInitialized() {
-        return isInitialized;
-    }
-
-    public void initPoolData() throws ConnectionPoolException {
-        Locale.setDefault(Locale.ENGLISH);
-
-        try {
-            Class.forName(driverName);
-
-            givenAwayConnectionQueue = new ArrayBlockingQueue<>(poolSize);
-            connectionQueue = new ArrayBlockingQueue<>(poolSize);
-
-            for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user, password);
-
-                PooledConnection pooledConnection = new PooledConnection(connection);
-
-                connectionQueue.add(pooledConnection);
-            }
-        } catch (SQLException e) {
-            //TODO: LOG !
-            throw new ConnectionPoolException("SQL Exception during initializing Connection Pool!");
-        } catch (ClassNotFoundException e) {
-            throw new ConnectionPoolException("Can't find driver class for database!");
-        }
-        this.isInitialized = true;
-    }
 
     public void dispose() {
         clearConnectionQueue();
     }
 
-    private void clearConnectionQueue() {
-        try {
-            closeConnectionsQueue(givenAwayConnectionQueue);
-            closeConnectionsQueue(connectionQueue);
-        } catch (SQLException e) {
-            //TODO: LOG !
-        }
-    }
 
     public Connection takeConnection() throws ConnectionPoolException {
         Connection connection = null;
@@ -121,6 +87,14 @@ public class ConnectionPool {
         }
     }
 
+    public void closeConnection(Connection connection) {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            //TODO: LOG!
+        }
+    }
+
     public void closeConnection(Connection connection, Statement statement) {
         try {
             connection.close();
@@ -135,6 +109,30 @@ public class ConnectionPool {
         }
     }
 
+    private void initPoolData() throws ConnectionPoolRuntimeException {
+        Locale.setDefault(Locale.ENGLISH);
+
+        try {
+            Class.forName(driverName);
+
+            givenAwayConnectionQueue = new ArrayBlockingQueue<>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
+
+            for (int i = 0; i < poolSize; i++) {
+                Connection connection = DriverManager.getConnection(url, user, password);
+
+                PooledConnection pooledConnection = new PooledConnection(connection);
+
+                connectionQueue.add(pooledConnection);
+            }
+        } catch (SQLException e) {
+            //TODO: LOG !
+            throw new ConnectionPoolRuntimeException("SQL Exception during initializing Connection Pool!");
+        } catch (ClassNotFoundException e) {
+            throw new ConnectionPoolRuntimeException("Can't find driver class for database!");
+        }
+    }
+
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
 
@@ -146,6 +144,14 @@ public class ConnectionPool {
         }
     }
 
+    private void clearConnectionQueue() {
+        try {
+            closeConnectionsQueue(givenAwayConnectionQueue);
+            closeConnectionsQueue(connectionQueue);
+        } catch (SQLException e) {
+            //TODO: LOG !
+        }
+    }
 
     private class PooledConnection implements Connection {
         private static final boolean DEFAULT_AUTO_COMMIT = true;

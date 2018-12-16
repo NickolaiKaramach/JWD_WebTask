@@ -1,6 +1,6 @@
 package by.etc.karamach.dao;
 
-import by.etc.karamach.dao.DAOImpl.SQLUserDAO;
+import by.etc.karamach.dao.impl.SQLUserDAO;
 
 public class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();

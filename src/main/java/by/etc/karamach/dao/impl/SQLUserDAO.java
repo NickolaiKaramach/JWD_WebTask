@@ -1,10 +1,10 @@
-package by.etc.karamach.dao.DAOImpl;
+package by.etc.karamach.dao.impl;
 
 import by.etc.karamach.bean.User;
-import by.etc.karamach.connectionpool.ConnectionPool;
-import by.etc.karamach.connectionpool.ConnectionPoolException;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.UserDao;
+import by.etc.karamach.dao.pool.ConnectionPool;
+import by.etc.karamach.dao.pool.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,12 +15,10 @@ public class SQLUserDAO implements UserDao {
 
     private static final int LOGIN_PARAMETER_INDEX = 1;
     private static final int PASSWORD_PARAMETER_INDEX = 2;
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
     public User findUserByEmail(String email) throws DAOException {
-
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-
         Connection connection = null;
 
         PreparedStatement preparedStatement = null;
@@ -29,12 +27,6 @@ public class SQLUserDAO implements UserDao {
         ResultSet resultSet;
 
         try {
-            //TODO:QUESTION: Where could we initPool?
-
-            if (!connectionPool.isInitialized()) {
-                connectionPool.initPoolData();
-            }
-
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN);
 
@@ -63,29 +55,16 @@ public class SQLUserDAO implements UserDao {
         return user;
     }
 
-    private void fillUserWithResultSet(User user, ResultSet resultSet) throws SQLException {
-        user.setId(resultSet.getInt(SQLUserTableColumn.ID));
-        user.setAccessLevel(resultSet.getInt(SQLUserTableColumn.ACCESS_LEVEL));
-        user.setEmail(resultSet.getString(SQLUserTableColumn.EMAIL));
-        user.setPassword(resultSet.getString(SQLUserTableColumn.PASSWORD));
-    }
-
     @Override
     public User signIn(String email, String password) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
 
         PreparedStatement preparedStatement = null;
 
         User user = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
 
         try {
-
-            if (!connectionPool.isInitialized()) {
-                connectionPool.initPoolData();
-            }
-
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN_AND_PASSWORD);
 
@@ -106,9 +85,15 @@ public class SQLUserDAO implements UserDao {
         } catch (SQLException e) {
             throw new DAOException("Couldn't execute query to data source", e);
         } finally {
+            if ((connection != null) && ((preparedStatement != null) && (resultSet != null))) {
+                connectionPool.closeConnection(connection, preparedStatement, resultSet);
+            } else {
 
-            if ((connection != null) && (preparedStatement != null)) {
-                connectionPool.closeConnection(connection, preparedStatement);
+                if ((connection != null) && (preparedStatement != null)) {
+                    connectionPool.closeConnection(connection, preparedStatement);
+                } else {
+                    connectionPool.closeConnection(connection);
+                }
             }
         }
 
@@ -122,10 +107,6 @@ public class SQLUserDAO implements UserDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            if (!connectionPool.isInitialized()) {
-                connectionPool.initPoolData();
-            }
-
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SQLQuery.SAVE_USER_AS_REGISTERED);
 
@@ -149,12 +130,20 @@ public class SQLUserDAO implements UserDao {
         } catch (SQLException e) {
             throw new DAOException("Couldn't execute query to data source", e);
         } finally {
-            //TODO: QUESTION: Chanege close condition?
             if ((connection != null) && (preparedStatement != null)) {
                 connectionPool.closeConnection(connection, preparedStatement);
+            } else {
+
+                connectionPool.closeConnection(connection);
             }
-
-
         }
     }
+
+    private void fillUserWithResultSet(User user, ResultSet resultSet) throws SQLException {
+        user.setId(resultSet.getInt(SQLUserTableColumn.ID));
+        user.setAccessLevel(resultSet.getInt(SQLUserTableColumn.ACCESS_LEVEL));
+        user.setEmail(resultSet.getString(SQLUserTableColumn.EMAIL));
+        user.setPassword(resultSet.getString(SQLUserTableColumn.PASSWORD));
+    }
 }
+

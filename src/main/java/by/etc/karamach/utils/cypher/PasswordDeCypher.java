@@ -1,6 +1,9 @@
-package by.etc.karamach.cypher;
+package by.etc.karamach.utils.cypher;
 
-public class PasswordDeCypher {
+public final class PasswordDeCypher {
+    private PasswordDeCypher() {
+    }
+
     public static String decipherPassword(String encryptedPassword) {
         StringBuilder decipheredPassword = new StringBuilder();
 
