@@ -101,8 +101,9 @@ public class SQLUserDAO implements UserDao {
     }
 
     @Override
-    public void register(User user) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public boolean register(User user) throws DAOException {
+        boolean isSuccessful = false;
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -125,11 +126,18 @@ public class SQLUserDAO implements UserDao {
             preparedStatement.setString(SQLUserTableColumn.NAME, name);
 
             preparedStatement.executeUpdate();
+            isSuccessful = true;
+
         } catch (ConnectionPoolException e) {
+
             throw new DAOException("Couldn't take connection from connection pool", e);
+
         } catch (SQLException e) {
+
             throw new DAOException("Couldn't execute query to data source", e);
+
         } finally {
+
             if ((connection != null) && (preparedStatement != null)) {
                 connectionPool.closeConnection(connection, preparedStatement);
             } else {
@@ -137,13 +145,20 @@ public class SQLUserDAO implements UserDao {
                 connectionPool.closeConnection(connection);
             }
         }
+
+        return isSuccessful;
     }
 
     private void fillUserWithResultSet(User user, ResultSet resultSet) throws SQLException {
-        user.setId(resultSet.getInt(SQLUserTableColumn.ID));
-        user.setAccessLevel(resultSet.getInt(SQLUserTableColumn.ACCESS_LEVEL));
-        user.setEmail(resultSet.getString(SQLUserTableColumn.EMAIL));
-        user.setPassword(resultSet.getString(SQLUserTableColumn.PASSWORD));
+        int id = resultSet.getInt(SQLUserTableColumn.ID);
+        int accessLevel = resultSet.getInt(SQLUserTableColumn.ACCESS_LEVEL);
+        String email = resultSet.getString(SQLUserTableColumn.EMAIL);
+        String password = resultSet.getString(SQLUserTableColumn.PASSWORD);
+
+        user.setId(id);
+        user.setAccessLevel(accessLevel);
+        user.setEmail(email);
+        user.setPassword(password);
     }
 }
 

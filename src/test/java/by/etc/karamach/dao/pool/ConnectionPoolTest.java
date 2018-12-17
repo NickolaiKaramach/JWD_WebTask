@@ -14,9 +14,7 @@ public class ConnectionPoolTest {
         Connection connection = null;
         Statement statement = null;
         try {
-            if (!connectionPool.isInitialized()) {
-                connectionPool.initPoolData();
-            }
+
             connection = connectionPool.takeConnection();
             statement = connection.createStatement();
             statement.execute("create table user(" +

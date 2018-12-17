@@ -5,7 +5,6 @@ import by.etc.karamach.controller.JspPageName;
 import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.service.AccessLevel;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
@@ -21,7 +20,7 @@ import static by.etc.karamach.controller.RequestParameterName.*;
 
 public class SignIn implements Command {
 
-    private static final String GREETING = "You have been logged in as a ";
+    private static final String GREETING = "You have been logged in.";
     private static final String INVALID_PASSWORD = "Invalid login or password";
     private static final boolean DONT_CREATE_NEW_SESSION = false;
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
@@ -55,7 +54,7 @@ public class SignIn implements Command {
                 HttpSession newSession = req.getSession();
                 userService.saveUserToSession(newSession, user);
 
-                status = GREETING + AccessLevel.getRoleName(user.getAccessLevel());
+                status = GREETING;
 
             } else {
                 status = INVALID_PASSWORD;

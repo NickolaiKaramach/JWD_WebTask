@@ -38,7 +38,9 @@ public class UserServiceImpl implements UserService {
 
     //TODO: Change to boolean and remove exception email taken
     @Override
-    public void register(User user) throws ServiceException {
+    public boolean register(User user) throws ServiceException {
+        boolean isSuccessful;
+
         //TODO: Check user for his validness
         if (!UserDataValidator.isValidUserData(user)) {
             throw new ServiceException("Invalid user data");
@@ -46,15 +48,22 @@ public class UserServiceImpl implements UserService {
 
 
         try {
+
             if (userDAO.findUserByEmail(user.getEmail()) != null) {
-                throw new ServiceException("Email is already taken!");
+                isSuccessful = false;
+
+            } else {
+
+                isSuccessful = userDAO.register(user);
+
             }
 
-            userDAO.register(user);
         } catch (DAOException e) {
             //TODO: LOG !
             throw new ServiceException("Cannot perform action with data source", e);
         }
+
+        return isSuccessful;
     }
 
     private boolean isValidData(String email, String password) {

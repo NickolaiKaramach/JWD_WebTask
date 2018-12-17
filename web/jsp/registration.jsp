@@ -5,6 +5,7 @@
   Time: 15:53
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,6 +33,13 @@
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="name" id="name" placeholder="Your Name"/>
                         </div>
+
+                        <c:if test="${requestScope.get(\"err\")}">
+                            <div class="form-group">
+                                <c:out value="An error occurred: "/>
+                                <c:out value="${requestScope.get(\"errmsg\")}"/>
+                            </div>
+                        </c:if>
 
                         <div class="form-group">
                             <label for="email"><i class="zmdi zmdi-email"></i></label>
@@ -71,7 +79,6 @@
         }
         return cypherText;
     }
-
 
 
     function holdRegForm(form) {

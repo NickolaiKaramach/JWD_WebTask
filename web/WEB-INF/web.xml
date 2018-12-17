@@ -5,7 +5,6 @@
          version="4.0">
 
     <servlet>
-        <description></description>
         <display-name>Controller</display-name>
         <servlet-name>Controller</servlet-name>
         <servlet-class>by.etc.karamach.controller.Controller</servlet-class>

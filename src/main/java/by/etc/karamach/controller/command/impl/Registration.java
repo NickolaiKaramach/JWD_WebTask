@@ -4,7 +4,6 @@ import by.etc.karamach.bean.User;
 import by.etc.karamach.controller.JspPageName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.service.AccessLevel;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
@@ -21,15 +20,48 @@ import static by.etc.karamach.controller.RequestParameterName.*;
 public class Registration implements Command {
 
     private static final String SUCCESSFULLY_REGISTERED = "Successfully added new user!";
+    private static final String EMAIL_TAKEN = "Email is already taken!";
+    private static final int ACCESS_LEVEL_USER = 1;
+
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
+    private static final boolean ERROR_TRUE = true;
+
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
+        User user = createUserFromRequest(req);
+
+        boolean isSuccessful = registerUser(user);
+        String nextPage;
+
+        if (isSuccessful) {
+
+            HttpSession session = req.getSession();
+            userService.saveUserToSession(session, user);
+
+            req.setAttribute(MSG, SUCCESSFULLY_REGISTERED);
+            nextPage = JspPageName.USER_PAGE;
+
+
+        } else {
+            req.setAttribute(ERROR, ERROR_TRUE);
+            req.setAttribute(ERROR_MSG, EMAIL_TAKEN);
+
+            nextPage = JspPageName.REGISTER_PAGE;
+        }
+
+
+        //TODO: Doesn't redirect normally
+        redirectToJsp(req, resp, nextPage);
+
+        return null;
+    }
+
+    private User createUserFromRequest(HttpServletRequest req) {
+        String name;
         String email;
         String password;
-        String name;
-
         name = req.getParameter(NAME);
         email = req.getParameter(EMAIL);
         password = req.getParameter(PASSWORD);
@@ -37,32 +69,22 @@ public class Registration implements Command {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        user.setAccessLevel(AccessLevel.USER);
+        user.setAccessLevel(ACCESS_LEVEL_USER);
         user.setName(name);
-
-
-        registerUser(user);
-
-        String status;
-        status = SUCCESSFULLY_REGISTERED;
-
-        HttpSession session = req.getSession();
-        userService.saveUserToSession(session, user);
-
-
-        req.setAttribute(MSG, status);
-        redirectToJsp(req, resp, JspPageName.USER_PAGE);
-
-        return null;
+        return user;
     }
 
-    private void registerUser(User user) throws CommandException {
+    private boolean registerUser(User user) throws CommandException {
+        boolean result;
+
         try {
-            userService.register(user);
+            result = userService.register(user);
         } catch (ServiceException e) {
             //TODO: LOG !
             throw new CommandException(e);
         }
+
+        return result;
     }
 
     private void redirectToJsp(HttpServletRequest req, HttpServletResponse resp, String jspPageName) throws CommandException {
