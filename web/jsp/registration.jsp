@@ -7,13 +7,17 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
+<html lang="${sessionScope.locale}">
 <head>
     <!-- Font Icon -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/jsp/css/style.css">
 
     <!-- Main css -->
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="/jsp/fonts/material-icon/css/material-design-iconic-font.min.css">
 
 
     <title>Registration</title>
@@ -25,14 +29,9 @@
         <div class="container">
             <div class="signup-content">
                 <div class="signup-form">
-                    <h2 class="form-title">Sign up</h2>
+                    <h2 class="form-title"><fmt:message key="locale.signup.message"/></h2>
                     <form method="POST" class="register-form" id="register-form" action="/controller">
                         <input type="hidden" name="command" value="registration">
-
-                        <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="name" id="name" placeholder="Your Name"/>
-                        </div>
 
                         <c:if test="${requestScope.get(\"err\")}">
                             <div class="form-group">
@@ -40,6 +39,12 @@
                                 <c:out value="${requestScope.get(\"errmsg\")}"/>
                             </div>
                         </c:if>
+
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Name"/>
+                        </div>
+
 
                         <div class="form-group">
                             <label for="email"><i class="zmdi zmdi-email"></i></label>
@@ -56,6 +61,7 @@
                             <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
                         </div>
 
+                        <!-- TODO: QUESTION HOW TO USE LOCALE THERE-->
                         <div class="form-group form-button">
                             <input type="button" name="signup" id="signup" class="form-submit"
                                    value="Register" onclick="holdRegForm(this.form)"/>
@@ -63,8 +69,9 @@
                     </form>
                 </div>
                 <div class="signup-image">
-                    <figure><img src="images/signup.jpeg" alt="sing up image"></figure>
-                    <a href="logIn.jsp" class="signup-image-link">I already have an account</a>
+                    <figure><img src="/jsp/images/signup.jpeg" alt="sing up image"></figure>
+                    <a href="logIn.jsp" class="signup-image-link"><fmt:message
+                            key="locale.already.registered.message"/> </a>
                 </div>
             </div>
         </div>

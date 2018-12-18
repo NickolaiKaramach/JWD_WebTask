@@ -6,7 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
+
+<html lang="${sessionScope.locale}">
 <head>
     <title>Log In page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,12 +24,13 @@
 
 <form action="/controller" method="post" class="form-signin">
     <input type="hidden" name="command" value="sign_in"/>
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in!</h1>
-    <label for="email" class="sr-only">Login</label>
+    <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="locale.login.message"/></h1>
+    <label for="email" class="sr-only"><fmt:message key="locale.email.input"/> </label>
     <input type="text" name="email" id="email" class="form-control" placeholder="Email address" required autofocus/>
-    <label for="password" class="sr-only">Password</label>
+    <label for="password" class="sr-only"><fmt:message key="locale.password.input"/></label>
     <input type="password" name="pass" id="password" placeholder="Password" class="form-control" required/>
-    <button class="btn btn-lg btn-primary btn-block" onclick="holdForm(this.form)">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" onclick="holdForm(this.form)"><fmt:message
+            key="locale.signin.action"/></button>
 </form>
 
 <script type="text/javascript">
