@@ -62,15 +62,18 @@ public class Registration implements Command {
         String name;
         String email;
         String password;
+
         name = req.getParameter(NAME);
         email = req.getParameter(EMAIL);
         password = req.getParameter(PASSWORD);
 
         User user = new User();
+
         user.setEmail(email);
         user.setPassword(password);
         user.setAccessLevel(ACCESS_LEVEL_USER);
         user.setName(name);
+
         return user;
     }
 

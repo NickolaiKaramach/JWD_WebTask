@@ -5,9 +5,8 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class User implements Serializable {
-    private static final long serialVersionUID = -6844576554904773999L;
+    private static final long serialVersionUID = -4195272284077336093L;
 
-    //TODO: Question - shell we on our own set id?
     private int id;
     private String email;
     private String password;
