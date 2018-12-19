@@ -16,7 +16,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User signIn(String email, String password) throws ServiceException {
-        //TODO:Service - validation & service
         User user;
 
         if (!isValidData(email, password)) {
@@ -30,18 +29,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUserToSession(HttpSession session, User user) {
+
         session.setAttribute(SessionAttributeName.EMAIL, user.getEmail());
         session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
         session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
         session.setAttribute(SessionAttributeName.NAME, user.getName());
+
     }
 
-    //TODO: Change to boolean and remove exception email taken
     @Override
     public boolean register(User user) throws ServiceException {
         boolean isSuccessful;
 
-        //TODO: Check user for his validness
         if (!UserDataValidator.isValidUserData(user)) {
             throw new ServiceException("Invalid user data");
         }
