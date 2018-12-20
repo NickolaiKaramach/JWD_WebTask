@@ -30,7 +30,7 @@ public final class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameterName.COMMAND_NAME);
 
         if (commandName == null) {
-            commandName = (String) req.getAttribute(RequestAttributeName.COMMAND);
+            commandName = (String) req.getAttribute(RequestAttributeName.COMMAND_NAME);
         }
 
         Command command = CommandProvider.getInstance().getCommand(commandName);

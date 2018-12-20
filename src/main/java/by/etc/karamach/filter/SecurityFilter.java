@@ -37,7 +37,7 @@ public class SecurityFilter implements Filter {
         String command = req.getParameter(RequestParameterName.COMMAND_NAME);
 
         if (command == null) {
-            command = (String) req.getAttribute(RequestAttributeName.COMMAND);
+            command = (String) req.getAttribute(RequestAttributeName.COMMAND_NAME);
         }
 
         boolean continueChain = true;

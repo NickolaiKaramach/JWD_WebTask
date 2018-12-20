@@ -24,12 +24,12 @@ public class GetRequestFilter implements Filter {
         switch (pathInfo) {
             case PATH_COMMAND_TESTS:
 
-                req.setAttribute(RequestAttributeName.COMMAND, CommandName.GET_TESTS.toString());
+                req.setAttribute(RequestAttributeName.COMMAND_NAME, CommandName.GET_TESTS.toString());
                 break;
 
             case PATH_COMMAND_MY_TESTS:
 
-                req.setAttribute(RequestAttributeName.COMMAND, CommandName.GET_MY_TESTS.toString());
+                req.setAttribute(RequestAttributeName.COMMAND_NAME, CommandName.GET_MY_TESTS.toString());
                 break;
 
         }

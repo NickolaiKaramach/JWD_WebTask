@@ -12,10 +12,12 @@ public class CommandProvider {
     private CommandProvider() {
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.REGISTRATION, new Registration());
+        //TODO: Wrong request rename or replace logically
         repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
         repository.put(CommandName.GET_TESTS, new GetTest());
         repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
         repository.put(CommandName.CREATE_TEST, new CreateTest());
+        repository.put(CommandName.LOGOUT, new Logout());
     }
 
     public static CommandProvider getInstance() {
@@ -31,6 +33,7 @@ public class CommandProvider {
             command = repository.get(commandName);
         } catch (IllegalArgumentException | NullPointerException e) {
             //TODO: Log !
+            //TODO: DON't PUT TO MAP
             command = repository.get(CommandName.WRONG_REQUEST);
         }
 

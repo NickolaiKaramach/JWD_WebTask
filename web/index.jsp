@@ -6,7 +6,7 @@
 <fmt:setBundle basename="locale"/>
 
 <!doctype html>
-<html lang="${param.lang}">
+<html lang="${param.locale}">
 
 
 <head>
@@ -41,10 +41,21 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/jsp/logIn.jsp"> <fmt:message key="locale.login.button"/> <span
-                        class="sr-only">(current)</span></a>
-            </li>
+            <c:if test="${sessionScope.id == null}">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/jsp/logIn.jsp"> <fmt:message key="locale.login.button"/> <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.id != null}">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/controller?command=logout"> <fmt:message key="locale.logout.button"/>
+                        <span
+                                class="sr-only">(current)</span></a>
+                </li>
+            </c:if>
+
             <li class="nav-item">
                 <a class="nav-link" href="/jsp/registration.jsp"> <fmt:message key="locale.register.button"/> </a>
             </li>
