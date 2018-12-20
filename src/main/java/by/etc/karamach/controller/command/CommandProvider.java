@@ -1,8 +1,6 @@
 package by.etc.karamach.controller.command;
 
-import by.etc.karamach.controller.command.impl.Registration;
-import by.etc.karamach.controller.command.impl.SignIn;
-import by.etc.karamach.controller.command.impl.WrongRequest;
+import by.etc.karamach.controller.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +13,8 @@ public class CommandProvider {
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.REGISTRATION, new Registration());
         repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
+        repository.put(CommandName.GET_TESTS, new GetTest());
+        repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
     }
 
     public static CommandProvider getInstance() {

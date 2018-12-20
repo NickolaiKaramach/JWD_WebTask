@@ -21,7 +21,7 @@
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.1/examples/navbar-static/navbar-top.css" rel="stylesheet">
 
-    <title>Hello, world!</title>
+    <title><fmt:message key="locale.index.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
@@ -47,6 +47,10 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/jsp/registration.jsp"> <fmt:message key="locale.register.button"/> </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/get/tests"> <fmt:message key="locale.tests.title"/> </a>
             </li>
         </ul>
     </div>

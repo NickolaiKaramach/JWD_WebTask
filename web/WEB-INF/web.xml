@@ -15,4 +15,9 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/get/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

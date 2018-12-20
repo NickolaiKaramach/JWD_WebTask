@@ -24,7 +24,7 @@ public class SQLUserDAO implements UserDao {
         PreparedStatement preparedStatement = null;
 
         User user = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
 
         try {
             connection = connectionPool.takeConnection();
@@ -47,9 +47,7 @@ public class SQLUserDAO implements UserDao {
             throw new DAOException("Couldn't execute query to data source", e);
         } finally {
 
-            if ((connection != null) && (preparedStatement != null)) {
-                connectionPool.closeConnection(connection, preparedStatement);
-            }
+            closeAll(connection, preparedStatement, resultSet);
         }
 
         return user;
@@ -85,16 +83,7 @@ public class SQLUserDAO implements UserDao {
         } catch (SQLException e) {
             throw new DAOException("Couldn't execute query to data source", e);
         } finally {
-            if ((connection != null) && ((preparedStatement != null) && (resultSet != null))) {
-                connectionPool.closeConnection(connection, preparedStatement, resultSet);
-            } else {
-
-                if ((connection != null) && (preparedStatement != null)) {
-                    connectionPool.closeConnection(connection, preparedStatement);
-                } else {
-                    connectionPool.closeConnection(connection);
-                }
-            }
+            closeAll(connection, preparedStatement, resultSet);
         }
 
         return user;
@@ -159,6 +148,20 @@ public class SQLUserDAO implements UserDao {
         user.setAccessLevel(accessLevel);
         user.setEmail(email);
         user.setPassword(password);
+    }
+
+
+    private void closeAll(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
+        if ((connection != null) && ((preparedStatement != null) && (resultSet != null))) {
+            connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        } else {
+
+            if ((connection != null) && (preparedStatement != null)) {
+                connectionPool.closeConnection(connection, preparedStatement);
+            } else {
+                connectionPool.closeConnection(connection);
+            }
+        }
     }
 }
 

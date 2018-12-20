@@ -13,7 +13,7 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <title>Log In page</title>
+    <title><fmt:message key="locale.login.title"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
 

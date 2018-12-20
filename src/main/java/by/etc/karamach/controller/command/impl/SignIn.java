@@ -85,7 +85,7 @@ public class SignIn implements Command {
         return user;
     }
 
-    //TODO: Equal methods
+    //TODO: Same methods
     private void redirectToJsp(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(JspPageName.USER_PAGE);

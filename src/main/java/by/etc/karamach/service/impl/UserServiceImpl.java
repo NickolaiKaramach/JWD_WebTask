@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         session.setAttribute(SessionAttributeName.PASSWORD, user.getPassword());
         session.setAttribute(SessionAttributeName.ACCESS_LEVEL, user.getAccessLevel());
         session.setAttribute(SessionAttributeName.NAME, user.getName());
+        session.setAttribute(SessionAttributeName.ID, user.getId());
 
     }
 

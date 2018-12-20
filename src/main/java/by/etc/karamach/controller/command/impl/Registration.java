@@ -90,6 +90,7 @@ public class Registration implements Command {
         return result;
     }
 
+    //TODO: Extract to object method
     private void redirectToJsp(HttpServletRequest req, HttpServletResponse resp, String jspPageName) throws CommandException {
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(jspPageName);

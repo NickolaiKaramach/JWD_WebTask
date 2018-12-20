@@ -6,4 +6,5 @@ public class SessionAttributeName {
     public static final String ACCESS_LEVEL = "accessLevel";
     public static final String NAME = "name";
     public static final String LOCALE = "locale";
+    public static final String ID = "id";
 }
