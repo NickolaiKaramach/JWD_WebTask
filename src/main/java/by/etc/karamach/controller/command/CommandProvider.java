@@ -15,6 +15,7 @@ public class CommandProvider {
         repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
         repository.put(CommandName.GET_TESTS, new GetTest());
         repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
+        repository.put(CommandName.CREATE_TEST, new CreateTest());
     }
 
     public static CommandProvider getInstance() {

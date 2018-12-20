@@ -8,4 +8,6 @@ public interface TestDAO {
     List<Test> getAllTests() throws DAOException;
 
     List<Test> getMyTests(int userId) throws DAOException;
+
+    void saveNewTest(Test test) throws DAOException;
 }

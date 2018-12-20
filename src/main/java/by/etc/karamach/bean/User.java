@@ -1,17 +1,21 @@
 package by.etc.karamach.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class User implements Serializable {
-    private static final long serialVersionUID = -4195272284077336093L;
+    private static final long serialVersionUID = 8057498312405991389L;
 
     private int id;
     private String email;
     private String password;
     private String name;
     private int accessLevel;
+
+    transient private List<Test> createdTests;
+    transient private List<Grade> grades;
 
     public User(int id, String email, String password, String name, int accessLevel) {
         this.id = id;
@@ -22,6 +26,22 @@ public class User implements Serializable {
     }
 
     public User() {
+    }
+
+    public List<Test> getCreatedTests() {
+        return createdTests;
+    }
+
+    public void setCreatedTests(List<Test> createdTests) {
+        this.createdTests = createdTests;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 
     public String getName() {
@@ -66,6 +86,7 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) {
             return true;
         }
@@ -75,15 +96,19 @@ public class User implements Serializable {
         }
 
         User user = (User) o;
-        return id == user.getId() &&
-                accessLevel == user.getAccessLevel() &&
-                Objects.equals(email, user.getEmail()) &&
-                Objects.equals(password, user.getPassword());
+
+        return getId() == user.getId() &&
+                getAccessLevel() == user.getAccessLevel() &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getCreatedTests(), user.getCreatedTests()) &&
+                Objects.equals(getGrades(), user.getGrades());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, accessLevel);
+        return Objects.hash(getId(), getEmail(), getPassword(), getName(), getAccessLevel(), getCreatedTests(), getGrades());
     }
 
     @Override
@@ -92,6 +117,7 @@ public class User implements Serializable {
                 .add("id=" + id)
                 .add("email='" + email + "'")
                 .add("password='" + password + "'")
+                .add("name='" + name + "'")
                 .add("accessLevel=" + accessLevel)
                 .toString();
     }

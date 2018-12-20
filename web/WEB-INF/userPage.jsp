@@ -15,11 +15,26 @@
 </head>
 <body>
 
-<%
-    out.println(request.getAttribute(RequestParameterName.MSG));
-%>
+<div>
+    <%
+        out.println(request.getAttribute(RequestParameterName.MSG));
+    %>
+</div>
 
-<a href="/get/tests/my"> <fmt:message key="locale.user.panmel.mytests.button"/> </a>
+<div>
+    <br>
+    <a href="/get/tests/my"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
+    <br>
+</div>
+
+<div>
+    <form action="/controller" method="post">
+        <input type="hidden" name="command" value="create_test">
+        <fmt:message key="locale.user.panel.newtest.name"/><br>
+        <input type="text" name="name">
+        <input type="submit">
+    </form>
+</div>
 
 </body>
 </html>

@@ -8,4 +8,6 @@ public interface TestService {
     List<Test> getAllTests() throws ServiceException;
 
     List<Test> getMyTests(int userId) throws ServiceException;
+
+    boolean saveNewTest(Test test) throws ServiceException;
 }

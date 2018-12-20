@@ -16,7 +16,7 @@ import java.util.List;
 public class SQLTestDAO implements TestDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final int OWNER_ID_PARAMETER_INDEX = 1;
-
+    private static final int NAME_PARAMETER_INDEX = 1;
 
     @Override
     public List<Test> getAllTests() throws DAOException {
@@ -95,8 +95,40 @@ public class SQLTestDAO implements TestDAO {
             closeAll(connection, preparedStatement, resultSet);
         }
 
-
         return tests;
+    }
+
+    @Override
+    public void saveNewTest(Test test) throws DAOException {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            preparedStatement = connection.prepareStatement(SQLQuery.SAVE_NEW_TEST);
+
+            //TODO: Extract to CONST
+            preparedStatement.setInt(2, test.getOwnerId());
+            preparedStatement.setString(1, test.getName());
+
+            preparedStatement.execute();
+
+
+        } catch (ConnectionPoolException e) {
+            //TODO: LOG !
+            throw new DAOException("Couldn't take connection from connection pool", e);
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't execute query to data source", e);
+        } finally {
+
+            if ((connection != null) && (preparedStatement != null)) {
+                connectionPool.closeConnection(connection, preparedStatement);
+            } else {
+
+                connectionPool.closeConnection(connection);
+            }
+        }
     }
 
 
@@ -112,6 +144,7 @@ public class SQLTestDAO implements TestDAO {
     }
 
     //TODO:Extract to method object
+    //TODO:Increase functionality by adding all !close! logic
     private void closeAll(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
         if ((connection != null) && ((preparedStatement != null) && (resultSet != null))) {
             connectionPool.closeConnection(connection, preparedStatement, resultSet);

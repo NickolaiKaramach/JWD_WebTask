@@ -29,6 +29,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<Test> getMyTests(int userId) throws ServiceException {
+        //TODO: Validate id
 
         List<Test> resultTest;
 
@@ -41,4 +42,21 @@ public class TestServiceImpl implements TestService {
 
         return resultTest;
     }
+
+    @Override
+    public boolean saveNewTest(Test test) throws ServiceException {
+        //TODO: Validate testName and id && if notValid return false
+        boolean result = true;
+
+        try {
+            testDAO.saveNewTest(test);
+        } catch (DAOException e) {
+            //TODO: LOG ! OR
+            throw new ServiceException(e);
+
+        }
+
+        return result;
+    }
+
 }

@@ -1,15 +1,18 @@
 package by.etc.karamach.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Question implements Serializable {
-    private static final long serialVersionUID = -8965441960212156538L;
+    private static final long serialVersionUID = -3269717093128035302L;
 
     private int id;
     private int test_id;
     private String description;
+
+    transient private List<Answer> answerList;
 
     public Question() {
     }
@@ -18,6 +21,14 @@ public class Question implements Serializable {
         this.id = id;
         this.test_id = test_id;
         this.description = description;
+    }
+
+    public List<Answer> getAnswerList() {
+        return answerList;
+    }
+
+    public void setAnswerList(List<Answer> answerList) {
+        this.answerList = answerList;
     }
 
     public int getId() {
@@ -46,6 +57,7 @@ public class Question implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) {
             return true;
         }
@@ -58,12 +70,13 @@ public class Question implements Serializable {
 
         return getId() == question.getId() &&
                 getTest_id() == question.getTest_id() &&
-                Objects.equals(getDescription(), question.getDescription());
+                Objects.equals(getDescription(), question.getDescription()) &&
+                Objects.equals(getAnswerList(), question.getAnswerList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTest_id(), getDescription());
+        return Objects.hash(getId(), getTest_id(), getDescription(), getAnswerList());
     }
 
     @Override
