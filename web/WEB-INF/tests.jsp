@@ -22,7 +22,7 @@
                 ${tests_list.name}
         </div>
         <div>
-            <a href="/get/tests/${tests_list.id}">
+            <a href="/controller?command=get_test&test_id=${tests_list.id}">
                 <fmt:message key="locale.tests.details.button"/>
             </a>
         </div>

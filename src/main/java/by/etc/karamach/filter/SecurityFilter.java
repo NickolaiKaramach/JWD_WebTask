@@ -1,7 +1,6 @@
 package by.etc.karamach.filter;
 
 import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.RequestAttributeName;
 import by.etc.karamach.controller.RequestParameterName;
 import by.etc.karamach.controller.SessionAttributeName;
 
@@ -35,10 +34,6 @@ public class SecurityFilter implements Filter {
         resp = (HttpServletResponse) servletResponse;
 
         String command = req.getParameter(RequestParameterName.COMMAND_NAME);
-
-        if (command == null) {
-            command = (String) req.getAttribute(RequestAttributeName.COMMAND_NAME);
-        }
 
         boolean continueChain = true;
 

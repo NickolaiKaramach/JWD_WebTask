@@ -28,6 +28,7 @@ public class CreateTest implements Command {
 
         HttpSession session = req.getSession(DONT_CREATE_NEW_SESSION);
 
+        //TODO validate?
         int userId = (int) session.getAttribute(SessionAttributeName.ID);
         String testName = req.getParameter(RequestParameterName.NAME);
 

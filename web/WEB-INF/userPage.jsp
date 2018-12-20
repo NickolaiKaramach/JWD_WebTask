@@ -23,7 +23,7 @@
 
 <div>
     <br>
-    <a href="/get/tests/my"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
+    <a href="/controller?command=get_my_tests"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
     <br>
 </div>
 

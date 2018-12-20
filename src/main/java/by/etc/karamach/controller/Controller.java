@@ -29,10 +29,6 @@ public final class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandName = req.getParameter(RequestParameterName.COMMAND_NAME);
 
-        if (commandName == null) {
-            commandName = (String) req.getAttribute(RequestAttributeName.COMMAND_NAME);
-        }
-
         Command command = CommandProvider.getInstance().getCommand(commandName);
 
         try {
