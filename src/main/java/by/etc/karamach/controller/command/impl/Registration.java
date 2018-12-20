@@ -7,13 +7,13 @@ import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
+import by.etc.karamach.utils.http.DispatchAssistant;
+import by.etc.karamach.utils.http.DispatchException;
+import by.etc.karamach.utils.http.SessionHelper;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 import static by.etc.karamach.controller.RequestParameterName.*;
 
@@ -31,29 +31,44 @@ public class Registration implements Command {
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         User user = createUserFromRequest(req);
+        boolean isSuccess;
 
-        boolean isSuccessful = registerUser(user);
+        try {
+
+            isSuccess = userService.register(user);
+
+        } catch (ServiceException e) {
+            //TODO: LOG !
+            throw new CommandException(e);
+        }
+
+
         String nextPage;
 
-        if (isSuccessful) {
+        if (isSuccess) {
 
-            HttpSession session = req.getSession();
+            HttpSession session = SessionHelper.createOrGetSession(req);
             userService.saveUserToSession(session, user);
 
             req.setAttribute(MSG, SUCCESSFULLY_REGISTERED);
             nextPage = JspPageName.USER_PAGE;
 
-
         } else {
+
             req.setAttribute(ERROR, ERROR_TRUE);
             req.setAttribute(ERROR_MSG, EMAIL_TAKEN);
 
             nextPage = JspPageName.REGISTER_PAGE;
         }
 
+        try {
 
-        //TODO: Doesn't redirect normally
-        redirectToJsp(req, resp, nextPage);
+            DispatchAssistant.redirectToJsp(req, resp, nextPage);
+
+        } catch (DispatchException e) {
+            //TODO: LOG !
+            throw new CommandException(e);
+        }
 
         return null;
     }
@@ -77,30 +92,4 @@ public class Registration implements Command {
         return user;
     }
 
-    private boolean registerUser(User user) throws CommandException {
-        boolean result;
-
-        try {
-            result = userService.register(user);
-        } catch (ServiceException e) {
-            //TODO: LOG !
-            throw new CommandException(e);
-        }
-
-        return result;
-    }
-
-    //TODO: Extract to object method
-    private void redirectToJsp(HttpServletRequest req, HttpServletResponse resp, String jspPageName) throws CommandException {
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher(jspPageName);
-
-        try {
-            dispatcher.forward(req, resp);
-
-        } catch (ServletException | IOException e) {
-            //TODO: LOG!
-            throw new CommandException("Something goes wrong", e);
-        }
-    }
 }

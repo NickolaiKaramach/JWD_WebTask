@@ -9,5 +9,5 @@ public interface TestService {
 
     List<Test> getMyTests(int userId) throws ServiceException;
 
-    boolean saveNewTest(Test test) throws ServiceException;
+    void saveNewTest(Test test) throws ServiceException;
 }

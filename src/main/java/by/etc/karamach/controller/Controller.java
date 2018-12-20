@@ -19,7 +19,7 @@ public final class Controller extends HttpServlet {
     private static final String ERROR_TEXT = "E R R O R";
     private static final long serialVersionUID = 86004574040274668L;
 
-    //TODO: QUESTION? LOG OR THROW NEW
+    //TODO: QUESTION? Can we group ...Name to one package?
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);

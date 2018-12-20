@@ -44,9 +44,8 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public boolean saveNewTest(Test test) throws ServiceException {
+    public void saveNewTest(Test test) throws ServiceException {
         //TODO: Validate testName and id && if notValid return false
-        boolean result = true;
 
         try {
             testDAO.saveNewTest(test);
@@ -56,7 +55,6 @@ public class TestServiceImpl implements TestService {
 
         }
 
-        return result;
     }
 
 }

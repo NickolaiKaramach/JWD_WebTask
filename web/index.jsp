@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -67,9 +67,9 @@
     </div>
 </nav>
 
-<a href="?locale=en"> <fmt:message key="locale.lang.en"/> </a>
+<a href="/?locale=en"> <fmt:message key="locale.lang.en"/> </a>
 
-<a href="?locale=ru"> <fmt:message key="locale.lang.ru"/> </a>
+<a href="/?locale=ru"> <fmt:message key="locale.lang.ru"/> </a>
 
 </body>
 </html>

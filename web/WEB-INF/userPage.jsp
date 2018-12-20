@@ -1,4 +1,4 @@
-<%@ page import="by.etc.karamach.controller.RequestParameterName" contentType="text/html;charset=UTF-8" %><%--
+<%@ page contentType="text/html;charset=UTF-8" %><%--
   Created by IntelliJ IDEA.
   User: kosoj_rus
   Date: 12/3/18
@@ -16,9 +16,9 @@
 <body>
 
 <div>
-    <%
-        out.println(request.getAttribute(RequestParameterName.MSG));
-    %>
+    <c:if test="${requestScope.msg != null}}">
+        ${requestScope.msg}
+    </c:if>
 </div>
 
 <div>

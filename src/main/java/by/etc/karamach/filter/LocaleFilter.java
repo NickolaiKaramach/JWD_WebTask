@@ -6,32 +6,29 @@ import by.etc.karamach.controller.SessionAttributeName;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(filterName = "LocaleFilter", urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
-    @Override
-    public void init(FilterConfig filterConfig) {
-
-    }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
+
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String locale = req.getParameter(RequestParameterName.LOCALE);
-
-
         if (locale != null) {
-            req.getSession().setAttribute(SessionAttributeName.LOCALE, locale);
+
+            HttpSession session = req.getSession();
+
+            session.setAttribute(SessionAttributeName.LOCALE, locale);
+
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
 
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }

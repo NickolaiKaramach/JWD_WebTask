@@ -3,6 +3,9 @@ package by.etc.karamach.filter;
 import by.etc.karamach.controller.JspPageName;
 import by.etc.karamach.controller.RequestParameterName;
 import by.etc.karamach.controller.SessionAttributeName;
+import by.etc.karamach.utils.http.DispatchAssistant;
+import by.etc.karamach.utils.http.DispatchException;
+import by.etc.karamach.utils.http.SessionHelper;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,15 +17,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"})
+
 public class SecurityFilter implements Filter {
 
-    private static final boolean DONT_CREATE_NEW_SESSION = false;
-    private Set<String> notPublicCommands = new HashSet<>();
+    private Set<String> protectedCommands = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) {
-        notPublicCommands.add("CREATE_TEST");
-        notPublicCommands.add("GET_MY_TESTS");
+        protectedCommands.add("CREATE_TEST");
+        protectedCommands.add("GET_MY_TESTS");
     }
 
     @Override
@@ -35,41 +38,31 @@ public class SecurityFilter implements Filter {
 
         String command = req.getParameter(RequestParameterName.COMMAND_NAME);
 
-        boolean continueChain = true;
+        //TODO: Question: is it normal, to use multiple return statements?
+        if ((command == null) || (!protectedCommands.contains(command))) {
+            filterChain.doFilter(req, resp);
+            return;
+        }
 
+        HttpSession existingSession = SessionHelper.getExistingSession(req);
 
-        //TODO: Simplify
-        if ((command != null) && (notPublicCommands.contains(command))) {
+        if (isGuest(existingSession)) {
 
-            HttpSession session = req.getSession(DONT_CREATE_NEW_SESSION);
-
-            boolean isNotLoggedIn =
-                    (session == null) ||
-                            (session.getAttribute(SessionAttributeName.ID) == null);
-
-            if (isNotLoggedIn) {
-                redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
-                continueChain = false;
-
+            try {
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
+            } catch (DispatchException e) {
+                throw new ServletException(e);
             }
 
+            return;
         }
 
-        if (continueChain) {
-            filterChain.doFilter(req, resp);
-        }
+        filterChain.doFilter(req, resp);
     }
 
-    private void redirectToJsp(HttpServletRequest req, HttpServletResponse resp, String jspPageName) {
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher(jspPageName);
-
-        try {
-            dispatcher.forward(req, resp);
-
-        } catch (ServletException | IOException e) {
-            //TODO: LOG!
-        }
+    private boolean isGuest(HttpSession session) {
+        return (session == null) ||
+                (session.getAttribute(SessionAttributeName.ID) == null);
     }
 
 

@@ -9,11 +9,11 @@ public class CommandProvider {
     private static final CommandProvider instance = new CommandProvider();
     private final Map<CommandName, Command> repository = new HashMap<>();
 
+    private final NoSuchCommand noSuchCommand = new NoSuchCommand();
+
     private CommandProvider() {
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.REGISTRATION, new Registration());
-        //TODO: Wrong request rename or replace logically
-        repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
         repository.put(CommandName.GET_TESTS, new GetTest());
         repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
         repository.put(CommandName.CREATE_TEST, new CreateTest());
@@ -25,16 +25,15 @@ public class CommandProvider {
     }
 
     public Command getCommand(String name) {
-        CommandName commandName = null;
-        Command command = null;
+        CommandName commandName;
+        Command command;
 
         try {
             commandName = CommandName.valueOf(name.toUpperCase());
             command = repository.get(commandName);
         } catch (IllegalArgumentException | NullPointerException e) {
             //TODO: Log !
-            //TODO: DON't PUT TO MAP
-            command = repository.get(CommandName.WRONG_REQUEST);
+            command = noSuchCommand;
         }
 
         return command;
