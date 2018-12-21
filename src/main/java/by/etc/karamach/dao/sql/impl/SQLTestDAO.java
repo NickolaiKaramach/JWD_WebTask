@@ -1,10 +1,14 @@
-package by.etc.karamach.dao.impl;
+package by.etc.karamach.dao.sql.impl;
 
 import by.etc.karamach.bean.Test;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.TestDAO;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
+import by.etc.karamach.dao.sql.query.FindAllTests;
+import by.etc.karamach.dao.sql.query.FindTestsByOwnerId;
+import by.etc.karamach.dao.sql.query.SaveNewTest;
+import by.etc.karamach.utils.sql.ResourceDestroyer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,8 +19,6 @@ import java.util.List;
 
 public class SQLTestDAO implements TestDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private static final int OWNER_ID_PARAMETER_INDEX = 1;
-    private static final int NAME_PARAMETER_INDEX = 1;
 
     @Override
     public List<Test> getAllTests() throws DAOException {
@@ -31,7 +33,7 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.FIND_ALL_TESTS);
+            preparedStatement = connection.prepareStatement(FindAllTests.statement);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -47,11 +49,14 @@ public class SQLTestDAO implements TestDAO {
         } catch (ConnectionPoolException e) {
             //TODO: LOG !
             throw new DAOException("Couldn't take connection from connection pool", e);
+
         } catch (SQLException e) {
+
             throw new DAOException("Couldn't execute query to data source", e);
+
         } finally {
 
-            closeAll(connection, preparedStatement, resultSet);
+            ResourceDestroyer.closeAll(connection, preparedStatement, resultSet);
         }
 
 
@@ -70,9 +75,9 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.FIND_TESTS_BY_OWNER_ID);
+            preparedStatement = connection.prepareStatement(FindTestsByOwnerId.statement);
 
-            preparedStatement.setInt(OWNER_ID_PARAMETER_INDEX, userId);
+            preparedStatement.setInt(FindTestsByOwnerId.OWNER_ID_INPUT_INDEX, userId);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -88,11 +93,14 @@ public class SQLTestDAO implements TestDAO {
         } catch (ConnectionPoolException e) {
             //TODO: LOG !
             throw new DAOException("Couldn't take connection from connection pool", e);
+
         } catch (SQLException e) {
+
             throw new DAOException("Couldn't execute query to data source", e);
+
         } finally {
 
-            closeAll(connection, preparedStatement, resultSet);
+            ResourceDestroyer.closeAll(connection, preparedStatement, resultSet);
         }
 
         return tests;
@@ -106,11 +114,11 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.SAVE_NEW_TEST);
+            preparedStatement = connection.prepareStatement(SaveNewTest.statement);
 
             //TODO: Extract to CONST
-            preparedStatement.setInt(2, test.getOwnerId());
-            preparedStatement.setString(1, test.getName());
+            preparedStatement.setInt(SaveNewTest.OWNER_ID_INPUT_INDEX, test.getOwnerId());
+            preparedStatement.setString(SaveNewTest.NAME_INPUT_INDEX, test.getName());
 
             preparedStatement.execute();
 
@@ -118,44 +126,27 @@ public class SQLTestDAO implements TestDAO {
         } catch (ConnectionPoolException e) {
             //TODO: LOG !
             throw new DAOException("Couldn't take connection from connection pool", e);
+
         } catch (SQLException e) {
+
             throw new DAOException("Couldn't execute query to data source", e);
+
         } finally {
 
-            if ((connection != null) && (preparedStatement != null)) {
-                connectionPool.closeConnection(connection, preparedStatement);
-            } else {
-
-                connectionPool.closeConnection(connection);
-            }
+            ResourceDestroyer.closeAll(connection, preparedStatement);
         }
     }
 
 
     private void fillTestDataFromResultSet(ResultSet resultSet, Test test) throws SQLException {
-        int id = resultSet.getInt(SQLTestTableColumn.ID);
-        String name = resultSet.getString(SQLTestTableColumn.NAME);
-        int owner_id = resultSet.getInt(SQLTestTableColumn.OWNER_ID);
+        int id = resultSet.getInt(FindAllTests.ID_RESULT_INDEX);
+        String name = resultSet.getString(FindAllTests.NAME_RESULT_INDEX);
+        int owner_id = resultSet.getInt(FindAllTests.OWNER_ID_RESULT_INDEX);
 
         test.setId(id);
         test.setName(name);
         test.setOwnerId(owner_id);
 
-    }
-
-    //TODO:Extract to method object
-    //TODO:Increase functionality by adding all !close! logic
-    private void closeAll(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
-        if ((connection != null) && ((preparedStatement != null) && (resultSet != null))) {
-            connectionPool.closeConnection(connection, preparedStatement, resultSet);
-        } else {
-
-            if ((connection != null) && (preparedStatement != null)) {
-                connectionPool.closeConnection(connection, preparedStatement);
-            } else {
-                connectionPool.closeConnection(connection);
-            }
-        }
     }
 }
 

@@ -54,6 +54,11 @@
                         <span
                                 class="sr-only">(current)</span></a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/controller?command=sign_in"> <fmt:message
+                            key="locale.user.panel.button"/> </a>
+                </li>
             </c:if>
 
             <li class="nav-item">
@@ -63,6 +68,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/controller?command=get_tests"> <fmt:message key="locale.tests.title"/> </a>
             </li>
+
         </ul>
     </div>
 </nav>

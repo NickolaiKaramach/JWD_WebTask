@@ -34,7 +34,7 @@ public class SignIn implements Command {
 
             try {
 
-                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INDEX_JSP);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_PAGE);
 
             } catch (DispatchException e) {
                 //TODO: LOG !
@@ -62,7 +62,7 @@ public class SignIn implements Command {
         }
 
         HttpSession newSession = SessionHelper.createOrGetSession(req);
-        userService.saveUserToSession(newSession, user);
+        SessionHelper.saveUserToSession(newSession, user);
 
         try {
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_PAGE);

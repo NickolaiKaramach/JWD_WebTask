@@ -35,13 +35,10 @@ public final class Controller extends HttpServlet {
             command.executeTask(req, resp);
         } catch (CommandException e) {
             //TODO: LOG !
-            //TODO: Place errormsg at jsp
+            //TODO: Place error msg at jsp
             req.setAttribute(ERROR_MSG, e.getMessage());
             redirectToErrorPage(req, resp);
         }
-//        catch (Exception e) {
-//            redirectToErrorPage(req, resp);
-//        }
     }
 
     private void redirectToErrorPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

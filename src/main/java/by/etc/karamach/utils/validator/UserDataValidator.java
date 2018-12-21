@@ -21,9 +21,14 @@ public final class UserDataValidator {
         return (name != null) && (!name.isEmpty());
     }
 
+    public static boolean isValidUserId(int id) {
+        return (id > 0);
+    }
+
     public static boolean isValidUserData(User user) {
-        return ((isValidPassword(user.getPassword()) &&
-                isValidEmail(user.getEmail())) &&
-                (isValidName(user.getName())));
+        boolean validPassword = isValidPassword(user.getPassword());
+        boolean validEmail = isValidEmail(user.getEmail());
+        boolean validName = isValidName(user.getName());
+        return ((validPassword && validEmail) && validName);
     }
 }

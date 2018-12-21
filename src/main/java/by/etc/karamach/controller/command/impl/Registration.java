@@ -31,11 +31,13 @@ public class Registration implements Command {
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         User user = createUserFromRequest(req);
+
         boolean isSuccess;
 
         try {
 
             isSuccess = userService.register(user);
+            user = userService.signIn(user.getEmail(), user.getPassword());
 
         } catch (ServiceException e) {
             //TODO: LOG !
@@ -45,10 +47,29 @@ public class Registration implements Command {
 
         String nextPage;
 
+
+        nextPage = formResponse(req, user, isSuccess);
+
+        try {
+
+            DispatchAssistant.redirectToJsp(req, resp, nextPage);
+
+        } catch (DispatchException e) {
+            //TODO: LOG !
+            throw new CommandException(e);
+        }
+
+        return null;
+    }
+
+    private String formResponse(HttpServletRequest req, User user, boolean isSuccess) {
+        String nextPage;
+
         if (isSuccess) {
 
+
             HttpSession session = SessionHelper.createOrGetSession(req);
-            userService.saveUserToSession(session, user);
+            SessionHelper.saveUserToSession(session, user);
 
             req.setAttribute(MSG, SUCCESSFULLY_REGISTERED);
             nextPage = JspPageName.USER_PAGE;
@@ -61,16 +82,7 @@ public class Registration implements Command {
             nextPage = JspPageName.REGISTER_PAGE;
         }
 
-        try {
-
-            DispatchAssistant.redirectToJsp(req, resp, nextPage);
-
-        } catch (DispatchException e) {
-            //TODO: LOG !
-            throw new CommandException(e);
-        }
-
-        return null;
+        return nextPage;
     }
 
     private User createUserFromRequest(HttpServletRequest req) {

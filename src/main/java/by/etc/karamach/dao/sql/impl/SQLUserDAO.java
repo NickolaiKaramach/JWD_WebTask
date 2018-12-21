@@ -1,10 +1,14 @@
-package by.etc.karamach.dao.impl;
+package by.etc.karamach.dao.sql.impl;
 
 import by.etc.karamach.bean.User;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.UserDao;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
+import by.etc.karamach.dao.sql.query.FindUserByEmail;
+import by.etc.karamach.dao.sql.query.FindUserByLoginAndPassword;
+import by.etc.karamach.dao.sql.query.SaveUser;
+import by.etc.karamach.utils.sql.ResourceDestroyer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +17,7 @@ import java.sql.SQLException;
 
 public class SQLUserDAO implements UserDao {
 
-    private static final int LOGIN_PARAMETER_INDEX = 1;
-    private static final int PASSWORD_PARAMETER_INDEX = 2;
+
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
@@ -28,9 +31,9 @@ public class SQLUserDAO implements UserDao {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN);
+            preparedStatement = connection.prepareStatement(FindUserByEmail.statement);
 
-            preparedStatement.setString(LOGIN_PARAMETER_INDEX, email);
+            preparedStatement.setString(FindUserByEmail.LOGIN_INPUT_INDEX, email);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -42,12 +45,16 @@ public class SQLUserDAO implements UserDao {
 
         } catch (ConnectionPoolException e) {
             //TODO: LOG !
+
             throw new DAOException("Couldn't take connection from connection pool", e);
+
         } catch (SQLException e) {
+
             throw new DAOException("Couldn't execute query to data source", e);
+
         } finally {
 
-            closeAll(connection, preparedStatement, resultSet);
+            ResourceDestroyer.closeAll(connection, preparedStatement, resultSet);
         }
 
         return user;
@@ -64,10 +71,10 @@ public class SQLUserDAO implements UserDao {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN_AND_PASSWORD);
+            preparedStatement = connection.prepareStatement(FindUserByLoginAndPassword.statement);
 
-            preparedStatement.setString(LOGIN_PARAMETER_INDEX, email);
-            preparedStatement.setString(PASSWORD_PARAMETER_INDEX, password);
+            preparedStatement.setString(FindUserByLoginAndPassword.LOGIN_INPUT_INDEX, email);
+            preparedStatement.setString(FindUserByLoginAndPassword.PASSWORD_INPUT_INDEX, password);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -80,25 +87,28 @@ public class SQLUserDAO implements UserDao {
         } catch (ConnectionPoolException e) {
             //TODO: LOG !
             throw new DAOException("Couldn't take connection from connection pool", e);
+
         } catch (SQLException e) {
+
             throw new DAOException("Couldn't execute query to data source", e);
+
         } finally {
-            closeAll(connection, preparedStatement, resultSet);
+
+            ResourceDestroyer.closeAll(connection, preparedStatement, resultSet);
         }
 
         return user;
     }
 
     @Override
-    public boolean register(User user) throws DAOException {
-        boolean isSuccessful = false;
+    public void register(User user) throws DAOException {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.SAVE_USER_AS_REGISTERED);
+            preparedStatement = connection.prepareStatement(SaveUser.statement);
 
             int id = user.getId();
             int accessLevel = user.getAccessLevel();
@@ -107,15 +117,14 @@ public class SQLUserDAO implements UserDao {
             String password = user.getPassword();
             String name = user.getName();
 
-            preparedStatement.setInt(SQLUserTableColumn.ID, id);
-            preparedStatement.setInt(SQLUserTableColumn.ACCESS_LEVEL, accessLevel);
+            preparedStatement.setInt(SaveUser.ID_INPUT_INDEX, id);
+            preparedStatement.setInt(SaveUser.ACCESS_LEVEL_INPUT_INDEX, accessLevel);
 
-            preparedStatement.setString(SQLUserTableColumn.EMAIL, email);
-            preparedStatement.setString(SQLUserTableColumn.PASSWORD, password);
-            preparedStatement.setString(SQLUserTableColumn.NAME, name);
+            preparedStatement.setString(SaveUser.EMAIL_INPUT_INDEX, email);
+            preparedStatement.setString(SaveUser.PASSWORD_INPUT_INDEX, password);
+            preparedStatement.setString(SaveUser.NAME_INPUT_INDEX, name);
 
             preparedStatement.executeUpdate();
-            isSuccessful = true;
 
         } catch (ConnectionPoolException e) {
 
@@ -127,41 +136,27 @@ public class SQLUserDAO implements UserDao {
 
         } finally {
 
-            if ((connection != null) && (preparedStatement != null)) {
-                connectionPool.closeConnection(connection, preparedStatement);
-            } else {
-
-                connectionPool.closeConnection(connection);
-            }
+            ResourceDestroyer.closeAll(connection, preparedStatement);
         }
-
-        return isSuccessful;
     }
 
     private void fillUserWithResultSet(User user, ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt(SQLUserTableColumn.ID);
-        int accessLevel = resultSet.getInt(SQLUserTableColumn.ACCESS_LEVEL);
-        String email = resultSet.getString(SQLUserTableColumn.EMAIL);
-        String password = resultSet.getString(SQLUserTableColumn.PASSWORD);
+
+        //TODO: Use different INDEXES, from different classes
+        int idIndex = FindUserByLoginAndPassword.ID_RESULT_INDEX;
+        int accessLevelIndex = FindUserByLoginAndPassword.ACCESS_LEVEL_RESULT_INDEX;
+        int emailIndex = FindUserByLoginAndPassword.EMAIL_RESULT_INDEX;
+        int passwordIndex = FindUserByLoginAndPassword.PASSWORD_RESULT_INDEX;
+
+        int id = resultSet.getInt(idIndex);
+        int accessLevel = resultSet.getInt(accessLevelIndex);
+        String email = resultSet.getString(emailIndex);
+        String password = resultSet.getString(passwordIndex);
 
         user.setId(id);
         user.setAccessLevel(accessLevel);
         user.setEmail(email);
         user.setPassword(password);
-    }
-
-
-    private void closeAll(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
-        if ((connection != null) && ((preparedStatement != null) && (resultSet != null))) {
-            connectionPool.closeConnection(connection, preparedStatement, resultSet);
-        } else {
-
-            if ((connection != null) && (preparedStatement != null)) {
-                connectionPool.closeConnection(connection, preparedStatement);
-            } else {
-                connectionPool.closeConnection(connection);
-            }
-        }
     }
 }
 
