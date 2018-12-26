@@ -25,8 +25,8 @@ public final class DispatchAssistant {
 
         } catch (ServletException | IOException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new DispatchException(e);
         }

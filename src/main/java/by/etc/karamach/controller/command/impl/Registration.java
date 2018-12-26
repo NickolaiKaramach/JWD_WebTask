@@ -44,8 +44,8 @@ public class Registration implements Command {
 
         } catch (ServiceException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new CommandException(e);
         }
@@ -62,8 +62,8 @@ public class Registration implements Command {
 
         } catch (DispatchException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new CommandException(e);
         }

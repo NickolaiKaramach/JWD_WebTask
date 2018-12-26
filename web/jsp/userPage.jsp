@@ -27,14 +27,14 @@
     <br>
 </div>
 
-<div>
-    <form action="/controller" method="post">
-        <input type="hidden" name="command" value="create_test">
-        <fmt:message key="locale.user.panel.newtest.name"/><br>
-        <input type="text" name="name">
-        <input type="submit">
-    </form>
-</div>
+<%--<div>--%>
+<%--<form action="/controller" method="post">--%>
+<%--<input type="hidden" name="command" value="create_test">--%>
+<%--<fmt:message key="locale.user.panel.newtest.name"/><br>--%>
+<%--<input type="text" name="name">--%>
+<%--<input type="submit">--%>
+<%--</form>--%>
+<%--</div>--%>
 
 </body>
 </html>

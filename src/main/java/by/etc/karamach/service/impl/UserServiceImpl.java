@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
 
         } catch (DAOException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new ServiceException("Cannot perform action with data source", e);
         }
@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
             user = userDAO.signIn(email, password);
         } catch (DAOException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new ServiceException("Cannot perform action with data source", e);
         }

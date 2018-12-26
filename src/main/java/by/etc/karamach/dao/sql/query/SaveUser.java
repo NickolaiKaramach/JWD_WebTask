@@ -1,7 +1,7 @@
 package by.etc.karamach.dao.sql.query;
 
 public final class SaveUser {
-    public static final String statement
+    public static final String STATEMENT
             =
             "INSERT INTO " +
                     "users " +

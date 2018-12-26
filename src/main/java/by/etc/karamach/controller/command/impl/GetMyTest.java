@@ -42,8 +42,8 @@ public class GetMyTest implements Command {
 
             } catch (DispatchException e) {
 
-                logger.error(e.getMessage());
-                logger.error(e.getStackTrace().toString());
+                logger.error(e.getMessage(), e);
+
 
                 throw new CommandException(e);
             }
@@ -64,8 +64,8 @@ public class GetMyTest implements Command {
 
         } catch (ServiceException | DispatchException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new CommandException(e);
         }

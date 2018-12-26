@@ -10,4 +10,6 @@ public interface TestService {
     List<Test> getMyTests(int userId) throws ServiceException;
 
     void saveNewTest(Test test) throws ServiceException;
+
+    void deleteTest(int userId, int testId) throws ServiceException;
 }

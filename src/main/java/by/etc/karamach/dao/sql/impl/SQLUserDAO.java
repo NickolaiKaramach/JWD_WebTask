@@ -35,7 +35,7 @@ public class SQLUserDAO implements UserDao {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(FindUserByEmail.statement);
+            preparedStatement = connection.prepareStatement(FindUserByEmail.STATEMENT);
 
             preparedStatement.setString(FindUserByEmail.LOGIN_INPUT_INDEX, email);
 
@@ -49,15 +49,15 @@ public class SQLUserDAO implements UserDao {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new DAOException("Couldn't execute query to data source", e);
 
@@ -81,7 +81,7 @@ public class SQLUserDAO implements UserDao {
         try {
 
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(FindUserByLoginAndPassword.statement);
+            preparedStatement = connection.prepareStatement(FindUserByLoginAndPassword.STATEMENT);
 
             preparedStatement.setString(FindUserByLoginAndPassword.LOGIN_INPUT_INDEX, email);
             preparedStatement.setString(FindUserByLoginAndPassword.PASSWORD_INPUT_INDEX, password);
@@ -96,15 +96,15 @@ public class SQLUserDAO implements UserDao {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new DAOException("Couldn't execute query to data source", e);
 
@@ -124,7 +124,7 @@ public class SQLUserDAO implements UserDao {
 
         try {
             connection = connectionPool.takeConnection();
-            preparedStatement = connection.prepareStatement(SaveUser.statement);
+            preparedStatement = connection.prepareStatement(SaveUser.STATEMENT);
 
             int id = user.getId();
             int accessLevel = user.getAccessLevel();
@@ -163,16 +163,19 @@ public class SQLUserDAO implements UserDao {
         int accessLevelIndex = FindUserByLoginAndPassword.ACCESS_LEVEL_RESULT_INDEX;
         int emailIndex = FindUserByLoginAndPassword.EMAIL_RESULT_INDEX;
         int passwordIndex = FindUserByLoginAndPassword.PASSWORD_RESULT_INDEX;
+        int nameIndex = FindUserByLoginAndPassword.NAME_RESULT_INDEX;
 
         int id = resultSet.getInt(idIndex);
         int accessLevel = resultSet.getInt(accessLevelIndex);
         String email = resultSet.getString(emailIndex);
         String password = resultSet.getString(passwordIndex);
+        String name = resultSet.getString(nameIndex);
 
         user.setId(id);
         user.setAccessLevel(accessLevel);
         user.setEmail(email);
         user.setPassword(password);
+        user.setName(name);
     }
 }
 

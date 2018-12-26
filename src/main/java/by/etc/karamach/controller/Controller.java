@@ -39,8 +39,8 @@ public final class Controller extends HttpServlet {
             command.executeTask(req, resp);
         } catch (CommandException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             //TODO: Place error msg at jsp
             req.setAttribute(ERROR_MSG, e.getMessage());

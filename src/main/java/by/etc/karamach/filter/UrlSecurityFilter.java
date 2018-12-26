@@ -1,7 +1,6 @@
 package by.etc.karamach.filter;
 
 import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.RequestParameterName;
 import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.utils.http.DispatchAssistant;
 import by.etc.karamach.utils.http.DispatchException;
@@ -16,17 +15,14 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "UrlSecurityFilter", urlPatterns = {"/*"})
+public class UrlSecurityFilter implements Filter {
 
-public class SecurityFilter implements Filter {
-
-    private Set<String> protectedCommands = new HashSet<>();
+    private Set<String> protectedUrl = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) {
-        protectedCommands.add("CREATE_TEST");
-        protectedCommands.add("GET_MY_TESTS");
-        protectedCommands.add("REDIRECT");
+        protectedUrl.add("/jsp/userPage.jsp");
     }
 
     @Override
@@ -37,34 +33,25 @@ public class SecurityFilter implements Filter {
         req = (HttpServletRequest) servletRequest;
         resp = (HttpServletResponse) servletResponse;
 
-        String command = req.getParameter(RequestParameterName.COMMAND_NAME);
-
-        //TODO: Question: is it normal, to use multiple return statements?
-        if ((command == null) || (!protectedCommands.contains(command))) {
+        if (!protectedUrl.contains(req.getRequestURI())) {
             filterChain.doFilter(req, resp);
             return;
         }
 
         HttpSession existingSession = SessionHelper.getExistingSession(req);
+        String userName = (String) existingSession.getAttribute(SessionAttributeName.NAME);
 
-        if (isGuest(existingSession)) {
-
+        if (userName == null) {
             try {
                 DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
             } catch (DispatchException e) {
                 throw new ServletException(e);
             }
 
-            return;
+        } else {
+            filterChain.doFilter(req, resp);
         }
 
-        filterChain.doFilter(req, resp);
+
     }
-
-    private boolean isGuest(HttpSession session) {
-        return (session == null) ||
-                (session.getAttribute(SessionAttributeName.ID) == null);
-    }
-
-
 }

@@ -43,8 +43,8 @@ public class ConnectionPool {
             initPoolData();
         } catch (NumberFormatException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             poolSize = DEFAULT_POOL_SIZE;
         }
@@ -81,22 +81,22 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
         }
 
         try {
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
         }
 
         try {
             statement.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
         }
     }
 
@@ -104,8 +104,8 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
         }
     }
 
@@ -113,15 +113,15 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
         }
 
         try {
             statement.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
         }
     }
 
@@ -144,15 +144,15 @@ public class ConnectionPool {
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new ConnectionPoolRuntimeException("SQL Exception during initializing Connection Pool!");
 
         } catch (ClassNotFoundException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new ConnectionPoolRuntimeException("Can't find driver class for database!");
         }
@@ -177,8 +177,8 @@ public class ConnectionPool {
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
         }
     }

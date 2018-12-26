@@ -16,13 +16,13 @@
 </head>
 <body>
 
-<c:forEach items="${requestScope.tests}" var="tests_list">
+<c:forEach items="${requestScope.tests}" var="currentTest">
     <ul>
         <div>
-                ${tests_list.name}
+                ${currentTest.name}
         </div>
         <div>
-            <a href="/controller?command=get_test&test_id=${tests_list.id}">
+            <a href="#">
                 <fmt:message key="locale.tests.details.button"/>
             </a>
         </div>

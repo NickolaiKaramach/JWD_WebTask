@@ -21,8 +21,8 @@
                 ${test.name}
         </div>
         <div>
-            <a href="/controller?command=get_test&test_id=${test.id}">
-                <fmt:message key="locale.tests.details.button"/>
+            <a href="/controller?command=delete_test&test_id=${test.id}">
+                <fmt:message key="locale.user.panel.mytest.delete"/>
             </a>
         </div>
     </ul>

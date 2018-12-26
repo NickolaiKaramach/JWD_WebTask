@@ -34,7 +34,7 @@
     <!-- Filter Security -->
     <filter>
         <filter-name>SecurityFilter</filter-name>
-        <filter-class>by.etc.karamach.filter.SecurityFilter</filter-class>
+        <filter-class>by.etc.karamach.filter.CommandSecurityFilter</filter-class>
 
     </filter>
 

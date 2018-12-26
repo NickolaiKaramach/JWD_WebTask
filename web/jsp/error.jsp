@@ -13,9 +13,9 @@
 <%
     String str = (String) request.getAttribute(RequestParameterName.ERROR_MSG);
     if (str != null) {
-        out.println("<h1>" + str + "</h1>");
+        out.println("<h3>" + str + "</h3>");
     } else {
-        out.println("<h1>UNKNOWN E R R O R</h1>");
+        out.println("<h3>UNKNOWN E R R O R</h3>");
     }
 
 %>

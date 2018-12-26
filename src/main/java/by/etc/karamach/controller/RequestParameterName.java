@@ -9,7 +9,7 @@ public final class RequestParameterName {
     public static final String ERROR = "err";
     public static final String MSG = "msg";
     public static final String LOCALE = "locale";
-
+    public static final String TEST_ID = "test_id";
 
     private RequestParameterName() {
     }

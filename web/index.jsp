@@ -56,7 +56,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/controller?command=sign_in"> <fmt:message
+                    <a class="nav-link" href="/jsp/userPage.jsp"> <fmt:message
                             key="locale.user.panel.button"/> </a>
                 </li>
             </c:if>

@@ -26,8 +26,8 @@ public class TestServiceImpl implements TestService {
             resultTest = testDAO.getAllTests();
         } catch (DAOException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new ServiceException(e);
         }
@@ -50,9 +50,6 @@ public class TestServiceImpl implements TestService {
         try {
             resultTest = testDAO.getMyTests(userId);
         } catch (DAOException e) {
-
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
 
             throw new ServiceException(e);
         }
@@ -78,13 +75,35 @@ public class TestServiceImpl implements TestService {
             testDAO.saveNewTest(test);
         } catch (DAOException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
-
             throw new ServiceException(e);
 
         }
 
     }
 
+    @Override
+    public void deleteTest(int userId, int testId) throws ServiceException {
+        boolean isValidData =
+                UserDataValidator.isValidUserId(userId) &&
+                        TestDataValidator.isValidTestId(testId);
+
+        if (!isValidData) {
+
+            throw new ServiceException("Cannot delete test with giving data");
+        }
+
+        try {
+            Test test = testDAO.getTest(testId);
+
+            if ((test == null) || (test.getOwnerId() != userId)) {
+                throw new ServiceException("Cannot delete test using your account");
+            }
+
+            testDAO.deleteTest(testId);
+
+
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

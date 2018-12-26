@@ -1,7 +1,7 @@
 package by.etc.karamach.dao.sql.query;
 
 public final class FindAllTests {
-    public static final String statement
+    public static final String STATEMENT
             = "SELECT " +
             "tests.id, tests.name, tests.owner_id " +
             "FROM " +

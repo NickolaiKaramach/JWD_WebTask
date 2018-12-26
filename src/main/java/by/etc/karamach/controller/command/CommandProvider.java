@@ -24,6 +24,7 @@ public class CommandProvider {
         repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
         repository.put(CommandName.CREATE_TEST, new CreateTest());
         repository.put(CommandName.LOGOUT, new Logout());
+        repository.put(CommandName.DELETE_TEST, new DeleteTest());
     }
 
     public static CommandProvider getInstance() {

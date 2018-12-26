@@ -2,7 +2,6 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.bean.User;
 import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.service.ServiceException;
@@ -33,25 +32,6 @@ public class SignIn implements Command {
 
         HttpSession session = SessionHelper.getExistingSession(req);
 
-        if ((session != null) &&
-                (session.getAttribute(SessionAttributeName.ID) != null)) {
-
-            try {
-
-                DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_PAGE);
-
-            } catch (DispatchException e) {
-
-                logger.error(e.getMessage());
-                logger.error(e.getStackTrace().toString());
-
-                throw new CommandException(e);
-            }
-
-            return null;
-        }
-
-
         User user = takeUser(req);
 
         if (user == null) {
@@ -66,8 +46,8 @@ public class SignIn implements Command {
 
             } catch (DispatchException e) {
 
-                logger.error(e.getMessage());
-                logger.error(e.getStackTrace().toString());
+                logger.error(e.getMessage(), e);
+
 
                 throw new CommandException(e);
             }
@@ -105,8 +85,8 @@ public class SignIn implements Command {
 
         } catch (ServiceException e) {
 
-            logger.error(e.getMessage());
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
+
 
             throw new CommandException(e);
         }
