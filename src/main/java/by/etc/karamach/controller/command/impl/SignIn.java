@@ -11,6 +11,8 @@ import by.etc.karamach.service.UserService;
 import by.etc.karamach.utils.http.DispatchAssistant;
 import by.etc.karamach.utils.http.DispatchException;
 import by.etc.karamach.utils.http.SessionHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,8 @@ import javax.servlet.http.HttpSession;
 import static by.etc.karamach.controller.RequestParameterName.*;
 
 public class SignIn implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
 
     private static final String INVALID_PASSWORD = "Invalid login or password";
 
@@ -37,7 +41,10 @@ public class SignIn implements Command {
                 DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_PAGE);
 
             } catch (DispatchException e) {
-                //TODO: LOG !
+
+                logger.error(e.getMessage());
+                logger.error(e.getStackTrace().toString());
+
                 throw new CommandException(e);
             }
 
@@ -52,9 +59,16 @@ public class SignIn implements Command {
             req.setAttribute(MSG, INVALID_PASSWORD);
 
             try {
+
+
+                //TODO: Show error to user
                 DispatchAssistant.redirectToJsp(req, resp, JspPageName.ERROR_PAGE);
+
             } catch (DispatchException e) {
-                //TODO: LOG !
+
+                logger.error(e.getMessage());
+                logger.error(e.getStackTrace().toString());
+
                 throw new CommandException(e);
             }
 
@@ -90,7 +104,10 @@ public class SignIn implements Command {
             user = userService.signIn(email, password);
 
         } catch (ServiceException e) {
-            //TODO: LOG!
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new CommandException(e);
         }
 

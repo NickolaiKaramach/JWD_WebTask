@@ -9,6 +9,8 @@ import by.etc.karamach.dao.sql.query.FindUserByEmail;
 import by.etc.karamach.dao.sql.query.FindUserByLoginAndPassword;
 import by.etc.karamach.dao.sql.query.SaveUser;
 import by.etc.karamach.utils.sql.ResourceDestroyer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +21,8 @@ public class SQLUserDAO implements UserDao {
 
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public User findUserByEmail(String email) throws DAOException {
@@ -44,11 +48,16 @@ public class SQLUserDAO implements UserDao {
             }
 
         } catch (ConnectionPoolException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
 
             throw new DAOException("Couldn't execute query to data source", e);
 
@@ -70,6 +79,7 @@ public class SQLUserDAO implements UserDao {
         ResultSet resultSet = null;
 
         try {
+
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(FindUserByLoginAndPassword.statement);
 
@@ -85,10 +95,16 @@ public class SQLUserDAO implements UserDao {
             }
 
         } catch (ConnectionPoolException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
 
             throw new DAOException("Couldn't execute query to data source", e);
 

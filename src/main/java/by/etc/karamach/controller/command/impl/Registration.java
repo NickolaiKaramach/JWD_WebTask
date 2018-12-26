@@ -10,6 +10,8 @@ import by.etc.karamach.service.UserService;
 import by.etc.karamach.utils.http.DispatchAssistant;
 import by.etc.karamach.utils.http.DispatchException;
 import by.etc.karamach.utils.http.SessionHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,7 @@ public class Registration implements Command {
 
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
     private static final boolean ERROR_TRUE = true;
+    private static final Logger logger = LogManager.getLogger();
 
 
     @Override
@@ -40,7 +43,10 @@ public class Registration implements Command {
             user = userService.signIn(user.getEmail(), user.getPassword());
 
         } catch (ServiceException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new CommandException(e);
         }
 
@@ -55,7 +61,10 @@ public class Registration implements Command {
             DispatchAssistant.redirectToJsp(req, resp, nextPage);
 
         } catch (DispatchException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new CommandException(e);
         }
 

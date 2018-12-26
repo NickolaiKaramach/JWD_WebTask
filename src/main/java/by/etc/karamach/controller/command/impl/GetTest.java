@@ -10,6 +10,8 @@ import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
 import by.etc.karamach.utils.http.DispatchAssistant;
 import by.etc.karamach.utils.http.DispatchException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import java.util.List;
 public class GetTest implements Command {
 
     private TestService testService = ServiceFactory.getInstance().getTestService();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -31,7 +34,10 @@ public class GetTest implements Command {
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.TESTS_PAGE);
 
         } catch (ServiceException | DispatchException e) {
-            //TODO: Log !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new CommandException(e);
         }
 

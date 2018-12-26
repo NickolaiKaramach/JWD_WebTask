@@ -1,5 +1,8 @@
 package by.etc.karamach.dao.pool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.Locale;
 import java.util.Map;
@@ -9,6 +12,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public class ConnectionPool {
+
+    private static final Logger logger = LogManager.getLogger();
+
+
     private static final int DEFAULT_POOL_SIZE = 5;
     private static final ConnectionPool instance = new ConnectionPool();
 
@@ -35,7 +42,10 @@ public class ConnectionPool {
             this.poolSize = Integer.parseInt(poolSizeProperty);
             initPoolData();
         } catch (NumberFormatException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             poolSize = DEFAULT_POOL_SIZE;
         }
 
@@ -71,19 +81,22 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            //TODO: LOG !
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
         }
 
         try {
             resultSet.close();
         } catch (SQLException e) {
-            //TODO: LOG !
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
         }
 
         try {
             statement.close();
         } catch (SQLException e) {
-            //TODO: LOG !
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
         }
     }
 
@@ -91,7 +104,8 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            //TODO: LOG!
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
         }
     }
 
@@ -99,13 +113,15 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            //TODO: LOG !
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
         }
 
         try {
             statement.close();
         } catch (SQLException e) {
-            //TODO: LOG !
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
         }
     }
 
@@ -125,10 +141,19 @@ public class ConnectionPool {
 
                 connectionQueue.add(pooledConnection);
             }
+
         } catch (SQLException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new ConnectionPoolRuntimeException("SQL Exception during initializing Connection Pool!");
+
         } catch (ClassNotFoundException e) {
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new ConnectionPoolRuntimeException("Can't find driver class for database!");
         }
     }
@@ -146,10 +171,15 @@ public class ConnectionPool {
 
     private void clearConnectionQueue() {
         try {
+
             closeConnectionsQueue(givenAwayConnectionQueue);
             closeConnectionsQueue(connectionQueue);
+
         } catch (SQLException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
         }
     }
 
@@ -214,7 +244,7 @@ public class ConnectionPool {
 
             if (connection.isReadOnly()) {
                 //TODO: Do we need to extract it to constants?
-                connection.setReadOnly(/*this one*/false);
+                connection.setReadOnly(false);
             }
 
             if (!givenAwayConnectionQueue.remove(this)) {

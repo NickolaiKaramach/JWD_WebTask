@@ -1,5 +1,8 @@
 package by.etc.karamach.utils.http;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public final class DispatchAssistant {
+    private static final Logger logger = LogManager.getLogger();
 
     private DispatchAssistant() {
     }
@@ -20,7 +24,10 @@ public final class DispatchAssistant {
             dispatcher.forward(req, resp);
 
         } catch (ServletException | IOException e) {
-            //TODO: LOG!
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new DispatchException(e);
         }
     }

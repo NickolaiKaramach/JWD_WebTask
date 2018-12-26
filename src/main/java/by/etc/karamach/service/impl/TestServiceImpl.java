@@ -8,12 +8,15 @@ import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.TestService;
 import by.etc.karamach.utils.validator.TestDataValidator;
 import by.etc.karamach.utils.validator.UserDataValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class TestServiceImpl implements TestService {
 
     private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public List<Test> getAllTests() throws ServiceException {
@@ -22,7 +25,10 @@ public class TestServiceImpl implements TestService {
         try {
             resultTest = testDAO.getAllTests();
         } catch (DAOException e) {
-            //TODO: Log !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new ServiceException(e);
         }
 
@@ -44,7 +50,10 @@ public class TestServiceImpl implements TestService {
         try {
             resultTest = testDAO.getMyTests(userId);
         } catch (DAOException e) {
-            //TODO: Log !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new ServiceException(e);
         }
 
@@ -68,7 +77,10 @@ public class TestServiceImpl implements TestService {
         try {
             testDAO.saveNewTest(test);
         } catch (DAOException e) {
-            //TODO: LOG ! OR
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new ServiceException(e);
 
         }

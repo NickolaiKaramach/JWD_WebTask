@@ -9,6 +9,8 @@ import by.etc.karamach.dao.sql.query.FindAllTests;
 import by.etc.karamach.dao.sql.query.FindTestsByOwnerId;
 import by.etc.karamach.dao.sql.query.SaveNewTest;
 import by.etc.karamach.utils.sql.ResourceDestroyer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +21,8 @@ import java.util.List;
 
 public class SQLTestDAO implements TestDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public List<Test> getAllTests() throws DAOException {
@@ -47,10 +51,15 @@ public class SQLTestDAO implements TestDAO {
             }
 
         } catch (ConnectionPoolException e) {
-            //TODO: LOG !
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
 
             throw new DAOException("Couldn't execute query to data source", e);
 
@@ -91,10 +100,16 @@ public class SQLTestDAO implements TestDAO {
             }
 
         } catch (ConnectionPoolException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
 
             throw new DAOException("Couldn't execute query to data source", e);
 
@@ -116,7 +131,6 @@ public class SQLTestDAO implements TestDAO {
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SaveNewTest.statement);
 
-            //TODO: Extract to CONST
             preparedStatement.setInt(SaveNewTest.OWNER_ID_INPUT_INDEX, test.getOwnerId());
             preparedStatement.setString(SaveNewTest.NAME_INPUT_INDEX, test.getName());
 
@@ -124,10 +138,16 @@ public class SQLTestDAO implements TestDAO {
 
 
         } catch (ConnectionPoolException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
 
             throw new DAOException("Couldn't execute query to data source", e);
 

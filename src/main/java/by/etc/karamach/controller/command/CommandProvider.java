@@ -1,11 +1,17 @@
 package by.etc.karamach.controller.command;
 
 import by.etc.karamach.controller.command.impl.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandProvider {
+
+    private static final Logger logger = LogManager.getLogger();
+
+
     private static final CommandProvider instance = new CommandProvider();
     private final Map<CommandName, Command> repository = new HashMap<>();
 
@@ -32,7 +38,9 @@ public class CommandProvider {
             commandName = CommandName.valueOf(name.toUpperCase());
             command = repository.get(commandName);
         } catch (IllegalArgumentException | NullPointerException e) {
-            //TODO: Log !
+
+            logger.warn("No such command: " + name);
+
             command = noSuchCommand;
         }
 

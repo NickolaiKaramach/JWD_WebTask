@@ -26,6 +26,7 @@ public class SecurityFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         protectedCommands.add("CREATE_TEST");
         protectedCommands.add("GET_MY_TESTS");
+        protectedCommands.add("REDIRECT");
     }
 
     @Override

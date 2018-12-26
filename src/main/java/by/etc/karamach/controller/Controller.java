@@ -3,6 +3,8 @@ package by.etc.karamach.controller;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.controller.command.CommandProvider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +19,9 @@ public final class Controller extends HttpServlet {
 
     private static final String TEXT_HTML = "text/html";
     private static final String ERROR_TEXT = "E R R O R";
-    private static final long serialVersionUID = 86004574040274668L;
+    private static final long serialVersionUID = 4237191862072584563L;
+
+    private static final transient Logger logger = LogManager.getLogger();
 
     //TODO: QUESTION? Can we group ...Name to one package?
     @Override
@@ -34,7 +38,10 @@ public final class Controller extends HttpServlet {
         try {
             command.executeTask(req, resp);
         } catch (CommandException e) {
-            //TODO: LOG !
+
+            logger.error(e.getMessage());
+            logger.error(e.getStackTrace().toString());
+
             //TODO: Place error msg at jsp
             req.setAttribute(ERROR_MSG, e.getMessage());
             redirectToErrorPage(req, resp);
