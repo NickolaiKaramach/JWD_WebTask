@@ -92,18 +92,64 @@ public class TestServiceImpl implements TestService {
             throw new ServiceException("Cannot delete test with giving data");
         }
 
-        try {
-            Test test = testDAO.getTest(testId);
+        if (isTestOwner(userId, testId)) {
+            throw new ServiceException("Cannot delete test using your account");
+        }
 
-            if ((test == null) || (test.getOwnerId() != userId)) {
-                throw new ServiceException("Cannot delete test using your account");
-            }
+
+        try {
 
             testDAO.deleteTest(testId);
-
 
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public boolean isTestOwner(int userId, int testId) throws ServiceException {
+
+        boolean isValidData =
+                UserDataValidator.isValidUserId(userId) &&
+                        TestDataValidator.isValidTestId(testId);
+
+        if (!isValidData) {
+
+            throw new ServiceException("Cannot delete test with giving data");
+        }
+
+        Test test;
+
+        try {
+
+            test = testDAO.getTest(testId);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+        }
+
+        return ((test != null) && (test.getOwnerId() == userId));
+    }
+
+    @Override
+    public Test getTestById(int testId) throws ServiceException {
+        if (!TestDataValidator.isValidTestId(testId)) {
+
+            throw new ServiceException("Cannot delete test with giving data");
+        }
+
+        Test test;
+
+        try {
+
+            test = testDAO.getTest(testId);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+        }
+
+        return test;
     }
 }

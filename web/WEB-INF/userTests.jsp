@@ -15,17 +15,39 @@
     <title><fmt:message key="locale.tests.title"/></title>
 </head>
 <body>
+<div>
 <c:forEach items="${requestScope.mytests}" var="test">
     <ul>
         <div>
                 ${test.name}
         </div>
         <div>
+            <a href="/controller?command=edit_test&test_id=${test.id}">
+                <fmt:message key="locale.test.page.edit.button"/>
+            </a>
+        </div>
+        <div>
             <a href="/controller?command=delete_test&test_id=${test.id}">
                 <fmt:message key="locale.user.panel.mytest.delete"/>
             </a>
         </div>
+
     </ul>
 </c:forEach>
+
+</div>
+<br/>
+<br/>
+
+<div>
+    <%--TODO: Make check on FE--%>
+    <form action="/controller" method="post">
+        <input type="hidden" name="command" value="create_test">
+        <fmt:message key="locale.user.panel.newtest.name"/>
+        <input type="text" name="name">
+        <input type="submit">
+    </form>
+</div>
+
 </body>
 </html>

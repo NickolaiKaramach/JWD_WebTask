@@ -7,7 +7,7 @@ public final class FindTestsByOwnerId {
             "FROM " +
             "tests" +
             " WHERE " +
-            "(tests.status = 'PUBLISHED') AND (tests.owner_id = ?);";
+            "(tests.owner_id = ?);";
     public static final int OWNER_ID_INPUT_INDEX = 1;
 
     private FindTestsByOwnerId() {

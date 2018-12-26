@@ -1,5 +1,6 @@
 package by.etc.karamach.service;
 
+import by.etc.karamach.service.impl.QuestionsServiceImpl;
 import by.etc.karamach.service.impl.TestServiceImpl;
 import by.etc.karamach.service.impl.UserServiceImpl;
 
@@ -9,6 +10,7 @@ public class ServiceFactory {
 
     private final UserService userService = new UserServiceImpl();
     private final TestService testService = new TestServiceImpl();
+    private final QuestionService questionService = new QuestionsServiceImpl();
 
     private ServiceFactory() {
     }
@@ -23,5 +25,9 @@ public class ServiceFactory {
 
     public TestService getTestService() {
         return testService;
+    }
+
+    public QuestionService getQuestionService() {
+        return questionService;
     }
 }

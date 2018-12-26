@@ -2,7 +2,7 @@ package by.etc.karamach.dao.sql.impl;
 
 import by.etc.karamach.bean.User;
 import by.etc.karamach.dao.DAOException;
-import by.etc.karamach.dao.UserDao;
+import by.etc.karamach.dao.UserDAO;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.FindUserByEmail;
@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLUserDAO implements UserDao {
+public class SQLUserDAO implements UserDAO {
 
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();

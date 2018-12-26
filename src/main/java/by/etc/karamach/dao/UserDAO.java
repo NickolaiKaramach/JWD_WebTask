@@ -2,7 +2,7 @@ package by.etc.karamach.dao;
 
 import by.etc.karamach.bean.User;
 
-public interface UserDao {
+public interface UserDAO {
     User signIn(String email, String password) throws DAOException;
 
     void register(User user) throws DAOException;

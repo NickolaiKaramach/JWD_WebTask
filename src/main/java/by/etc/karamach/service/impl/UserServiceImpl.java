@@ -3,7 +3,7 @@ package by.etc.karamach.service.impl;
 import by.etc.karamach.bean.User;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.DAOFactory;
-import by.etc.karamach.dao.UserDao;
+import by.etc.karamach.dao.UserDAO;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.UserService;
 import by.etc.karamach.utils.validator.UserDataValidator;
@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDAO = DAOFactory.getInstance().getUserDAO();
+    private UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
     private static final Logger logger = LogManager.getLogger();
 

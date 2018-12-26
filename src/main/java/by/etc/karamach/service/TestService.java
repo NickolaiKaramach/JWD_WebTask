@@ -12,4 +12,8 @@ public interface TestService {
     void saveNewTest(Test test) throws ServiceException;
 
     void deleteTest(int userId, int testId) throws ServiceException;
+
+    boolean isTestOwner(int userId, int testId) throws ServiceException;
+
+    Test getTestById(int testId) throws ServiceException;
 }
