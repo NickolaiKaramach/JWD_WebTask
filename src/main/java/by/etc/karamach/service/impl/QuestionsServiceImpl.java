@@ -6,7 +6,7 @@ import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.QuestionDAO;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
-import by.etc.karamach.utils.validator.TestDataValidator;
+import by.etc.karamach.service.validator.TestDataValidator;
 
 import java.util.List;
 

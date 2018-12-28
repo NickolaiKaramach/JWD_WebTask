@@ -1,4 +1,4 @@
-package by.etc.karamach.utils.validator;
+package by.etc.karamach.service.validator;
 
 public final class TestDataValidator {
     private TestDataValidator() {

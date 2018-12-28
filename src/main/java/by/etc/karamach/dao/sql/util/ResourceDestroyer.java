@@ -1,4 +1,4 @@
-package by.etc.karamach.utils.sql;
+package by.etc.karamach.dao.sql.util;
 
 import by.etc.karamach.dao.pool.ConnectionPool;
 

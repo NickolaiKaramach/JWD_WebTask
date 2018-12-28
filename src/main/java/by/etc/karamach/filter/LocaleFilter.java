@@ -1,7 +1,7 @@
 package by.etc.karamach.filter;
 
-import by.etc.karamach.controller.RequestParameterName;
-import by.etc.karamach.controller.SessionAttributeName;
+import by.etc.karamach.controller.util.RequestParameterName;
+import by.etc.karamach.controller.util.SessionAttributeName;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

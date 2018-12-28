@@ -6,8 +6,8 @@ import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.TestDAO;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.TestService;
-import by.etc.karamach.utils.validator.TestDataValidator;
-import by.etc.karamach.utils.validator.UserDataValidator;
+import by.etc.karamach.service.validator.TestDataValidator;
+import by.etc.karamach.service.validator.UserDataValidator;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -84,16 +84,8 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void deleteTest(int userId, int testId) throws ServiceException {
-        boolean isValidData =
-                UserDataValidator.isValidUserId(userId) &&
-                        TestDataValidator.isValidTestId(testId);
 
-        if (!isValidData) {
-
-            throw new ServiceException("Cannot delete test with giving data");
-        }
-
-        if (isTestOwner(userId, testId)) {
+        if (!isTestOwner(userId, testId)) {
             throw new ServiceException("Cannot delete test using your account");
         }
 

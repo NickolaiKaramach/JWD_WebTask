@@ -1,4 +1,4 @@
-package by.etc.karamach.controller;
+package by.etc.karamach.controller.util;
 
 public final class RequestAttributeName {
     public static final String TEST = "test";

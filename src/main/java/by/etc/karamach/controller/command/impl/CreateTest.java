@@ -1,25 +1,21 @@
 package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.bean.Test;
-import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.RequestAttributeName;
-import by.etc.karamach.controller.RequestParameterName;
-import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import by.etc.karamach.utils.http.DispatchAssistant;
-import by.etc.karamach.utils.http.DispatchException;
-import by.etc.karamach.utils.http.SessionHelper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class CreateTest implements Command {
 
@@ -36,7 +32,6 @@ public class CreateTest implements Command {
 
         if ((userId == null) || (testName == null)) {
 
-            logger.error("Invalid data input!");
             throw new CommandException("Invalid data input, please try one more time!");
             //TODO: ERROR
         }
@@ -52,7 +47,7 @@ public class CreateTest implements Command {
 
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.TEST_PAGE);
 
-        } catch (ServiceException | DispatchException e) {
+        } catch (ServiceException | IOException | ServletException e) {
             logger.error(ExceptionUtils.getStackTrace(e));
 
 

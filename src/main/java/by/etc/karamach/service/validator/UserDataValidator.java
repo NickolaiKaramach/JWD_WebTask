@@ -1,4 +1,4 @@
-package by.etc.karamach.utils.validator;
+package by.etc.karamach.service.validator;
 
 import by.etc.karamach.bean.User;
 

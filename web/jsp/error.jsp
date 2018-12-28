@@ -1,4 +1,4 @@
-<%@ page import="by.etc.karamach.controller.RequestParameterName" contentType="text/html;charset=UTF-8" %><%--
+<%@ page import="by.etc.karamach.controller.util.RequestParameterName" contentType="text/html;charset=UTF-8" %><%--
   Created by IntelliJ IDEA.
   User: kosoj_rus
   Date: 12/3/18

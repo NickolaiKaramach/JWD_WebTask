@@ -16,21 +16,31 @@
 </head>
 <body>
 ${requestScope.test.name}
-
+<br>
+------------------------------------------
 <br>
 
-<c:forEach items="${requestScope.test.questionList}" var="question">
+<div>
+    <c:forEach items="${requestScope.test.questionList}" var="question">
 
-    ${question.description}
+        <div>
+                ${question.description}
+        </div>
+        <div>
+            <a href="/controller?command=edit_question&question_id=${question.id}">
+                <fmt:message key="locale.question.edit.button"/>
+            </a>
+        </div>
 
-    <br>
-    <c:forEach items="${question.answerList}" var="answer">
-        ${answer.description}
+        <div>
+            <a href="/controller?command=delete_question&question_id=${question.id}">
+                <fmt:message key="locale.question.delete.button"/>
+            </a>
+        </div>
+
         <br>
     </c:forEach>
-    <br>
-    <br>
-</c:forEach>
+</div>
 
 <button>Add</button>
 <button>Save</button>

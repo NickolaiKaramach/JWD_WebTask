@@ -1,13 +1,13 @@
 package by.etc.karamach.controller.command.impl;
 
-import by.etc.karamach.controller.RequestParameterName;
-import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.controller.util.RequestParameterName;
+import by.etc.karamach.controller.util.SessionAttributeName;
+import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import by.etc.karamach.utils.http.SessionHelper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +21,7 @@ public class DeleteTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
     private static final Logger logger = LogManager.getLogger();
+    private static final String USER_TESTS_PAGE_URL = "http://localhost:8080/controller?command=get_my_tests";
 
     @Override
     public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -31,7 +32,6 @@ public class DeleteTest implements Command {
                 (Integer) existingSession.getAttribute(SessionAttributeName.ID);
 
         if (userId == null) {
-            logger.error("You must be logged in, to delete your tests!");
             throw new CommandException("You must be logged in, to delete your tests!");
         }
 
@@ -41,7 +41,7 @@ public class DeleteTest implements Command {
 
             testService.deleteTest(userId, testId);
 
-            resp.sendRedirect("http://localhost:8080/controller?command=get_my_tests");
+            resp.sendRedirect(USER_TESTS_PAGE_URL);
 
         } catch (ServiceException | IOException e) {
 

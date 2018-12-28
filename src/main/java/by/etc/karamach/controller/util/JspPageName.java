@@ -1,4 +1,4 @@
-package by.etc.karamach.controller;
+package by.etc.karamach.controller.util;
 
 public final class JspPageName {
     public static final String USER_PAGE = "/jsp/userPage.jsp";

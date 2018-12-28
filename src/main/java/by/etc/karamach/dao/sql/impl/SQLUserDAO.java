@@ -8,7 +8,7 @@ import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.FindUserByEmail;
 import by.etc.karamach.dao.sql.query.FindUserByLoginAndPassword;
 import by.etc.karamach.dao.sql.query.SaveUser;
-import by.etc.karamach.utils.sql.ResourceDestroyer;
+import by.etc.karamach.dao.sql.util.ResourceDestroyer;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

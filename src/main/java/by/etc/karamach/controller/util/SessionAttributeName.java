@@ -1,4 +1,4 @@
-package by.etc.karamach.controller;
+package by.etc.karamach.controller.util;
 
 public class SessionAttributeName {
     public static final String EMAIL = "email";

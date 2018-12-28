@@ -1,7 +1,6 @@
-package by.etc.karamach.utils.http;
+package by.etc.karamach.controller.util;
 
 import by.etc.karamach.bean.User;
-import by.etc.karamach.controller.SessionAttributeName;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -1,11 +1,6 @@
 package by.etc.karamach.filter;
 
-import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.RequestParameterName;
-import by.etc.karamach.controller.SessionAttributeName;
-import by.etc.karamach.utils.http.DispatchAssistant;
-import by.etc.karamach.utils.http.DispatchException;
-import by.etc.karamach.utils.http.SessionHelper;
+import by.etc.karamach.controller.util.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -52,7 +47,7 @@ public class CommandSecurityFilter implements Filter {
 
             try {
                 DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
-            } catch (DispatchException e) {
+            } catch (IOException | ServletException e) {
                 throw new ServletException(e);
             }
 

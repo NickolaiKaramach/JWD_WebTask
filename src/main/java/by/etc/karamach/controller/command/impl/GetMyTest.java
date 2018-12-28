@@ -1,24 +1,20 @@
 package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.bean.Test;
-import by.etc.karamach.controller.JspPageName;
-import by.etc.karamach.controller.RequestAttributeName;
-import by.etc.karamach.controller.SessionAttributeName;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import by.etc.karamach.utils.http.DispatchAssistant;
-import by.etc.karamach.utils.http.DispatchException;
-import by.etc.karamach.utils.http.SessionHelper;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class GetMyTest implements Command {
@@ -41,10 +37,7 @@ public class GetMyTest implements Command {
             try {
                 DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
 
-            } catch (DispatchException e) {
-
-                logger.error(ExceptionUtils.getStackTrace(e));
-
+            } catch (IOException | ServletException e) {
 
                 throw new CommandException(e);
             }
@@ -63,10 +56,7 @@ public class GetMyTest implements Command {
 
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_TESTS);
 
-        } catch (ServiceException | DispatchException e) {
-
-            logger.error(ExceptionUtils.getStackTrace(e));
-
+        } catch (ServiceException | IOException | ServletException e) {
 
             throw new CommandException(e);
         }

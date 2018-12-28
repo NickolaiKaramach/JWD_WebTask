@@ -6,7 +6,7 @@ import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.UserDAO;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.UserService;
-import by.etc.karamach.utils.validator.UserDataValidator;
+import by.etc.karamach.service.validator.UserDataValidator;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
