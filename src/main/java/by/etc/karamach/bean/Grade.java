@@ -8,17 +8,17 @@ public class Grade implements Serializable {
     private static final long serialVersionUID = -2744249801865549578L;
 
     private int id;
-    private int test_id;
-    private int user_id;
+    private int testId;
+    private int userId;
     private int mark;
 
     public Grade() {
     }
 
-    public Grade(int id, int test_id, int user_id, int mark) {
+    public Grade(int id, int testId, int userId, int mark) {
         this.id = id;
-        this.test_id = test_id;
-        this.user_id = user_id;
+        this.testId = testId;
+        this.userId = userId;
         this.mark = mark;
     }
 
@@ -31,20 +31,20 @@ public class Grade implements Serializable {
         this.id = id;
     }
 
-    public int getTest_id() {
-        return test_id;
+    public int getTestId() {
+        return testId;
     }
 
-    public void setTest_id(int test_id) {
-        this.test_id = test_id;
+    public void setTestId(int testId) {
+        this.testId = testId;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getMark() {
@@ -68,22 +68,22 @@ public class Grade implements Serializable {
         Grade grade = (Grade) obj;
 
         return getId() == grade.getId() &&
-                getTest_id() == grade.getTest_id() &&
-                getUser_id() == grade.getUser_id() &&
+                getTestId() == grade.getTestId() &&
+                getUserId() == grade.getUserId() &&
                 getMark() == grade.getMark();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTest_id(), getUser_id(), getMark());
+        return Objects.hash(getId(), getTestId(), getUserId(), getMark());
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Grade.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("test_id=" + test_id)
-                .add("user_id=" + user_id)
+                .add("testId=" + testId)
+                .add("userId=" + userId)
                 .add("mark=" + mark)
                 .toString();
     }

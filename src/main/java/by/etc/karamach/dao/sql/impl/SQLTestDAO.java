@@ -7,6 +7,7 @@ import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.*;
 import by.etc.karamach.utils.sql.ResourceDestroyer;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,14 +50,14 @@ public class SQLTestDAO implements TestDAO {
             }
 
         } catch (ConnectionPoolException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't execute query to data source", e);
@@ -99,14 +100,14 @@ public class SQLTestDAO implements TestDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't execute query to data source", e);
@@ -137,14 +138,14 @@ public class SQLTestDAO implements TestDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't execute query to data source", e);
@@ -182,14 +183,14 @@ public class SQLTestDAO implements TestDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't execute query to data source", e);
@@ -219,14 +220,14 @@ public class SQLTestDAO implements TestDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't execute query to data source", e);
@@ -241,11 +242,11 @@ public class SQLTestDAO implements TestDAO {
     private void fillTestDataFromResultSet(ResultSet resultSet, Test test) throws SQLException {
         int id = resultSet.getInt(FindAllTests.ID_RESULT_INDEX);
         String name = resultSet.getString(FindAllTests.NAME_RESULT_INDEX);
-        int owner_id = resultSet.getInt(FindAllTests.OWNER_ID_RESULT_INDEX);
+        int ownerId = resultSet.getInt(FindAllTests.OWNER_ID_RESULT_INDEX);
 
         test.setId(id);
         test.setName(name);
-        test.setOwnerId(owner_id);
+        test.setOwnerId(ownerId);
 
     }
 }

@@ -6,6 +6,7 @@ import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.utils.http.DispatchAssistant;
 import by.etc.karamach.utils.http.DispatchException;
 import by.etc.karamach.utils.http.SessionHelper;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class Logout implements Command {
 
         } catch (DispatchException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new CommandException(e);

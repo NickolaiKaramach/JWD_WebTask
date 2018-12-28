@@ -10,16 +10,16 @@ public class Answer implements Serializable {
     private int id;
     private boolean isRight;
     private String description;
-    private int question_id;
+    private int questionId;
 
     public Answer() {
     }
 
-    public Answer(int id, boolean isRight, String description, int question_id) {
+    public Answer(int id, boolean isRight, String description, int questionId) {
         this.id = id;
         this.isRight = isRight;
         this.description = description;
-        this.question_id = question_id;
+        this.questionId = questionId;
     }
 
     public int getId() {
@@ -46,12 +46,12 @@ public class Answer implements Serializable {
         this.description = description;
     }
 
-    public int getQuestion_id() {
-        return question_id;
+    public int getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion_id(int question_id) {
-        this.question_id = question_id;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     @Override
@@ -68,13 +68,13 @@ public class Answer implements Serializable {
 
         return getId() == answer.getId() &&
                 isRight() == answer.isRight() &&
-                getQuestion_id() == answer.getQuestion_id() &&
+                getQuestionId() == answer.getQuestionId() &&
                 Objects.equals(getDescription(), answer.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), isRight(), getDescription(), getQuestion_id());
+        return Objects.hash(getId(), isRight(), getDescription(), getQuestionId());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Answer implements Serializable {
                 .add("id=" + id)
                 .add("isRight=" + isRight)
                 .add("description='" + description + "'")
-                .add("question_id=" + question_id)
+                .add("questionId=" + questionId)
                 .toString();
     }
 }

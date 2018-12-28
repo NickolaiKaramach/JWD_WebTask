@@ -7,6 +7,7 @@ import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.FindQuestionByTestId;
 import by.etc.karamach.utils.sql.ResourceDestroyer;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,14 +51,14 @@ public class SQLQuestionDAO implements QuestionDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new DAOException("Couldn't execute query to data source", e);

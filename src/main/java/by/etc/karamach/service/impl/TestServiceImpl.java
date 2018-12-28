@@ -8,6 +8,7 @@ import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.TestService;
 import by.etc.karamach.utils.validator.TestDataValidator;
 import by.etc.karamach.utils.validator.UserDataValidator;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +27,7 @@ public class TestServiceImpl implements TestService {
             resultTest = testDAO.getAllTests();
         } catch (DAOException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new ServiceException(e);

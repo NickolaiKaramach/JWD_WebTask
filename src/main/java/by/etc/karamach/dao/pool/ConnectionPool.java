@@ -1,5 +1,6 @@
 package by.etc.karamach.dao.pool;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +44,7 @@ public class ConnectionPool {
             initPoolData();
         } catch (NumberFormatException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             poolSize = DEFAULT_POOL_SIZE;
@@ -81,21 +82,21 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
         }
 
         try {
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
         }
 
         try {
             statement.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
         }
     }
@@ -104,7 +105,7 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
         }
     }
@@ -113,14 +114,14 @@ public class ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
         }
 
         try {
             statement.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
         }
     }
@@ -144,14 +145,14 @@ public class ConnectionPool {
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new ConnectionPoolRuntimeException("SQL Exception during initializing Connection Pool!");
 
         } catch (ClassNotFoundException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             throw new ConnectionPoolRuntimeException("Can't find driver class for database!");
@@ -177,7 +178,7 @@ public class ConnectionPool {
 
         } catch (SQLException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
         }

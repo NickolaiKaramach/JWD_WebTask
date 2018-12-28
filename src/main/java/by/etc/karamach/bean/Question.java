@@ -9,7 +9,7 @@ public class Question implements Serializable {
     private static final long serialVersionUID = -3269717093128035302L;
 
     private int id;
-    private int test_id;
+    private int testId;
     private String description;
 
     transient private List<Answer> answerList;
@@ -17,9 +17,9 @@ public class Question implements Serializable {
     public Question() {
     }
 
-    public Question(int id, int test_id, String description) {
+    public Question(int id, int testId, String description) {
         this.id = id;
-        this.test_id = test_id;
+        this.testId = testId;
         this.description = description;
     }
 
@@ -39,12 +39,12 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    public int getTest_id() {
-        return test_id;
+    public int getTestId() {
+        return testId;
     }
 
-    public void setTest_id(int test_id) {
-        this.test_id = test_id;
+    public void setTestId(int testId) {
+        this.testId = testId;
     }
 
     public String getDescription() {
@@ -69,21 +69,21 @@ public class Question implements Serializable {
         Question question = (Question) o;
 
         return getId() == question.getId() &&
-                getTest_id() == question.getTest_id() &&
+                getTestId() == question.getTestId() &&
                 Objects.equals(getDescription(), question.getDescription()) &&
                 Objects.equals(getAnswerList(), question.getAnswerList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTest_id(), getDescription(), getAnswerList());
+        return Objects.hash(getId(), getTestId(), getDescription(), getAnswerList());
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Question.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("test_id=" + test_id)
+                .add("testId=" + testId)
                 .add("description='" + description + "'")
                 .toString();
     }

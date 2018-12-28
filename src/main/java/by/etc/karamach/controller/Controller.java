@@ -3,6 +3,7 @@ package by.etc.karamach.controller;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.controller.command.CommandProvider;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,6 +32,7 @@ public final class Controller extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String commandName = req.getParameter(RequestParameterName.COMMAND_NAME);
 
         Command command = CommandProvider.getInstance().getCommand(commandName);
@@ -39,7 +41,7 @@ public final class Controller extends HttpServlet {
             command.executeTask(req, resp);
         } catch (CommandException e) {
 
-            logger.error(e.getMessage(), e);
+            logger.error(ExceptionUtils.getStackTrace(e));
 
 
             //TODO: Place error msg at jsp
