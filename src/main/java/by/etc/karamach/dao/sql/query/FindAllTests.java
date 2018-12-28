@@ -3,7 +3,7 @@ package by.etc.karamach.dao.sql.query;
 public final class FindAllTests {
     public static final String STATEMENT
             = "SELECT " +
-            "tests.id, tests.name, tests.owner_id " +
+            "tests.id, tests.name, tests.users_id " +
             "FROM " +
             "tests " +
             "WHERE " +
