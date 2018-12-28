@@ -7,8 +7,6 @@ import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +17,10 @@ import java.util.List;
 
 public class GetMyTest implements Command {
     private TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final Logger logger = LogManager.getLogger();
 
 
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         List<Test> tests;
 
         HttpSession session = SessionHelper.getExistingSession(req);
@@ -32,28 +29,19 @@ public class GetMyTest implements Command {
                 (session == null) ||
                         (session.getAttribute(SessionAttributeName.ID) == null);
 
-        if (isGuest) {
+        try {
 
-            try {
+            if (isGuest) {
                 DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
-
-            } catch (IOException | ServletException e) {
-
-                throw new CommandException(e);
+                return;
             }
 
-            return null;
-
-        }
-
-        try {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
             tests = testService.getMyTests(userId);
 
             req.setAttribute(RequestAttributeName.MY_TESTS, tests);
-
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_TESTS);
 
         } catch (ServiceException | IOException | ServletException e) {
@@ -61,7 +49,6 @@ public class GetMyTest implements Command {
             throw new CommandException(e);
         }
 
-        return null;
     }
 
 }

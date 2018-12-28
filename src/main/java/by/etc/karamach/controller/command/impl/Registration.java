@@ -9,9 +9,6 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,11 +26,10 @@ public class Registration implements Command {
 
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
     private static final boolean ERROR_TRUE = true;
-    private static final Logger logger = LogManager.getLogger();
 
 
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         User user = createUserFromRequest(req);
 
@@ -44,30 +40,18 @@ public class Registration implements Command {
             isSuccess = userService.register(user);
             user = userService.signIn(user.getEmail(), user.getPassword());
 
-        } catch (ServiceException e) {
 
-            logger.error(ExceptionUtils.getStackTrace(e));
+            String nextPage;
+            nextPage = formResponse(req, user, isSuccess);
 
-
-            throw new CommandException(e);
-        }
-
-
-        String nextPage;
-
-
-        nextPage = formResponse(req, user, isSuccess);
-
-        try {
 
             DispatchAssistant.redirectToJsp(req, resp, nextPage);
 
-        } catch (IOException | ServletException e) {
+        } catch (ServiceException | IOException | ServletException e) {
 
             throw new CommandException(e);
         }
 
-        return null;
     }
 
     private String formResponse(HttpServletRequest req, User user, boolean isSuccess) {

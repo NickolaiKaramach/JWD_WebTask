@@ -20,7 +20,7 @@ public class CommandProvider {
     private CommandProvider() {
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.REGISTRATION, new Registration());
-        repository.put(CommandName.GET_TESTS, new GetTest());
+        repository.put(CommandName.GET_TESTS, new GetTests());
         repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
         repository.put(CommandName.CREATE_TEST, new CreateTest());
         repository.put(CommandName.LOGOUT, new Logout());

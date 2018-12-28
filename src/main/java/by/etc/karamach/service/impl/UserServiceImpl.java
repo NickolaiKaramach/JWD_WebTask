@@ -7,15 +7,10 @@ import by.etc.karamach.dao.UserDAO;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.UserService;
 import by.etc.karamach.service.validator.UserDataValidator;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-
-    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public User signIn(String email, String password) throws ServiceException {
@@ -54,9 +49,6 @@ public class UserServiceImpl implements UserService {
 
         } catch (DAOException e) {
 
-            logger.error(ExceptionUtils.getStackTrace(e));
-
-
             throw new ServiceException("Cannot perform action with data source", e);
         }
 
@@ -71,9 +63,6 @@ public class UserServiceImpl implements UserService {
         try {
             user = userDAO.signIn(email, password);
         } catch (DAOException e) {
-
-            logger.error(ExceptionUtils.getStackTrace(e));
-
 
             throw new ServiceException("Cannot perform action with data source", e);
         }

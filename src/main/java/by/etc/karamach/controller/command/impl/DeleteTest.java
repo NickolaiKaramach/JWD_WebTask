@@ -8,9 +8,6 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +17,10 @@ import java.io.IOException;
 public class DeleteTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final Logger logger = LogManager.getLogger();
     private static final String USER_TESTS_PAGE_URL = "http://localhost:8080/controller?command=get_my_tests";
 
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         HttpSession existingSession = SessionHelper.getExistingSession(req);
 
@@ -45,11 +41,9 @@ public class DeleteTest implements Command {
 
         } catch (ServiceException | IOException e) {
 
-            logger.error(ExceptionUtils.getStackTrace(e));
             throw new CommandException(e);
         }
 
-        return null;
     }
 
 }

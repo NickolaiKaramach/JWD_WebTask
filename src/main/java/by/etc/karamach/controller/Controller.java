@@ -18,6 +18,10 @@ import java.io.IOException;
 
 import static by.etc.karamach.controller.util.RequestParameterName.ERROR_MSG;
 
+
+//TODO: 1. Logger hierarchy
+
+
 public final class Controller extends HttpServlet {
 
     private static final String TEXT_HTML = "text/html";
@@ -26,7 +30,6 @@ public final class Controller extends HttpServlet {
 
     private static final transient Logger logger = LogManager.getLogger();
 
-    //TODO: QUESTION? Can we group ...Name to one package?
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -47,6 +50,7 @@ public final class Controller extends HttpServlet {
 
 
             //TODO: Place error msg at jsp
+            //TODO: Show easy-to-understand message to user
             req.setAttribute(ERROR_MSG, e.getMessage());
             redirectToErrorPage(req, resp);
         }

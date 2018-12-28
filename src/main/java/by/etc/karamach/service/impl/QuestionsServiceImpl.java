@@ -28,7 +28,6 @@ public class QuestionsServiceImpl implements QuestionService {
             questions = questionDAO.getQuestionsByTestId(testId);
 
         } catch (DAOException e) {
-
             throw new ServiceException(e);
         }
 

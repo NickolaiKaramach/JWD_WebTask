@@ -9,9 +9,6 @@ import by.etc.karamach.dao.sql.query.FindUserByEmail;
 import by.etc.karamach.dao.sql.query.FindUserByLoginAndPassword;
 import by.etc.karamach.dao.sql.query.SaveUser;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +19,6 @@ public class SQLUserDAO implements UserDAO {
 
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-
-    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public User findUserByEmail(String email) throws DAOException {
@@ -50,15 +45,9 @@ public class SQLUserDAO implements UserDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(ExceptionUtils.getStackTrace(e));
-
-
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
-
-            logger.error(ExceptionUtils.getStackTrace(e));
-
 
             throw new DAOException("Couldn't execute query to data source", e);
 
@@ -97,15 +86,9 @@ public class SQLUserDAO implements UserDAO {
 
         } catch (ConnectionPoolException e) {
 
-            logger.error(ExceptionUtils.getStackTrace(e));
-
-
             throw new DAOException("Couldn't take connection from connection pool", e);
 
         } catch (SQLException e) {
-
-            logger.error(ExceptionUtils.getStackTrace(e));
-
 
             throw new DAOException("Couldn't execute query to data source", e);
 

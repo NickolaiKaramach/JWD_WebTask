@@ -9,8 +9,6 @@ import by.etc.karamach.controller.util.RequestAttributeName;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class GetTest implements Command {
+//TODO: QUESTION: Can we use -s in name?
+public class GetTests implements Command {
 
     private TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final Logger logger = LogManager.getLogger();
+
 
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         List<Test> tests;
 
         try {
@@ -39,6 +38,5 @@ public class GetTest implements Command {
             throw new CommandException(e);
         }
 
-        return null;
     }
 }

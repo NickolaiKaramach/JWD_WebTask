@@ -6,7 +6,7 @@
 
     <groupId>by.etc.karamach</groupId>
     <artifactId>web-task</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-CLEANING</version>
     <build>
         <plugins>
             <plugin>

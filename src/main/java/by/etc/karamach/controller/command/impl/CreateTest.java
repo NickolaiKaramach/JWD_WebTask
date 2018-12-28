@@ -7,9 +7,6 @@ import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +17,9 @@ import java.io.IOException;
 public class CreateTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         HttpSession session = SessionHelper.getExistingSession(req);
 
@@ -33,7 +29,7 @@ public class CreateTest implements Command {
         if ((userId == null) || (testName == null)) {
 
             throw new CommandException("Invalid data input, please try one more time!");
-            //TODO: ERROR
+            //TODO: SHOW ERROR
         }
 
 
@@ -48,14 +44,10 @@ public class CreateTest implements Command {
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.TEST_PAGE);
 
         } catch (ServiceException | IOException | ServletException e) {
-            logger.error(ExceptionUtils.getStackTrace(e));
-
 
             throw new CommandException(e);
         }
 
-
-        return null;
     }
 
     private Test constructTestFromData(Integer userId, String testName) {

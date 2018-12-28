@@ -11,11 +11,13 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"})
 
 public class CommandSecurityFilter implements Filter {
 
     private Set<String> protectedCommands = new HashSet<>();
+
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -33,26 +35,24 @@ public class CommandSecurityFilter implements Filter {
         req = (HttpServletRequest) servletRequest;
         resp = (HttpServletResponse) servletResponse;
 
+
         String command = req.getParameter(RequestParameterName.COMMAND_NAME);
 
-        //TODO: Question: is it normal, to use multiple return statements?
         if ((command == null) || (!protectedCommands.contains(command))) {
             filterChain.doFilter(req, resp);
             return;
         }
 
+
         HttpSession existingSession = SessionHelper.getExistingSession(req);
 
         if (isGuest(existingSession)) {
 
-            try {
-                DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
-            } catch (IOException | ServletException e) {
-                throw new ServletException(e);
-            }
+            DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
 
             return;
         }
+
 
         filterChain.doFilter(req, resp);
     }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class NoSuchCommand implements Command {
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         throw new CommandException("No such command!");
     }
 

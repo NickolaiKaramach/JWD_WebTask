@@ -9,9 +9,6 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,49 +20,36 @@ import static by.etc.karamach.controller.util.RequestParameterName.*;
 
 public class SignIn implements Command {
 
-    private static final Logger logger = LogManager.getLogger();
-
     private static final String INVALID_PASSWORD = "Invalid login or password";
 
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
-    public String executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-
-        HttpSession session = SessionHelper.getExistingSession(req);
+    public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         User user = takeUser(req);
+        String nextPage;
 
         if (user == null) {
             //TODO: Show error to user
             req.setAttribute(MSG, INVALID_PASSWORD);
+            nextPage = JspPageName.ERROR_PAGE;
 
-            try {
+        } else {
+            HttpSession newSession = SessionHelper.createOrGetSession(req);
+            SessionHelper.saveUserToSession(newSession, user);
 
-
-                //TODO: Show error to user
-                DispatchAssistant.redirectToJsp(req, resp, JspPageName.ERROR_PAGE);
-
-            } catch (IOException | ServletException e) {
-
-                throw new CommandException(e);
-            }
-
-            return null;
+            nextPage = JspPageName.USER_PAGE;
         }
 
-        HttpSession newSession = SessionHelper.createOrGetSession(req);
-        SessionHelper.saveUserToSession(newSession, user);
-
         try {
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_PAGE);
+            DispatchAssistant.redirectToJsp(req, resp, nextPage);
 
         } catch (IOException | ServletException e) {
 
             throw new CommandException(e);
         }
 
-        return null;
     }
 
     private User takeUser(HttpServletRequest req) throws CommandException {
@@ -83,9 +67,6 @@ public class SignIn implements Command {
             user = userService.signIn(email, password);
 
         } catch (ServiceException e) {
-
-            logger.error(ExceptionUtils.getStackTrace(e));
-
 
             throw new CommandException(e);
         }

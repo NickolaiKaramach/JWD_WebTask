@@ -41,11 +41,8 @@ public class UrlSecurityFilter implements Filter {
         String userName = (String) existingSession.getAttribute(SessionAttributeName.NAME);
 
         if (userName == null) {
-            try {
-                DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
-            } catch (IOException | ServletException e) {
-                throw new ServletException(e);
-            }
+
+            DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
 
         } else {
             filterChain.doFilter(req, resp);
