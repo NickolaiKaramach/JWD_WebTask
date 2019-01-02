@@ -35,4 +35,32 @@ public class AnswerServiceImpl implements AnswerService {
 
         return answerList;
     }
+
+    @Override
+    public Answer getAnswerById(int answerId, int userId) throws ServiceException {
+        boolean isValidData = UserDataValidator.isValidUserId(userId);
+
+        if (!isValidData) {
+            throw new ServiceException("Invalid data to perform action");
+        }
+
+
+        Answer answer;
+
+        try {
+
+            answer = answerDAO.getAnswerByAnswerIdAndUserId(answerId, userId);
+
+            if (answer == null) {
+                throw new ServiceException("Cannot edit not yours answer!");
+            }
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+        }
+
+
+        return answer;
+    }
 }

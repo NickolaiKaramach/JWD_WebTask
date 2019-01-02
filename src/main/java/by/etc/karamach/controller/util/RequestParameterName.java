@@ -11,6 +11,7 @@ public final class RequestParameterName {
     public static final String LOCALE = "locale";
     public static final String TEST_ID = "test_id";
     public static final String QUESTION_ID = "question_id";
+    public static final String ANSWER_ID = "answer_id";
 
     private RequestParameterName() {
     }

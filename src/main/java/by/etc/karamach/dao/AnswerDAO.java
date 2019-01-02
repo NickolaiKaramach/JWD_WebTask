@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AnswerDAO {
     List<Answer> getAnswersByQuestionIdAndUserId(int questionId, int userId) throws DAOException;
+
+    Answer getAnswerByAnswerIdAndUserId(int answerId, int userId) throws DAOException;
 }

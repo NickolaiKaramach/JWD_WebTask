@@ -5,6 +5,7 @@ public final class RequestAttributeName {
     public static final String MY_TESTS = "mytests";
     public static final String TESTS = "tests";
     public static final String QUESTION = "question";
+    public static final String ANSWER = "answer";
 
     private RequestAttributeName() {
     }

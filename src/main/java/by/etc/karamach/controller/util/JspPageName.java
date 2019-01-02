@@ -10,6 +10,7 @@ public final class JspPageName {
     public static final String TEST_PAGE = "/WEB-INF/testPage.jsp";
     public static final String INDEX_JSP = "/index.jsp";
     public static final String QUESTION_PAGE = "/WEB-INF/questionPage.jsp";
+    public static final String ANSWER_PAGE = "/WEB-INF/answerPage.jsp";
 
     private JspPageName() {
     }

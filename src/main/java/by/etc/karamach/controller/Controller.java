@@ -27,7 +27,8 @@ public final class Controller extends HttpServlet {
     public static final String SERVER_PATH = "http://localhost:8080";
     private static final String TEXT_HTML = "text/html";
     private static final String ERROR_TEXT = "E R R O R";
-    private static final long serialVersionUID = 4237191862072584563L;
+
+    private static final long serialVersionUID = -4642709576494909869L;
 
     private static final transient Logger logger = LogManager.getLogger();
 
