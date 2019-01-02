@@ -100,7 +100,7 @@ public class TestServiceImpl implements TestService {
 
         if (!isValidData) {
 
-            throw new ServiceException("Cannot delete test with giving data");
+            throw new ServiceException("Cannot perform action with giving data");
         }
 
         Test test;
@@ -121,7 +121,7 @@ public class TestServiceImpl implements TestService {
     public Test getTestById(int testId) throws ServiceException {
         if (!TestDataValidator.isValidTestId(testId)) {
 
-            throw new ServiceException("Cannot delete test with giving data");
+            throw new ServiceException("Cannot get test with giving data");
         }
 
         Test test;

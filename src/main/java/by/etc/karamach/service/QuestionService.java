@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface QuestionService {
     List<Question> getQuestionsByTestId(int testId) throws ServiceException;
+
+
+    Question getQuestionById(int questionId, int userId) throws ServiceException;
 }

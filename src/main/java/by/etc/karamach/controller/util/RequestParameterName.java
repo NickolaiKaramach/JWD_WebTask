@@ -10,6 +10,7 @@ public final class RequestParameterName {
     public static final String MSG = "msg";
     public static final String LOCALE = "locale";
     public static final String TEST_ID = "test_id";
+    public static final String QUESTION_ID = "question_id";
 
     private RequestParameterName() {
     }
