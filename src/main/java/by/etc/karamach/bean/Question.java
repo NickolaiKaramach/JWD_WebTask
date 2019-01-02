@@ -11,16 +11,19 @@ public class Question implements Serializable {
     private int id;
     private int testId;
     private String description;
+    private int ownerId;
 
     transient private List<Answer> answerList;
 
     public Question() {
     }
 
-    public Question(int id, int testId, String description) {
+    public Question(int id, int testId, String description, int ownerId, List<Answer> answerList) {
         this.id = id;
         this.testId = testId;
         this.description = description;
+        this.ownerId = ownerId;
+        this.answerList = answerList;
     }
 
     public List<Answer> getAnswerList() {
@@ -37,6 +40,14 @@ public class Question implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public int getTestId() {
@@ -57,7 +68,6 @@ public class Question implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) {
             return true;
         }
@@ -70,13 +80,14 @@ public class Question implements Serializable {
 
         return getId() == question.getId() &&
                 getTestId() == question.getTestId() &&
+                getOwnerId() == question.getOwnerId() &&
                 Objects.equals(getDescription(), question.getDescription()) &&
                 Objects.equals(getAnswerList(), question.getAnswerList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTestId(), getDescription(), getAnswerList());
+        return Objects.hash(getId(), getTestId(), getDescription(), getOwnerId(), getAnswerList());
     }
 
     @Override
@@ -85,6 +96,8 @@ public class Question implements Serializable {
                 .add("id=" + id)
                 .add("testId=" + testId)
                 .add("description='" + description + "'")
+                .add("ownerId=" + ownerId)
+                .add("answerList=" + answerList)
                 .toString();
     }
 }

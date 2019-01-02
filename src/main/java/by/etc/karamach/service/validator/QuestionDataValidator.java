@@ -4,7 +4,7 @@ public final class QuestionDataValidator {
     private QuestionDataValidator() {
     }
 
-    public boolean isValidQuestionId(int questionId) {
+    public static boolean isValidQuestionId(int questionId) {
         return (questionId > 0);
     }
 }

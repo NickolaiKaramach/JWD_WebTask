@@ -9,4 +9,6 @@ public interface QuestionService {
 
 
     Question getQuestionById(int questionId, int userId) throws ServiceException;
+
+    void deleteQuestion(int userId, int questionId) throws ServiceException;
 }

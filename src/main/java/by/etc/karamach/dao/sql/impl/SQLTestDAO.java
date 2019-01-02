@@ -17,6 +17,7 @@ import java.util.List;
 
 public class SQLTestDAO implements TestDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final boolean AUTO_COMMIT_TRUE = true;
 
     @Override
     public List<Test> getAllTests() throws DAOException {
@@ -31,6 +32,9 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindAllTests.STATEMENT);
 
             resultSet = preparedStatement.executeQuery();
@@ -73,6 +77,9 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindTestsByOwnerId.STATEMENT);
 
             preparedStatement.setInt(FindTestsByOwnerId.OWNER_ID_INPUT_INDEX, userId);
@@ -112,6 +119,8 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
             preparedStatement = connection.prepareStatement(SaveNewTest.STATEMENT);
 
             preparedStatement.setInt(SaveNewTest.OWNER_ID_INPUT_INDEX, test.getOwnerId());
@@ -140,12 +149,16 @@ public class SQLTestDAO implements TestDAO {
 
         Connection connection = null;
 
+
         PreparedStatement preparedStatement = null;
 
         ResultSet resultSet = null;
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindTestByTestId.STATEMENT);
 
             preparedStatement.setInt(FindTestByTestId.TEST_ID_INPUT_INDEX, testId);
@@ -183,6 +196,9 @@ public class SQLTestDAO implements TestDAO {
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(DeleteTestByTestId.STATEMENT);
 
             preparedStatement.setInt(DeleteTestByTestId.TEST_ID_INPUT_INDEX, testId);

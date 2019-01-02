@@ -5,6 +5,7 @@ import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.QuestionDAO;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
+import by.etc.karamach.dao.sql.query.DeleteQuestionByQuestionId;
 import by.etc.karamach.dao.sql.query.FindQuestionByIdAndOwnerId;
 import by.etc.karamach.dao.sql.query.FindQuestionByTestId;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
@@ -18,6 +19,63 @@ import java.util.List;
 
 public class SQLQuestionDAO implements QuestionDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final boolean AUTO_COMMIT_FALSE = false;
+    private static final boolean AUTO_COMMIT_TRUE = true;
+
+    @Override
+    public void deleteTest(int questionId) throws DAOException {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement secondStatement;
+
+        try {
+            connection = connectionPool.takeConnection();
+
+            connection.setAutoCommit(AUTO_COMMIT_FALSE);
+
+
+            preparedStatement = connection.prepareStatement(DeleteQuestionByQuestionId.STATEMENT);
+
+            preparedStatement.setInt(DeleteQuestionByQuestionId.QUESTION_ID_INPUT_INDEX, questionId);
+
+            preparedStatement.execute();
+
+
+            secondStatement = connection.prepareStatement(DeleteQuestionByQuestionId.SECOND_STATEMENT);
+
+            secondStatement.setInt(DeleteQuestionByQuestionId.QUESTION_ID_SECOND_INPUT_INDEX, questionId);
+
+            secondStatement.execute();
+
+
+            connection.commit();
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            //TODO: QUESTION: Is it possible?(2 try-catch) AND autoCommit changes inside method
+
+            try {
+
+                ResourceDestroyer.closeAllWithRollBack(connection, preparedStatement);
+
+            } catch (SQLException e) {
+
+                //TODO: What to do with fatal exception?
+                throw new RuntimeException(e);
+
+            }
+
+        }
+    }
 
     @Override
     public Question getQuestionByQuestionsIdAndUserId(int questionId, int userId) throws DAOException {
@@ -32,6 +90,9 @@ public class SQLQuestionDAO implements QuestionDAO {
         try {
 
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindQuestionByIdAndOwnerId.STATEMENT);
 
             preparedStatement.setInt(FindQuestionByIdAndOwnerId.QUESTION_ID_INPUT_INDEX, questionId);
@@ -79,6 +140,9 @@ public class SQLQuestionDAO implements QuestionDAO {
         try {
 
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindQuestionByTestId.STATEMENT);
 
             preparedStatement.setInt(FindQuestionByTestId.TEST_ID_INPUT_INDEX, testId);

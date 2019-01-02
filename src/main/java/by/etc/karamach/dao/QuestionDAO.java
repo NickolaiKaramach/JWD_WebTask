@@ -8,4 +8,6 @@ public interface QuestionDAO {
     List<Question> getQuestionsByTestId(int testId) throws DAOException;
 
     Question getQuestionByQuestionsIdAndUserId(int questionId, int userId) throws DAOException;
+
+    void deleteTest(int questionId) throws DAOException;
 }

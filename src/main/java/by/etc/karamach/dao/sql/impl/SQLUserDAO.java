@@ -19,6 +19,7 @@ public class SQLUserDAO implements UserDAO {
 
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final boolean AUTO_COMMIT_TRUE = true;
 
     @Override
     public User findUserByEmail(String email) throws DAOException {
@@ -31,6 +32,10 @@ public class SQLUserDAO implements UserDAO {
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+
             preparedStatement = connection.prepareStatement(FindUserByEmail.STATEMENT);
 
             preparedStatement.setString(FindUserByEmail.LOGIN_INPUT_INDEX, email);
@@ -71,6 +76,9 @@ public class SQLUserDAO implements UserDAO {
         try {
 
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindUserByLoginAndPassword.STATEMENT);
 
             preparedStatement.setString(FindUserByLoginAndPassword.LOGIN_INPUT_INDEX, email);
@@ -108,6 +116,9 @@ public class SQLUserDAO implements UserDAO {
 
         try {
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(SaveUser.STATEMENT);
 
             int id = user.getId();

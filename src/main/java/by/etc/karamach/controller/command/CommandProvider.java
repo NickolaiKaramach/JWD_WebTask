@@ -27,6 +27,7 @@ public class CommandProvider {
         repository.put(CommandName.DELETE_TEST, new DeleteTest());
         repository.put(CommandName.EDIT_TEST, new EditTest());
         repository.put(CommandName.EDIT_QUESTION, new EditQuestion());
+        repository.put(CommandName.DELETE_QUESTION, new DeleteQuestion());
     }
 
     public static CommandProvider getInstance() {

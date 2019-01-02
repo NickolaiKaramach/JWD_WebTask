@@ -8,6 +8,7 @@ import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.QuestionDAO;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
+import by.etc.karamach.service.validator.QuestionDataValidator;
 import by.etc.karamach.service.validator.TestDataValidator;
 import by.etc.karamach.service.validator.UserDataValidator;
 
@@ -18,6 +19,23 @@ public class QuestionsServiceImpl implements QuestionService {
     private static final QuestionDAO questionDAO = DAOFactory.getInstance().getQuestionDAO();
 
     private static final AnswerDAO answerDAO = DAOFactory.getInstance().getAnswerDAO();
+
+    @Override
+    public void deleteQuestion(int userId, int questionId) throws ServiceException {
+        if (!isQuestionOwner(userId, questionId)) {
+            throw new ServiceException("Cannot delete this test using your account");
+        }
+
+
+        try {
+
+            questionDAO.deleteTest(questionId);
+
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 
     @Override
     public Question getQuestionById(int questionId, int userId) throws ServiceException {
@@ -70,5 +88,30 @@ public class QuestionsServiceImpl implements QuestionService {
         }
 
         return questions;
+    }
+
+    private boolean isQuestionOwner(int userId, int questionId) throws ServiceException {
+
+        boolean isValidData =
+                UserDataValidator.isValidUserId(userId) &&
+                        QuestionDataValidator.isValidQuestionId(questionId);
+
+        if (!isValidData) {
+
+            throw new ServiceException("Cannot perform action with giving data");
+        }
+
+        Question question;
+
+        try {
+
+            question = questionDAO.getQuestionByQuestionsIdAndUserId(questionId, userId);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+        }
+
+        return (question != null);
     }
 }

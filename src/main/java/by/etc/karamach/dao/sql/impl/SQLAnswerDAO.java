@@ -17,6 +17,7 @@ import java.util.List;
 
 public class SQLAnswerDAO implements AnswerDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final boolean AUTO_COMMIT_TRUE = true;
 
     @Override
     public List<Answer> getAnswersByQuestionIdAndUserId(int questionId, int userId) throws DAOException {
@@ -31,6 +32,9 @@ public class SQLAnswerDAO implements AnswerDAO {
         try {
 
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
             preparedStatement = connection.prepareStatement(FindAnswersByQuestionIdAndUserId.STATEMENT);
 
             preparedStatement.setInt(FindAnswersByQuestionIdAndUserId.QUESTION_ID_INPUT_INDEX, questionId);
