@@ -12,6 +12,8 @@ public final class RequestParameterName {
     public static final String TEST_ID = "test_id";
     public static final String QUESTION_ID = "question_id";
     public static final String ANSWER_ID = "answer_id";
+    public static final String DESCRIPTION = "description";
+    public static final String IS_RIGHT = "isRight";
 
     private RequestParameterName() {
     }

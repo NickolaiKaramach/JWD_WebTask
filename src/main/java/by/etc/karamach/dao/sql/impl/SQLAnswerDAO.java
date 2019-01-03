@@ -7,6 +7,7 @@ import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.FindAnswerByAnswerIdAndUserId;
 import by.etc.karamach.dao.sql.query.FindAnswersByQuestionIdAndUserId;
+import by.etc.karamach.dao.sql.query.UpdateAnswer;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
 
 import java.sql.Connection;
@@ -19,6 +20,40 @@ import java.util.List;
 public class SQLAnswerDAO implements AnswerDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    @Override
+    public void updateAnswer(int answerId, String description, boolean isRight) throws DAOException {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+            preparedStatement = connection.prepareStatement(UpdateAnswer.STATEMENT);
+
+            preparedStatement.setString(UpdateAnswer.ANSWER_DESCRIPTION_INPUT_INDEX, description);
+            preparedStatement.setBoolean(UpdateAnswer.ANSWER_IS_RIGHT_INPUT_INDEX, isRight);
+            preparedStatement.setInt(UpdateAnswer.ANSWER_ID_INPUT_INDEX, answerId);
+
+            preparedStatement.execute();
+
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement);
+        }
+    }
 
     @Override
     public Answer getAnswerByAnswerIdAndUserId(int answerId, int userId) throws DAOException {

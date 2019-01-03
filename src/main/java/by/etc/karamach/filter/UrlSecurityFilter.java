@@ -22,6 +22,7 @@ public class UrlSecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         protectedUrl.add("/jsp/userPage.jsp");
+        //TODO: Add all protected urls
     }
 
     @Override

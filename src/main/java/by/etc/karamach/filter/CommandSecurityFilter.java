@@ -21,6 +21,7 @@ public class CommandSecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
+        //TODO: Add all protected commands
         protectedCommands.add("CREATE_TEST");
         protectedCommands.add("GET_MY_TESTS");
         protectedCommands.add("DELETE_TEST");
