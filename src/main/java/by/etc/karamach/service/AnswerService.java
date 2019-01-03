@@ -10,4 +10,8 @@ public interface AnswerService {
     Answer getAnswerById(int answerId, int userId) throws ServiceException;
 
     boolean updateAnswer(int answerId, String description, boolean isRight, int userId) throws ServiceException;
+
+    void saveAnswer(int questionId, String description, boolean isRight, int userId) throws ServiceException;
+
+    void deleteAnswer(int answerId, int userId) throws ServiceException;
 }

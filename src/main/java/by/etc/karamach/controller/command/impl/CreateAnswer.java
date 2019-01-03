@@ -16,16 +16,15 @@ import java.io.IOException;
 
 import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
-public class UpdateAnswer implements Command {
+public class CreateAnswer implements Command {
+
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
-    private static final String ANSWER_PAGE_URL = SERVER_PATH + "/controller?command=edit_answer&answer_id=";
     private static final String IS_CHECKED_STATUS = "on";
+    private static final String QUESTION_PAGE = SERVER_PATH + "/controller?command=edit_question&question_id=";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-
-
-        int answerId = Integer.valueOf(req.getParameter(RequestParameterName.ANSWER_ID));
+        int questionId = Integer.valueOf(req.getParameter(RequestParameterName.QUESTION_ID));
 
         String description = req.getParameter(RequestParameterName.DESCRIPTION);
 
@@ -39,23 +38,14 @@ public class UpdateAnswer implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        boolean isSuccessful;
 
         try {
 
-            isSuccessful = answerService.updateAnswer(answerId, description, isRight, userId);
+            answerService.saveAnswer(questionId, description, isRight, userId);
 
-            if (isSuccessful) {
-                resp.sendRedirect(ANSWER_PAGE_URL + answerId);
-            } else {
-                //TODO: Show Error to user!
-            }
-
+            resp.sendRedirect(QUESTION_PAGE + questionId);
         } catch (ServiceException | IOException e) {
-
             throw new CommandException(e);
-
         }
-
     }
 }

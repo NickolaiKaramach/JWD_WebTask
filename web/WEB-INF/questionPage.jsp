@@ -33,7 +33,7 @@ ${requestScope.question.description}
         </div>
 
         <div>
-            <a href="/controller?command=delete_answer&answer_id=${answer.id}">
+            <a href="/controller?command=delete_answer&answer_id=${answer.id}&question_id=${requestScope.question.id}">
                 <fmt:message key="locale.question.page.delete.button"/>
             </a>
         </div>
@@ -42,7 +42,25 @@ ${requestScope.question.description}
     </c:forEach>
 </div>
 
-<button>Add</button>
-<button>Save</button>
+<form action="/controller" method="post">
+    <input type="hidden" name="question_id" value="${requestScope.question.id}">
+
+    <input type="hidden" name="command" value="create_answer">
+
+    <label for="description"><fmt:message key="locale.answer.page.new.Description"/></label>
+    <input id="description" type="text" name="description"/>
+
+    <br>
+
+
+    <label for="isRight"> <fmt:message key="locale.answer.page.new.isRight"/> </label>
+    <input id="isRight" type="checkbox" name="isRight"/>
+
+    <br>
+
+    <label for="button"><fmt:message key="locale.question.page.new.button"/></label>
+    <input type="submit" id="button"/>
+</form>
+
 </body>
 </html>

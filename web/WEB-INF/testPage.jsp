@@ -33,7 +33,7 @@ ${requestScope.test.name}
         </div>
 
         <div>
-            <a href="/controller?command=delete_question&question_id=${question.id}">
+            <a href="/controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
                 <fmt:message key="locale.question.delete.button"/>
             </a>
         </div>

@@ -108,6 +108,7 @@ public class SQLQuestionDAO implements QuestionDAO {
                 question.setDescription(description);
 
                 question.setId(questionId);
+                question.setOwnerId(userId);
 
             }
 
