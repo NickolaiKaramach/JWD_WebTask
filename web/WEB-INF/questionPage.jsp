@@ -12,10 +12,29 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
-    <title><fmt:message key="locale.question.page.titile"/></title>
+    <title><fmt:message key="locale.question.page.tittle"/></title>
 </head>
 <body>
-${requestScope.question.description}
+<h1>
+    ${requestScope.question.description}
+</h1>
+
+<form action="/controller" method="post">
+    <input type="hidden" name="command" value="change_question_name">
+    <input type="hidden" name="question_id" value="${requestScope.question.id}">
+
+    <ul>
+        <li>
+            <label for="name"> <fmt:message key="locale.question.page.newName"/> </label>
+            <input type="text" name="name" id="name"/>
+
+        </li>
+        <li>
+            <label for="submit"> <fmt:message key="locale.question.page.newName.button"/> </label>
+            <input type="submit" id="submit">
+        </li>
+    </ul>
+</form>
 <br>
 ------------------------------------------
 <br>

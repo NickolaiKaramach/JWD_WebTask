@@ -2,10 +2,8 @@ package by.etc.karamach.service.impl;
 
 import by.etc.karamach.bean.Answer;
 import by.etc.karamach.bean.Question;
-import by.etc.karamach.dao.AnswerDAO;
-import by.etc.karamach.dao.DAOException;
-import by.etc.karamach.dao.DAOFactory;
-import by.etc.karamach.dao.QuestionDAO;
+import by.etc.karamach.bean.Test;
+import by.etc.karamach.dao.*;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.validator.QuestionDataValidator;
@@ -19,6 +17,55 @@ public class QuestionsServiceImpl implements QuestionService {
     private static final QuestionDAO questionDAO = DAOFactory.getInstance().getQuestionDAO();
 
     private static final AnswerDAO answerDAO = DAOFactory.getInstance().getAnswerDAO();
+
+    private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
+
+    @Override
+    public void createQuestion(int testId, String description, int userId) throws ServiceException {
+
+        //TODO: Maybe implement type of errors in error classes? By creating common super-class
+        if (!QuestionDataValidator.isValidDescription(description)) {
+
+            throw new ServiceException("Cannot operate with current description");
+
+        }
+
+
+        try {
+
+            Test changingTest = testDAO.getTest(testId);
+
+
+            if (changingTest.getOwnerId() != userId) {
+
+                throw new ServiceException("Permission denied!");
+
+            }
+
+            questionDAO.createQuestion(testId, description, userId);
+
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+    }
+
+    @Override
+    public void updateQuestionName(int questionId, String newName, int userId) throws ServiceException {
+        getQuestionById(questionId, userId);
+
+        try {
+
+            questionDAO.updateQuestionName(questionId, newName);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+    }
 
     @Override
     public void deleteQuestion(int userId, int questionId) throws ServiceException {

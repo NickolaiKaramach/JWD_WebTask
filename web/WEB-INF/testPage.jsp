@@ -15,8 +15,26 @@
     <title><fmt:message key="locale.test.page.title"/></title>
 </head>
 <body>
+<h1>
 ${requestScope.test.name}
+</h1>
 <br>
+<form action="/controller" method="post">
+    <input type="hidden" name="command" value="change_test_name">
+    <input type="hidden" name="test_id" value="${requestScope.test.id}">
+
+    <ul>
+        <li>
+            <label for="name"> <fmt:message key="locale.test.page.newName"/> </label>
+            <input type="text" name="name" id="name"/>
+
+        </li>
+        <li>
+            <label for="submit"> <fmt:message key="locale.test.page.newName.button"/> </label>
+            <input type="submit" id="submit">
+        </li>
+    </ul>
+</form>
 ------------------------------------------
 <br>
 
@@ -41,6 +59,21 @@ ${requestScope.test.name}
         <br>
     </c:forEach>
 </div>
+
+<form action="/controller" method="post">
+    <input type="hidden" name="test_id" value="${requestScope.test.id}">
+
+    <input type="hidden" name="command" value="create_question">
+
+    <label for="description"><fmt:message key="locale.test.page.new.question.description"/></label>
+    <input id="description" type="text" name="description"/>
+
+
+    <br>
+
+    <label for="button"><fmt:message key="locale.test.page.new.question.button"/></label>
+    <input type="submit" id="button"/>
+</form>
 
 <button>Add</button>
 <button>Save</button>

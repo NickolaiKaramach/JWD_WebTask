@@ -7,4 +7,8 @@ public final class QuestionDataValidator {
     public static boolean isValidQuestionId(int questionId) {
         return (questionId > 0);
     }
+
+    public static boolean isValidDescription(String description) {
+        return (((description != null) && (!description.isEmpty())) && (description.length() < 30));
+    }
 }
