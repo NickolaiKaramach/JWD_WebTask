@@ -14,4 +14,6 @@ public interface TestDAO {
     Test getTest(int testId) throws DAOException;
 
     void deleteTest(int testId) throws DAOException;
+
+    void updateTestName(int testId, String newName) throws DAOException;
 }

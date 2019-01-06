@@ -189,6 +189,38 @@ public class SQLTestDAO implements TestDAO {
     }
 
     @Override
+    public void updateTestName(int testId, String newName) throws DAOException {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+            preparedStatement = connection.prepareStatement(UpdateTestName.STATEMENT);
+
+            preparedStatement.setInt(UpdateTestName.TEST_ID_INPUT_INDEX, testId);
+            preparedStatement.setString(UpdateTestName.TEST_NAME_INPUT_INDEX, newName);
+
+            preparedStatement.execute();
+
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement);
+        }
+    }
+
+    @Override
     public void deleteTest(int testId) throws DAOException {
         Connection connection = null;
 

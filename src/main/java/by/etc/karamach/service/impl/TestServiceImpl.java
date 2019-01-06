@@ -16,6 +16,26 @@ public class TestServiceImpl implements TestService {
     private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
 
     @Override
+    public void updateTestName(int testId, String newName, int userId) throws ServiceException {
+
+        if (!isTestOwner(userId, testId)) {
+            throw new ServiceException("Permission denied!");
+        }
+
+        try {
+
+            testDAO.updateTestName(testId, newName);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+
+
+    }
+
+    @Override
     public List<Test> getAllTests() throws ServiceException {
         List<Test> resultTest;
 

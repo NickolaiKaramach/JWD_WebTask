@@ -16,4 +16,6 @@ public interface TestService {
     boolean isTestOwner(int userId, int testId) throws ServiceException;
 
     Test getTestById(int testId) throws ServiceException;
+
+    void updateTestName(int testId, String newName, int userId) throws ServiceException;
 }
