@@ -9,6 +9,8 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.AnswerService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,8 @@ import static by.etc.karamach.controller.Controller.SERVER_PATH;
 public class DeleteAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
     private static final String QUESTION_PAGE_URL = SERVER_PATH + "/controller?command=edit_question&question_id=";
+
+    private static final transient Logger logger = LogManager.getLogger();
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -37,9 +41,14 @@ public class DeleteAnswer implements Command {
 
             resp.sendRedirect(QUESTION_PAGE_URL + questionId);
 
-        } catch (ServiceException | IOException e) {
+        } catch (ServiceException e) {
 
             throw new CommandException(e);
+
+        } catch (IOException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
 
         }
     }

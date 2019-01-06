@@ -7,6 +7,8 @@ import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.AnswerService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.io.IOException;
 
 public class EditAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
+    private static final transient Logger logger = LogManager.getLogger();
 
 
     @Override
@@ -36,8 +39,16 @@ public class EditAnswer implements Command {
             req.setAttribute(RequestAttributeName.ANSWER, answer);
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.ANSWER_PAGE);
 
-        } catch (ServiceException | IOException | ServletException e) {
+        } catch (ServiceException e) {
+
             throw new CommandException(e);
+
+
+        } catch (IOException | ServletException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
+
         }
     }
 }

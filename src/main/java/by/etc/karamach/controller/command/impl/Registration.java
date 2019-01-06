@@ -9,6 +9,8 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ public class Registration implements Command {
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
     private static final boolean ERROR_TRUE = true;
 
+    private static final transient Logger logger = LogManager.getLogger();
 
     @Override
     public String getErrorJspPage() {
@@ -52,9 +55,14 @@ public class Registration implements Command {
 
             DispatchAssistant.redirectToJsp(req, resp, nextPage);
 
-        } catch (ServiceException | IOException | ServletException e) {
+        } catch (ServiceException e) {
 
             throw new CommandException(e);
+
+        } catch (IOException | ServletException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
         }
 
     }

@@ -9,6 +9,8 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +28,7 @@ public class CreateQuestion implements Command {
     }
 
     private static final String TEST_PAGE_URL = SERVER_PATH + "/controller?command=edit_test&test_id=";
+    private static final transient Logger logger = LogManager.getLogger();
 
 
     @Override
@@ -44,9 +47,14 @@ public class CreateQuestion implements Command {
 
             resp.sendRedirect(TEST_PAGE_URL + testId);
 
-        } catch (ServiceException | IOException e) {
+        } catch (ServiceException e) {
 
             throw new CommandException(e);
+
+        } catch (IOException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
 
         }
     }

@@ -7,6 +7,8 @@ import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import java.util.List;
 
 public class GetMyTest implements Command {
     private TestService testService = ServiceFactory.getInstance().getTestService();
+    private static final transient Logger logger = LogManager.getLogger();
 
 
     @Override
@@ -44,11 +47,14 @@ public class GetMyTest implements Command {
             req.setAttribute(RequestAttributeName.MY_TESTS, tests);
             DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_TESTS);
 
-        } catch (ServiceException | IOException | ServletException e) {
+        } catch (ServiceException e) {
 
             throw new CommandException(e);
-        }
+        } catch (IOException | ServletException e) {
 
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

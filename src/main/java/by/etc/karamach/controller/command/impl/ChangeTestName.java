@@ -9,6 +9,8 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import static by.etc.karamach.controller.Controller.SERVER_PATH;
 public class ChangeTestName implements Command {
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
     private static final String TEST_PAGE_URL = SERVER_PATH + "/controller?command=edit_test&test_id=";
+    private static final transient Logger logger = LogManager.getLogger();
 
     @Override
     public String getErrorJspPage() {
@@ -41,9 +44,14 @@ public class ChangeTestName implements Command {
 
             resp.sendRedirect(TEST_PAGE_URL + testId);
 
-        } catch (ServiceException | IOException e) {
+        } catch (ServiceException e) {
 
             throw new CommandException(e);
+
+        } catch (IOException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
 
         }
 

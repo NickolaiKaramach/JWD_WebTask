@@ -9,6 +9,8 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.AnswerService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +23,8 @@ public class UpdateAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
     private static final String ANSWER_PAGE_URL = SERVER_PATH + "/controller?command=edit_answer&answer_id=";
     private static final String IS_CHECKED_STATUS = "on";
+    private static final transient Logger logger = LogManager.getLogger();
+
 
     @Override
     public String getErrorJspPage() {
@@ -52,14 +56,23 @@ public class UpdateAnswer implements Command {
             isSuccessful = answerService.updateAnswer(answerId, description, isRight, userId);
 
             if (isSuccessful) {
+
                 resp.sendRedirect(ANSWER_PAGE_URL + answerId);
+
             } else {
-                //TODO: Show Error to user!
+
+                throw new CommandException("Something goes wrong...");
+
             }
 
-        } catch (ServiceException | IOException e) {
+        } catch (ServiceException e) {
 
             throw new CommandException(e);
+
+        } catch (IOException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
 
         }
 

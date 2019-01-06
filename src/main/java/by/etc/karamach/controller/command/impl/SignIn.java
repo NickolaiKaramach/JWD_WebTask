@@ -9,6 +9,8 @@ import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +23,9 @@ import static by.etc.karamach.controller.util.RequestParameterName.PASSWORD;
 
 public class SignIn implements Command {
 
-    private static final String INVALID_PASSWORD = "Invalid login or password";
-
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
+
+    private static final transient Logger logger = LogManager.getLogger();
 
     @Override
     public String getErrorJspPage() {
@@ -37,7 +39,6 @@ public class SignIn implements Command {
         String nextPage;
 
         if (user == null) {
-            //TODO: Show error to user
             throw new CommandException("Invalid password!");
 
         }
@@ -48,11 +49,13 @@ public class SignIn implements Command {
 
 
         try {
+
             DispatchAssistant.redirectToJsp(req, resp, nextPage);
 
         } catch (IOException | ServletException e) {
 
-            throw new CommandException(e);
+            logger.error(e);
+            throw new RuntimeException(e);
         }
 
     }
@@ -69,6 +72,7 @@ public class SignIn implements Command {
         User user;
 
         try {
+
             user = userService.signIn(email, password);
 
         } catch (ServiceException e) {
