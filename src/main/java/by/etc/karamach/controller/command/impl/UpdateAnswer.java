@@ -2,6 +2,7 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.controller.util.JspPageName;
 import by.etc.karamach.controller.util.RequestParameterName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -20,6 +21,11 @@ public class UpdateAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
     private static final String ANSWER_PAGE_URL = SERVER_PATH + "/controller?command=edit_answer&answer_id=";
     private static final String IS_CHECKED_STATUS = "on";
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.ANSWER_PAGE;
+    }
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

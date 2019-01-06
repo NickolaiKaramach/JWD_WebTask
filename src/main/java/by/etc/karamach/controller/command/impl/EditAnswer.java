@@ -19,6 +19,11 @@ public class EditAnswer implements Command {
 
 
     @Override
+    public String getErrorJspPage() {
+        return JspPageName.QUESTION_PAGE;
+    }
+
+    @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);

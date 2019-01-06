@@ -29,6 +29,11 @@ public class Registration implements Command {
 
 
     @Override
+    public String getErrorJspPage() {
+        return JspPageName.REGISTER_PAGE;
+    }
+
+    @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         User user = createUserFromRequest(req);

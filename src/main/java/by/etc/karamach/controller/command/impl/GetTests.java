@@ -39,4 +39,9 @@ public class GetTests implements Command {
         }
 
     }
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.INDEX_JSP;
+    }
 }

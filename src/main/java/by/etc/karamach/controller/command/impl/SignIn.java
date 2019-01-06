@@ -16,13 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.util.RequestParameterName.*;
+import static by.etc.karamach.controller.util.RequestParameterName.EMAIL;
+import static by.etc.karamach.controller.util.RequestParameterName.PASSWORD;
 
 public class SignIn implements Command {
 
     private static final String INVALID_PASSWORD = "Invalid login or password";
 
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.LOGIN_PAGE;
+    }
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -32,15 +38,14 @@ public class SignIn implements Command {
 
         if (user == null) {
             //TODO: Show error to user
-            req.setAttribute(MSG, INVALID_PASSWORD);
-            nextPage = JspPageName.ERROR_PAGE;
+            throw new CommandException("Invalid password!");
 
-        } else {
+        }
             HttpSession newSession = SessionHelper.createOrGetSession(req);
             SessionHelper.saveUserToSession(newSession, user);
 
             nextPage = JspPageName.USER_PAGE;
-        }
+
 
         try {
             DispatchAssistant.redirectToJsp(req, resp, nextPage);

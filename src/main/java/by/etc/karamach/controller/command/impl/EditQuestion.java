@@ -38,4 +38,9 @@ public class EditQuestion implements Command {
 
 
     }
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.TEST_PAGE;
+    }
 }

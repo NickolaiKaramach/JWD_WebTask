@@ -24,6 +24,16 @@
 </head>
 <body class="text-center">
 
+<c:if test="${requestScope.error != null}">
+    <%
+        Exception exception = (Exception) request.getAttribute("error");
+        out.print(exception.getMessage());
+    %>
+</c:if>
+
+<br>
+
+
 <div class="main">
     <section class="signup">
         <div class="container">

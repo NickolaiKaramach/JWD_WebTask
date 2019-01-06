@@ -14,6 +14,14 @@
     <title><fmt:message key="locale.user.panel.title"/></title>
 </head>
 <body>
+<c:if test="${requestScope.error != null}">
+    <%
+        Exception exception = (Exception) request.getAttribute("error");
+        out.print(exception.getMessage());
+    %>
+</c:if>
+
+<br>
 
 <div>
     <c:if test="${requestScope.msg != null}}">

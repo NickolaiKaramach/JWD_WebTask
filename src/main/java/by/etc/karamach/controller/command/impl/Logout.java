@@ -31,4 +31,9 @@ public class Logout implements Command {
         }
 
     }
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.INDEX_JSP;
+    }
 }

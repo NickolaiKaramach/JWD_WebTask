@@ -2,6 +2,7 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.controller.util.JspPageName;
 import by.etc.karamach.controller.util.RequestParameterName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -19,6 +20,11 @@ import static by.etc.karamach.controller.Controller.SERVER_PATH;
 public class ChangeQuestionName implements Command {
     private static final QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
     private static final String QUESTION_PAGE_URL = SERVER_PATH + "/controller?command=edit_question&question_id=";
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.QUESTION_PAGE;
+    }
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

@@ -2,6 +2,7 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
+import by.etc.karamach.controller.util.JspPageName;
 import by.etc.karamach.controller.util.RequestParameterName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -18,6 +19,12 @@ import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
 public class CreateQuestion implements Command {
     private static final QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.TEST_PAGE;
+    }
+
     private static final String TEST_PAGE_URL = SERVER_PATH + "/controller?command=edit_test&test_id=";
 
 

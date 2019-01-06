@@ -1,5 +1,6 @@
 package by.etc.karamach.filter;
 
+import by.etc.karamach.controller.command.CommandName;
 import by.etc.karamach.controller.util.*;
 
 import javax.servlet.*;
@@ -22,10 +23,19 @@ public class CommandSecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         //TODO: Add all protected commands
-        protectedCommands.add("CREATE_TEST");
-        protectedCommands.add("GET_MY_TESTS");
-        protectedCommands.add("DELETE_TEST");
-        protectedCommands.add("EDIT_TEST");
+        protectedCommands.add(CommandName.CHANGE_QUESTION_NAME.toString());
+        protectedCommands.add(CommandName.CHANGE_TEST_NAME.toString());
+        protectedCommands.add(CommandName.CREATE_ANSWER.toString());
+        protectedCommands.add(CommandName.CREATE_QUESTION.toString());
+        protectedCommands.add(CommandName.CREATE_TEST.toString());
+        protectedCommands.add(CommandName.DELETE_ANSWER.toString());
+        protectedCommands.add(CommandName.DELETE_QUESTION.toString());
+        protectedCommands.add(CommandName.DELETE_TEST.toString());
+        protectedCommands.add(CommandName.EDIT_ANSWER.toString());
+        protectedCommands.add(CommandName.EDIT_QUESTION.toString());
+        protectedCommands.add(CommandName.EDIT_TEST.toString());
+        protectedCommands.add(CommandName.GET_MY_TESTS.toString());
+        protectedCommands.add(CommandName.UPDATE_ANSWER.toString());
     }
 
     @Override
@@ -39,7 +49,7 @@ public class CommandSecurityFilter implements Filter {
 
         String command = req.getParameter(RequestParameterName.COMMAND_NAME);
 
-        if ((command == null) || (!protectedCommands.contains(command))) {
+        if ((command == null) || (!protectedCommands.contains(command.toUpperCase()))) {
             filterChain.doFilter(req, resp);
             return;
         }

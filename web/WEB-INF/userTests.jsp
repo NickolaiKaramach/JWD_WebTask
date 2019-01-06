@@ -15,6 +15,15 @@
     <title><fmt:message key="locale.tests.title"/></title>
 </head>
 <body>
+<c:if test="${requestScope.error != null}">
+    <%
+        Exception exception = (Exception) request.getAttribute("error");
+        out.print(exception.getMessage());
+    %>
+</c:if>
+
+<br>
+
 <div>
 <c:forEach items="${requestScope.mytests}" var="test">
     <ul>

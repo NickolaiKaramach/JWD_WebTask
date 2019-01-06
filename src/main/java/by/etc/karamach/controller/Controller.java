@@ -4,6 +4,7 @@ import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.controller.command.CommandProvider;
 import by.etc.karamach.controller.util.JspPageName;
+import by.etc.karamach.controller.util.RequestAttributeName;
 import by.etc.karamach.controller.util.RequestParameterName;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
@@ -15,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static by.etc.karamach.controller.util.RequestParameterName.ERROR_MSG;
 
 
 //TODO: 1. Logger hierarchy
@@ -53,24 +52,20 @@ public final class Controller extends HttpServlet {
 
             //TODO: Place error msg at jsp
             //TODO: Show easy-to-understand message to user
-            req.setAttribute(ERROR_MSG, e.getMessage());
-            redirectToErrorPage(req, resp);
+            req.setAttribute(RequestAttributeName.ERROR, e);
+            redirectToErrorPage(req, resp, command.getErrorJspPage());
         }
     }
 
-    private void redirectToErrorPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void redirectToErrorPage(HttpServletRequest req, HttpServletResponse resp, String jspName) throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher(JspPageName.ERROR_PAGE);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(jspName);
 
-        if (dispatcher != null) {
-            dispatcher.forward(req, resp);
-        } else {
-            errorMessageDirectlyFromResponse(resp);
+        if (dispatcher == null) {
+            dispatcher = req.getRequestDispatcher(JspPageName.FATAL_ERROR_PAGE);
         }
+
+        dispatcher.forward(req, resp);
     }
 
-    private void errorMessageDirectlyFromResponse(HttpServletResponse resp) throws IOException {
-        resp.setContentType(TEXT_HTML);
-        resp.getWriter().println(ERROR_TEXT);
-    }
 }

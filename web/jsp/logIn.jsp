@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale"/>
@@ -21,6 +22,14 @@
     <link href="https://getbootstrap.com/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
+
+<!-- TODO: Create another showing case!!! -->
+<c:if test="${requestScope.error != null}">
+    <%
+        Exception exception = (Exception) request.getAttribute("error");
+        out.print(exception.getMessage());
+    %>
+</c:if>
 
 <form action="/controller" method="post" class="form-signin">
     <input type="hidden" name="command" value="sign_in"/>

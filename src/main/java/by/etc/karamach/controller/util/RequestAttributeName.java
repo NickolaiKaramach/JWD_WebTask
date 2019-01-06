@@ -6,6 +6,7 @@ public final class RequestAttributeName {
     public static final String TESTS = "tests";
     public static final String QUESTION = "question";
     public static final String ANSWER = "answer";
+    public static final String ERROR = "error";
 
     private RequestAttributeName() {
     }

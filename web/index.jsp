@@ -24,6 +24,15 @@
     <title><fmt:message key="locale.index.title"/></title>
 </head>
 <body>
+<c:if test="${requestScope.error != null}">
+    <%
+        Exception exception = (Exception) request.getAttribute("error");
+        out.print(exception.getMessage());
+    %>
+</c:if>
+
+<br>
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <fmt:setLocale value="${requestScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>

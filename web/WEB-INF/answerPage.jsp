@@ -15,6 +15,14 @@
     <title><fmt:message key="locale.answer.page.title"/></title>
 </head>
 <body>
+<c:if test="${requestScope.error != null}">
+    <%
+        Exception exception = (Exception) request.getAttribute("error");
+        out.print(exception.getMessage());
+    %>
+</c:if>
+
+<br>
 <fmt:message key="locale.answer.page.currentDescription"/>
 <br>
 ${requestScope.answer.description}

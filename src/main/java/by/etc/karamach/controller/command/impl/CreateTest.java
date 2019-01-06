@@ -3,20 +3,25 @@ package by.etc.karamach.controller.command.impl;
 import by.etc.karamach.bean.Test;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.*;
+import by.etc.karamach.controller.util.JspPageName;
+import by.etc.karamach.controller.util.RequestParameterName;
+import by.etc.karamach.controller.util.SessionAttributeName;
+import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.etc.karamach.controller.Controller.SERVER_PATH;
+
 public class CreateTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
+    private static final String USER_TESTS_PAGE = SERVER_PATH + "/controller?command=get_my_tests";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -39,15 +44,19 @@ public class CreateTest implements Command {
 
             testService.saveNewTest(test);
 
-            req.setAttribute(RequestAttributeName.TEST, test);
+            resp.sendRedirect(USER_TESTS_PAGE);
 
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.TEST_PAGE);
 
-        } catch (ServiceException | IOException | ServletException e) {
+        } catch (ServiceException | IOException e) {
 
             throw new CommandException(e);
         }
 
+    }
+
+    @Override
+    public String getErrorJspPage() {
+        return JspPageName.TEST_PAGE;
     }
 
     private Test constructTestFromData(Integer userId, String testName) {
