@@ -1,6 +1,7 @@
 package by.etc.karamach.service.impl;
 
 import by.etc.karamach.bean.Test;
+import by.etc.karamach.bean.TestStatus;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.TestDAO;
@@ -14,6 +15,26 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
 
     private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
+
+    @Override
+    public void publishTest(int testId, int userId) throws ServiceException {
+
+        if (!isTestOwner(userId, testId)) {
+
+            throw new ServiceException("Permission denied to that user!");
+
+        }
+
+        try {
+
+            testDAO.changeTestStatus(testId, TestStatus.PUBLISHED);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+    }
 
     @Override
     public void updateTestName(int testId, String newName, int userId) throws ServiceException {

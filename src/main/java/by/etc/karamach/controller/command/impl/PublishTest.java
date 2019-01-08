@@ -1,6 +1,5 @@
 package by.etc.karamach.controller.command.impl;
 
-import by.etc.karamach.bean.Test;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.controller.util.JspPageName;
@@ -20,34 +19,26 @@ import java.io.IOException;
 
 import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
-public class CreateTest implements Command {
+public class PublishTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final String USER_TESTS_PAGE = SERVER_PATH + "/controller?command=get_my_tests";
-    private static final transient Logger logger = LogManager.getLogger();
+
+    private static final Logger logger = LogManager.getLogger();
+    private static final String USERS_TESTS_PAGE = SERVER_PATH + "/controller?command=get_my_tests";
+
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+        HttpSession existingSession = SessionHelper.getExistingSession(req);
+        int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        HttpSession session = SessionHelper.getExistingSession(req);
-
-        Integer userId = (Integer) session.getAttribute(SessionAttributeName.ID);
-        String testName = req.getParameter(RequestParameterName.NAME);
-
-        if ((userId == null) || (testName == null)) {
-
-            throw new CommandException("Invalid data input, please try one more time!");
-        }
-
+        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
 
         try {
 
-            Test test = constructTestFromData(userId, testName);
+            testService.publishTest(testId, userId);
 
-            testService.saveNewTest(test);
-
-            resp.sendRedirect(USER_TESTS_PAGE);
-
+            resp.sendRedirect(USERS_TESTS_PAGE);
 
         } catch (ServiceException e) {
 
@@ -66,13 +57,4 @@ public class CreateTest implements Command {
     public String getErrorJspPage() {
         return JspPageName.TEST_PAGE;
     }
-
-    private Test constructTestFromData(Integer userId, String testName) {
-        Test test = new Test();
-
-        test.setOwnerId(userId);
-        test.setName(testName);
-        return test;
-    }
-
 }

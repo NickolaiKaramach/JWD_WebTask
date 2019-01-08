@@ -22,7 +22,6 @@ public class CommandSecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        //TODO: Add all protected commands
         protectedCommands.add(CommandName.CHANGE_QUESTION_NAME.toString());
         protectedCommands.add(CommandName.CHANGE_TEST_NAME.toString());
         protectedCommands.add(CommandName.CREATE_ANSWER.toString());
@@ -36,6 +35,8 @@ public class CommandSecurityFilter implements Filter {
         protectedCommands.add(CommandName.EDIT_TEST.toString());
         protectedCommands.add(CommandName.GET_MY_TESTS.toString());
         protectedCommands.add(CommandName.UPDATE_ANSWER.toString());
+        protectedCommands.add(CommandName.PUBLISH_TEST.toString());
+
     }
 
     @Override

@@ -35,6 +35,7 @@ public class CommandProvider {
         repository.put(CommandName.CHANGE_QUESTION_NAME, new ChangeQuestionName());
         repository.put(CommandName.CREATE_QUESTION, new CreateQuestion());
         repository.put(CommandName.CHANGE_TEST_NAME, new ChangeTestName());
+        repository.put(CommandName.PUBLISH_TEST, new PublishTest());
     }
 
     public static CommandProvider getInstance() {

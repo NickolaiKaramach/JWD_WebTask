@@ -85,8 +85,8 @@ ${requestScope.test.name}
     <input type="submit" id="button"/>
 </form>
 
-<button>Add</button>
-<button>Save</button>
+<a href="/controller?command=publish_test&test_id=${requestScope.test.id}"><fmt:message
+        key="locale.test.page.publish.test.button"/> </a>
 
 </body>
 </html>

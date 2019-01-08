@@ -18,4 +18,6 @@ public interface TestService {
     Test getTestById(int testId) throws ServiceException;
 
     void updateTestName(int testId, String newName, int userId) throws ServiceException;
+
+    void publishTest(int testId, int userId) throws ServiceException;
 }

@@ -1,6 +1,7 @@
 package by.etc.karamach.dao;
 
 import by.etc.karamach.bean.Test;
+import by.etc.karamach.bean.TestStatus;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface TestDAO {
     void deleteTest(int testId) throws DAOException;
 
     void updateTestName(int testId, String newName) throws DAOException;
+
+    void changeTestStatus(int testId, TestStatus published) throws DAOException;
 }

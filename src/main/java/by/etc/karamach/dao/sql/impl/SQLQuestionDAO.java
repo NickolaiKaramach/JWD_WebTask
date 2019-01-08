@@ -154,7 +154,6 @@ public class SQLQuestionDAO implements QuestionDAO {
 
             } catch (SQLException e) {
 
-                //TODO: What to do with fatal exception?
                 throw new RuntimeException(e);
 
             }

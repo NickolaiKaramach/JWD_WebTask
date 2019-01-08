@@ -23,7 +23,6 @@ public class QuestionsServiceImpl implements QuestionService {
     @Override
     public void createQuestion(int testId, String description, int userId) throws ServiceException {
 
-        //TODO: Maybe implement type of errors in error classes? By creating common super-class
         if (!QuestionDataValidator.isValidDescription(description)) {
 
             throw new ServiceException("Cannot operate with current description");
