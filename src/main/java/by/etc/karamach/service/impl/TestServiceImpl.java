@@ -17,6 +17,30 @@ public class TestServiceImpl implements TestService {
     private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
 
     @Override
+    public Test takeTest(int userId, int testId) throws ServiceException {
+        boolean isValidData =
+                UserDataValidator.isValidUserId(userId) &&
+                        TestDataValidator.isValidTestId(testId);
+
+        if (!isValidData) {
+            throw new ServiceException("Please be logged in, and access only available tests!");
+        }
+
+        Test test;
+        try {
+
+            test = testDAO.getTest(testId);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+
+        return test;
+    }
+
+    @Override
     public void publishTest(int testId, int userId) throws ServiceException {
 
         if (!isTestOwner(userId, testId)) {

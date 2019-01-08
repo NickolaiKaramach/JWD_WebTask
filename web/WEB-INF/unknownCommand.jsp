@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: kosoj_rus
-  Date: 12/19/18
-  Time: 22:35
+  Date: 1/8/19
+  Time: 17:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -12,21 +12,9 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
-    <title><fmt:message key="locale.tests.title"/></title>
+    <title><fmt:message key="locale.unknown.command.title"/></title>
 </head>
 <body>
-
-<c:forEach items="${requestScope.tests}" var="currentTest">
-    <ul>
-            ${currentTest.name}
-
-
-        <a href="/controller?command=take_test&test_id=${currentTest.id}">
-            <fmt:message key="locale.tests.details.button"/>
-        </a>
-
-    </ul>
-</c:forEach>
-
+<h2><fmt:message key="locale.unknown.command.description"/></h2>
 </body>
 </html>

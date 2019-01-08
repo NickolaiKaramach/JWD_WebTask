@@ -20,4 +20,6 @@ public interface TestService {
     void updateTestName(int testId, String newName, int userId) throws ServiceException;
 
     void publishTest(int testId, int userId) throws ServiceException;
+
+    Test takeTest(int userId, int testId) throws ServiceException;
 }

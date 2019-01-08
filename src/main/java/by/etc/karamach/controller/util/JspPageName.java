@@ -12,6 +12,8 @@ public final class JspPageName {
     public static final String QUESTION_PAGE = "/WEB-INF/questionPage.jsp";
     public static final String ANSWER_PAGE = "/WEB-INF/answerPage.jsp";
     public static final String FATAL_ERROR_PAGE = "/WEB-INF/fatalError.jsp";
+    public static final String UNKNOWN_COMMAND_PAGE = "/WEB-INF/unknownCommand.jsp";
+    public static final String PREASSESSMENT_PAGE = "/WEB-INF/preAssessment.jsp";
 
     private JspPageName() {
     }
