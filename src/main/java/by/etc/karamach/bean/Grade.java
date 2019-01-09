@@ -1,27 +1,31 @@
 package by.etc.karamach.bean;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Grade implements Serializable {
-    private static final long serialVersionUID = -2744249801865549578L;
+    private static final long serialVersionUID = 2551435947564380776L;
 
     private int id;
     private int testId;
     private int userId;
     private int mark;
+    private Timestamp finishTime;
+    private boolean isFinished;
 
     public Grade() {
     }
 
-    public Grade(int id, int testId, int userId, int mark) {
+    public Grade(int id, int testId, int userId, int mark, Timestamp finishTime, boolean isFinished) {
         this.id = id;
         this.testId = testId;
         this.userId = userId;
         this.mark = mark;
+        this.finishTime = finishTime;
+        this.isFinished = isFinished;
     }
-
 
     public int getId() {
         return id;
@@ -55,27 +59,45 @@ public class Grade implements Serializable {
         this.mark = mark;
     }
 
+    public Timestamp getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(Timestamp finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
 
-        if (obj == null || getClass() != obj.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        Grade grade = (Grade) obj;
+        Grade grade = (Grade) o;
 
         return getId() == grade.getId() &&
                 getTestId() == grade.getTestId() &&
                 getUserId() == grade.getUserId() &&
-                getMark() == grade.getMark();
+                getMark() == grade.getMark() &&
+                isFinished() == grade.isFinished() &&
+                Objects.equals(getFinishTime(), grade.getFinishTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTestId(), getUserId(), getMark());
+        return Objects.hash(getId(), getTestId(), getUserId(), getMark(), getFinishTime(), isFinished());
     }
 
     @Override
@@ -85,6 +107,8 @@ public class Grade implements Serializable {
                 .add("testId=" + testId)
                 .add("userId=" + userId)
                 .add("mark=" + mark)
+                .add("finishTime=" + finishTime)
+                .add("isFinished=" + isFinished)
                 .toString();
     }
 }

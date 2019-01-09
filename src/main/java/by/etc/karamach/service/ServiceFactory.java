@@ -1,9 +1,6 @@
 package by.etc.karamach.service;
 
-import by.etc.karamach.service.impl.AnswerServiceImpl;
-import by.etc.karamach.service.impl.QuestionsServiceImpl;
-import by.etc.karamach.service.impl.TestServiceImpl;
-import by.etc.karamach.service.impl.UserServiceImpl;
+import by.etc.karamach.service.impl.*;
 
 public class ServiceFactory {
 
@@ -13,6 +10,8 @@ public class ServiceFactory {
     private final TestService testService = new TestServiceImpl();
     private final QuestionService questionService = new QuestionsServiceImpl();
     private final AnswerService answerService = new AnswerServiceImpl();
+    private final GradeService gradeService = new GradeServiceImpl();
+    private final ChoiceService choiceService = new ChoiceServiceImpl();
 
     private ServiceFactory() {
     }
@@ -35,5 +34,13 @@ public class ServiceFactory {
 
     public AnswerService getAnswerService() {
         return answerService;
+    }
+
+    public GradeService getGradeService() {
+        return gradeService;
+    }
+
+    public ChoiceService getChoiceService() {
+        return choiceService;
     }
 }

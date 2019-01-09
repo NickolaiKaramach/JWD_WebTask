@@ -8,5 +8,9 @@ CREATE TABLE JWD_WebProject.tests
 );
 CREATE UNIQUE INDEX id_UNIQUE ON JWD_WebProject.tests (id);
 CREATE INDEX fk_tests_users_idx ON JWD_WebProject.tests (users_id);
-INSERT INTO JWD_WebProject.tests (id, name, status, users_id) VALUES (1, 'Java0', 'NEW', 1);
-INSERT INTO JWD_WebProject.tests (id, name, status, users_id) VALUES (2, 'Java1', 'NEW', 2);
+INSERT INTO JWD_WebProject.tests (id, name, status, users_id)
+VALUES (3, 'Java0', 'PUBLISHED', 1);
+INSERT INTO JWD_WebProject.tests (id, name, status, users_id)
+VALUES (4, 'Another Java', 'PUBLISHED', 2);
+INSERT INTO JWD_WebProject.tests (id, name, status, users_id)
+VALUES (5, 'Java1', 'PUBLISHED', 1);

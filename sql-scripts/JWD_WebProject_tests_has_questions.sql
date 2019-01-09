@@ -8,7 +8,15 @@ CREATE TABLE JWD_WebProject.tests_has_questions
 );
 CREATE INDEX fk_tests_has_questions_tests1_idx ON JWD_WebProject.tests_has_questions (tests_id);
 CREATE INDEX fk_tests_has_questions_questions1_idx ON JWD_WebProject.tests_has_questions (questions_id);
-INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id) VALUES (1, 1);
-INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id) VALUES (1, 2);
-INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id) VALUES (2, 3);
-INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id) VALUES (2, 4);
+INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id)
+VALUES (3, 1);
+INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id)
+VALUES (3, 2);
+INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id)
+VALUES (4, 3);
+INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id)
+VALUES (4, 4);
+INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id)
+VALUES (5, 5);
+INSERT INTO JWD_WebProject.tests_has_questions (tests_id, questions_id)
+VALUES (5, 6);

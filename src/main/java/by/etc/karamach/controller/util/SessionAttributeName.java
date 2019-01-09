@@ -7,4 +7,7 @@ public class SessionAttributeName {
     public static final String NAME = "name";
     public static final String LOCALE = "locale";
     public static final String ID = "id";
+    public static final String QUESTION_LIST = "question_list";
+    public static final String GRADE = "grade";
+    public static final String CURRENT_QUESTION = "current_question";
 }

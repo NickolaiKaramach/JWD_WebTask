@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Answer implements Serializable {
-    private static final long serialVersionUID = 3049527556500318388L;
+    private static final long serialVersionUID = -5998132299192393135L;
 
     private int id;
     private boolean isRight;

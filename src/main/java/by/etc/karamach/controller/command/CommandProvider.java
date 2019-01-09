@@ -37,6 +37,9 @@ public class CommandProvider {
         repository.put(CommandName.CHANGE_TEST_NAME, new ChangeTestName());
         repository.put(CommandName.PUBLISH_TEST, new PublishTest());
         repository.put(CommandName.TAKE_TEST, new TakeTest());
+        repository.put(CommandName.START_TEST, new StartTest());
+        repository.put(CommandName.MAKE_CHOICE, new MakeChoice());
+        repository.put(CommandName.GET_NEXT_QUESTION, new GetNextQuestion());
     }
 
     public static CommandProvider getInstance() {

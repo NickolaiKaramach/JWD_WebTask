@@ -1,9 +1,6 @@
 package by.etc.karamach.dao;
 
-import by.etc.karamach.dao.sql.impl.SQLAnswerDAO;
-import by.etc.karamach.dao.sql.impl.SQLQuestionDAO;
-import by.etc.karamach.dao.sql.impl.SQLTestDAO;
-import by.etc.karamach.dao.sql.impl.SQLUserDAO;
+import by.etc.karamach.dao.sql.impl.*;
 
 public class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
@@ -12,6 +9,8 @@ public class DAOFactory {
     private final TestDAO sqlTestImpl = new SQLTestDAO();
     private final QuestionDAO sqlQuestionImpl = new SQLQuestionDAO();
     private final AnswerDAO sqlAnswerImpl = new SQLAnswerDAO();
+    private final GradeDAO sqlGradeImpl = new SQLGradeDAO();
+    private final ChoiceDAO sqlChoiceImpl = new SQLChoiceDAO();
 
     private DAOFactory() {
 
@@ -35,5 +34,13 @@ public class DAOFactory {
 
     public AnswerDAO getAnswerDAO() {
         return sqlAnswerImpl;
+    }
+
+    public GradeDAO getGradeDAO() {
+        return sqlGradeImpl;
+    }
+
+    public ChoiceDAO getChoiceDAO() {
+        return sqlChoiceImpl;
     }
 }

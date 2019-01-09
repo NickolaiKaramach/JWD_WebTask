@@ -263,7 +263,9 @@ public class SQLQuestionDAO implements QuestionDAO {
 
         int questionId = resultSet.getInt(FindQuestionByTestId.ID_RESULT_INDEX);
         String questionDescription = resultSet.getString(FindQuestionByTestId.DESCRIPTION_RESULT_INDEX);
+        int ownerId = resultSet.getInt(FindQuestionByTestId.OWNER_ID_RESULT_INDEX);
 
+        question.setOwnerId(ownerId);
         question.setId(questionId);
         question.setDescription(questionDescription);
         return question;

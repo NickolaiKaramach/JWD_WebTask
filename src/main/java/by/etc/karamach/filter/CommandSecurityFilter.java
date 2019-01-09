@@ -24,19 +24,27 @@ public class CommandSecurityFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         protectedCommands.add(CommandName.CHANGE_QUESTION_NAME.toString());
         protectedCommands.add(CommandName.CHANGE_TEST_NAME.toString());
+
         protectedCommands.add(CommandName.CREATE_ANSWER.toString());
         protectedCommands.add(CommandName.CREATE_QUESTION.toString());
         protectedCommands.add(CommandName.CREATE_TEST.toString());
+
         protectedCommands.add(CommandName.DELETE_ANSWER.toString());
         protectedCommands.add(CommandName.DELETE_QUESTION.toString());
         protectedCommands.add(CommandName.DELETE_TEST.toString());
+
         protectedCommands.add(CommandName.EDIT_ANSWER.toString());
         protectedCommands.add(CommandName.EDIT_QUESTION.toString());
         protectedCommands.add(CommandName.EDIT_TEST.toString());
+
         protectedCommands.add(CommandName.GET_MY_TESTS.toString());
+        protectedCommands.add(CommandName.GET_NEXT_QUESTION.toString());
+
         protectedCommands.add(CommandName.UPDATE_ANSWER.toString());
         protectedCommands.add(CommandName.PUBLISH_TEST.toString());
         protectedCommands.add(CommandName.TAKE_TEST.toString());
+        protectedCommands.add(CommandName.START_TEST.toString());
+        protectedCommands.add(CommandName.MAKE_CHOICE.toString());
 
     }
 

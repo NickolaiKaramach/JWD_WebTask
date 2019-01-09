@@ -7,4 +7,9 @@ public final class AnswerDataValidator {
     public static boolean isValidAnswerDescription(String description) {
         return (((description != null) && (!description.isEmpty())) && (description.length() < 30));
     }
+
+    public static boolean isValidAnswerId(int answerId) {
+
+        return answerId > 0;
+    }
 }
