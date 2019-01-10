@@ -2,7 +2,7 @@ package by.etc.karamach.dao.sql.query;
 
 public final class CreateQuestion {
     public static final String STATEMENT =
-            "INSERT INTO questions(description, onwer_id) VALUES (?, ?);";
+            "INSERT INTO questions(description, owner_id) VALUES (?, ?);";
     public static final String GET_LAST_ID_STATEMENT =
             "select @@identity;";
     public static final String CREATE_RELATION_STATEMENT =

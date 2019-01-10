@@ -2,7 +2,7 @@ package by.etc.karamach.dao.sql.query;
 
 public final class FindQuestionByTestId {
     public static final String STATEMENT =
-            "select questions.id, questions.description, questions.onwer_id " +
+            "select questions.id, questions.description, questions.owner_id " +
                     "from questions " +
                     "inner join tests_has_questions on questions.id = tests_has_questions.questions_id " +
                     "inner join tests on tests.id = tests_has_questions.tests_id " +

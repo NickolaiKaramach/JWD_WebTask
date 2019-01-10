@@ -65,9 +65,15 @@ public class SQLGradeDAO implements GradeDAO {
 
         } finally {
             try {
+
                 ResourceDestroyer.closeAllWithRollBack(connection, preparedStatement);
+
             } catch (SQLException e) {
-                throw new DAOException(e);
+
+                //Todo: move to catch block!
+
+                throw new RuntimeException(e);
+
             }
         }
     }
