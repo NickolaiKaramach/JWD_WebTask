@@ -7,7 +7,7 @@ How to use project:
 
 2. Build WAR file:
     *Use Maven to get dependencies
-    *Use 'mvn war:war' to compile WAR file
+    *Also it can help to build WAR
 
 3. Deploy WAR using tomcat
     *How to: "https://www.baeldung.com/tomcat-deploy-war"

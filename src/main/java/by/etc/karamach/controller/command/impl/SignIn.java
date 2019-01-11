@@ -45,7 +45,7 @@ public class SignIn implements Command {
             HttpSession newSession = SessionHelper.createOrGetSession(req);
             SessionHelper.saveUserToSession(newSession, user);
 
-            nextPage = JspPageName.USER_PAGE;
+        nextPage = JspPageName.INDEX_JSP;
 
 
         try {

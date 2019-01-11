@@ -40,6 +40,7 @@ public class CommandProvider {
         repository.put(CommandName.START_TEST, new StartTest());
         repository.put(CommandName.MAKE_CHOICE, new MakeChoice());
         repository.put(CommandName.GET_NEXT_QUESTION, new GetNextQuestion());
+        repository.put(CommandName.FINISH_TEST, new FinishTest());
     }
 
     public static CommandProvider getInstance() {

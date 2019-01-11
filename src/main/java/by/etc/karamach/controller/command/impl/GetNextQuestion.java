@@ -45,9 +45,10 @@ public class GetNextQuestion implements Command {
 
         try {
 
-            if (currentQuestionNum > questions.size()) {
+            if (currentQuestionNum >= questions.size()) {
                 //TODO: Mock to Finish
                 resp.sendRedirect(SERVER_PATH + "/controller?command=finish_test");
+                return;
             }
 
             Question question = questions.get(currentQuestionNum);

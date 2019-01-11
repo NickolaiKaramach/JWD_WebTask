@@ -1,6 +1,7 @@
 package by.etc.karamach.service.impl;
 
 import by.etc.karamach.bean.Grade;
+import by.etc.karamach.dao.ChoiceDAO;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.DAOFactory;
 import by.etc.karamach.dao.GradeDAO;
@@ -14,10 +15,49 @@ import java.sql.Timestamp;
 public class GradeServiceImpl implements GradeService {
 
     private static final GradeDAO gradeDAO = DAOFactory.getInstance().getGradeDAO();
+    private static final ChoiceDAO choiceDAO = DAOFactory.getInstance().getChoiceDAO();
 
     private static final int SECOND = 1000;
     private static final int MINUTES = 60 * SECOND;
     private static final int TIME_FOR_TEST = MINUTES * 60;
+    private static final double PERCENTS = 100.0;
+
+    @Override
+    public void finishTest(Grade grade, int userId) throws ServiceException {
+        boolean isValidUserId = UserDataValidator.isValidUserId(userId);
+
+        if (((grade == null) || (grade.getUserId() != userId)) || !isValidUserId) {
+            throw new ServiceException("Illegal data found!");
+        }
+
+        try {
+            int allChoicesCount;
+            allChoicesCount = choiceDAO.getCountAllChoicesByGrade(grade);
+
+            int rightChoicesCount;
+            rightChoicesCount = choiceDAO.getCountRightChoicesByGrade(grade);
+
+
+            if ((allChoicesCount < 0) || (rightChoicesCount < 0)) {
+
+                throw new ServiceException("Test was finished illegally");
+
+            }
+
+            double finishingGrade = rightChoicesCount * PERCENTS / allChoicesCount;
+            int finishingDegree = (int) Math.round(finishingGrade);
+
+            long currentTime = System.currentTimeMillis();
+            Timestamp currentTimestamp = new Timestamp(currentTime);
+
+
+            gradeDAO.finishGrade(finishingDegree, currentTimestamp, grade.getId());
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+    }
 
     @Override
     public Grade startTest(int userId, int testId) throws ServiceException {
