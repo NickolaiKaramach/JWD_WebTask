@@ -40,7 +40,7 @@
             <div class="signup-content">
                 <div class="signup-form">
                     <h2 class="form-title"><fmt:message key="locale.signup.message"/></h2>
-                    <form method="POST" class="register-form" id="register-form" action="../controller">
+                    <form method="POST" class="register-form" id="register-form" action="../wcontroller">
                         <input type="hidden" name="command" value="registration">
 
                         <c:if test="${requestScope.get(\"err\")}">
