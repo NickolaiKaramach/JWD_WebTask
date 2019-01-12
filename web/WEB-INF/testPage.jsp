@@ -29,7 +29,7 @@
 ${requestScope.test.name}
 </h1>
 <br>
-<form action="/controller" method="post">
+<form action="../controller" method="post">
     <input type="hidden" name="command" value="change_test_name">
     <input type="hidden" name="test_id" value="${requestScope.test.id}">
 
@@ -55,13 +55,13 @@ ${requestScope.test.name}
                 ${question.description}
         </div>
         <div>
-            <a href="/controller?command=edit_question&question_id=${question.id}">
+            <a href="../controller?command=edit_question&question_id=${question.id}">
                 <fmt:message key="locale.question.edit.button"/>
             </a>
         </div>
 
         <div>
-            <a href="/controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
+            <a href="../controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
                 <fmt:message key="locale.question.delete.button"/>
             </a>
         </div>
@@ -70,7 +70,7 @@ ${requestScope.test.name}
     </c:forEach>
 </div>
 
-<form action="/controller" method="post">
+<form action="../controller" method="post">
     <input type="hidden" name="test_id" value="${requestScope.test.id}">
 
     <input type="hidden" name="command" value="create_question">
@@ -85,7 +85,7 @@ ${requestScope.test.name}
     <input type="submit" id="button"/>
 </form>
 
-<a href="/controller?command=publish_test&test_id=${requestScope.test.id}"><fmt:message
+<a href="../controller?command=publish_test&test_id=${requestScope.test.id}"><fmt:message
         key="locale.test.page.publish.test.button"/> </a>
 
 </body>

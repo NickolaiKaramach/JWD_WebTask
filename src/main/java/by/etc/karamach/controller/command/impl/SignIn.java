@@ -42,8 +42,9 @@ public class SignIn implements Command {
             throw new CommandException("Invalid password!");
 
         }
-            HttpSession newSession = SessionHelper.createOrGetSession(req);
-            SessionHelper.saveUserToSession(newSession, user);
+
+        HttpSession newSession = SessionHelper.createOrGetSession(req);
+        SessionHelper.saveUserToSession(newSession, user);
 
         nextPage = JspPageName.INDEX_JSP;
 

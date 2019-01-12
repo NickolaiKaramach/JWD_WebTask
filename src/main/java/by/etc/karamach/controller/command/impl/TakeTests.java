@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 //TODO: QUESTION: Can we use -s in name?
-public class GetTests implements Command {
+public class TakeTests implements Command {
 
     private TestService testService = ServiceFactory.getInstance().getTestService();
 

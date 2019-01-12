@@ -14,10 +14,10 @@
 <html lang="${sessionScope.locale}">
 <head>
     <!-- Font Icon -->
-    <link rel="stylesheet" href="/jsp/css/style.css">
+    <link rel="stylesheet" href="../jsp/css/style.css">
 
     <!-- Main css -->
-    <link rel="stylesheet" href="/jsp/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="../jsp/fonts/material-icon/css/material-design-iconic-font.min.css">
 
 
     <title><fmt:message key="locale.registration.title"/></title>

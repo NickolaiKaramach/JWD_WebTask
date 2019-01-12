@@ -15,51 +15,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-public class GetMyTest implements Command {
-    private TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final transient Logger logger = LogManager.getLogger();
-
+public class PrepareForTest implements Command {
+    private static final TestService testService = ServiceFactory.getInstance().getTestService();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        List<Test> tests;
 
-        HttpSession session = SessionHelper.getExistingSession(req);
+        HttpSession existingSession = SessionHelper.getExistingSession(req);
+        int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        boolean isGuest =
-                (session == null) ||
-                        (session.getAttribute(SessionAttributeName.ID) == null);
+        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
+
 
         try {
+            Test test;
+            test = testService.prepareForTest(userId, testId);
 
-            if (isGuest) {
-                DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
-                return;
-            }
-
-
-            int userId = (int) session.getAttribute(SessionAttributeName.ID);
-
-            tests = testService.getMyTests(userId);
-
-            req.setAttribute(RequestAttributeName.MY_TESTS, tests);
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.USER_TESTS);
+            req.setAttribute(RequestAttributeName.TEST, test);
+            DispatchAssistant.redirectToJsp(req, resp, JspPageName.PREASSESSMENT_PAGE);
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
-        } catch (IOException | ServletException e) {
+
+        } catch (ServletException | IOException e) {
 
             logger.error(e);
             throw new RuntimeException(e);
+
         }
     }
 
     @Override
     public String getErrorJspPage() {
-        return JspPageName.USER_PAGE;
+        return null;
     }
-
 }

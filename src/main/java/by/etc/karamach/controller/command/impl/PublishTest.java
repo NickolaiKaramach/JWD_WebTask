@@ -17,14 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
 public class PublishTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
 
     private static final Logger logger = LogManager.getLogger();
-    private static final String USERS_TESTS_PAGE = SERVER_PATH + "/controller?command=get_my_tests";
+    private static final String USERS_TESTS_PAGE = "controller?command=take_my_tests";
 
 
     @Override

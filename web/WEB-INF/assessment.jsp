@@ -19,7 +19,7 @@
 <fmt:message key="locale.test.assessment.page.question"/> ${requestScope.question.description}
 <br>
 
-<form action="/controller" method="post">
+<form action="../controller" method="post">
     <input type="hidden" name="command" value="make_choice">
     <input type="hidden" name="question_id" value="${requestScope.question.id}">
 
@@ -36,7 +36,7 @@
     </div>
 </form>
 
-<a href="/controller?command=finish_test" <fmt:message key="locale.test.assessment.page.end"/>
+<a href="../controller?command=finish_test" <fmt:message key="locale.test.assessment.page.end"/>
 
 </body>
 </html>

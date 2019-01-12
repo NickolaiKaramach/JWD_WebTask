@@ -31,7 +31,7 @@
     %>
 </c:if>
 
-<form action="/controller" method="post" class="form-signin">
+<form action="../controller" method="post" class="form-signin">
     <input type="hidden" name="command" value="sign_in"/>
     <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="locale.login.message"/></h1>
     <label for="email" class="sr-only"><fmt:message key="locale.email.input"/> </label>

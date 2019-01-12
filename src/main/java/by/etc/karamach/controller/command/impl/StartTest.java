@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
-
 public class StartTest implements Command {
 
     private static final GradeService gradeService = ServiceFactory.getInstance().getGradeService();
@@ -32,7 +30,6 @@ public class StartTest implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private static final int FIRST_QUESTION_INDEX = 0;
-    private static final String ASSESSMENT_PAGE = SERVER_PATH + "/controller?command=make_choice";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -56,7 +53,7 @@ public class StartTest implements Command {
             existingSession.setAttribute(SessionAttributeName.CURRENT_QUESTION, FIRST_QUESTION_INDEX);
 
             Command nextCommandToExecute =
-                    CommandProvider.getInstance().getCommand(CommandName.GET_NEXT_QUESTION.toString());
+                    CommandProvider.getInstance().getCommand(CommandName.TAKE_NEXT_QUESTION.toString());
 
             nextCommandToExecute.executeTask(req, resp);
 

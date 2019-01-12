@@ -18,12 +18,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
-
-public class GetNextQuestion implements Command {
+public class TakeNextQuestion implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
 
     private static final Logger logger = LogManager.getLogger();
+    private static final String FINISH_TEST_PAGE = "controller?command=finish_test";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -47,7 +46,7 @@ public class GetNextQuestion implements Command {
 
             if (currentQuestionNum >= questions.size()) {
                 //TODO: Mock to Finish
-                resp.sendRedirect(SERVER_PATH + "/controller?command=finish_test");
+                resp.sendRedirect(FINISH_TEST_PAGE);
                 return;
             }
 

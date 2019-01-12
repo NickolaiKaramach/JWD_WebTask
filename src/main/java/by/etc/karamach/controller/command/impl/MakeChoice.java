@@ -39,7 +39,7 @@ public class MakeChoice implements Command {
             choiceService.makeChoice(grade, answerId, userId, questionId);
 
             Command nextCommandToExecute =
-                    CommandProvider.getInstance().getCommand(CommandName.GET_NEXT_QUESTION.toString());
+                    CommandProvider.getInstance().getCommand(CommandName.TAKE_NEXT_QUESTION.toString());
 
             nextCommandToExecute.executeTask(req, resp);
 

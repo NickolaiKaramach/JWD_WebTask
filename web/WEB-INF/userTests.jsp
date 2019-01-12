@@ -31,12 +31,12 @@
                 ${test.name}
         </div>
         <div>
-            <a href="/controller?command=edit_test&test_id=${test.id}">
+            <a href="../controller?command=edit_test&test_id=${test.id}">
                 <fmt:message key="locale.test.page.edit.button"/>
             </a>
         </div>
         <div>
-            <a href="/controller?command=delete_test&test_id=${test.id}">
+            <a href="../controller?command=delete_test&test_id=${test.id}">
                 <fmt:message key="locale.user.panel.mytest.delete"/>
             </a>
         </div>
@@ -50,7 +50,7 @@
 
 <div>
     <%--TODO: Make check on FE--%>
-    <form action="/controller" method="post">
+    <form action="../controller" method="post">
         <input type="hidden" name="command" value="create_test">
         <fmt:message key="locale.user.panel.newtest.name"/>
         <input type="text" name="name">

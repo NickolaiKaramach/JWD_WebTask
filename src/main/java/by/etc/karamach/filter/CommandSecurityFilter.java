@@ -37,12 +37,12 @@ public class CommandSecurityFilter implements Filter {
         protectedCommands.add(CommandName.EDIT_QUESTION.toString());
         protectedCommands.add(CommandName.EDIT_TEST.toString());
 
-        protectedCommands.add(CommandName.GET_MY_TESTS.toString());
-        protectedCommands.add(CommandName.GET_NEXT_QUESTION.toString());
+        protectedCommands.add(CommandName.TAKE_MY_TESTS.toString());
+        protectedCommands.add(CommandName.TAKE_NEXT_QUESTION.toString());
 
         protectedCommands.add(CommandName.UPDATE_ANSWER.toString());
         protectedCommands.add(CommandName.PUBLISH_TEST.toString());
-        protectedCommands.add(CommandName.TAKE_TEST.toString());
+        protectedCommands.add(CommandName.PREPARE_FOR_TEST.toString());
         protectedCommands.add(CommandName.START_TEST.toString());
         protectedCommands.add(CommandName.MAKE_CHOICE.toString());
         protectedCommands.add(CommandName.FINISH_TEST.toString());

@@ -16,12 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
-
 public class FinishTest implements Command {
 
     private static final GradeService gradeService = ServiceFactory.getInstance().getGradeService();
     private static final Logger logger = LogManager.getLogger();
+    private static final String USER_GRADES_PAGE = "controller?command=take_user_grades";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -40,7 +39,7 @@ public class FinishTest implements Command {
 
             gradeService.finishTest(grade, userId);
 
-            resp.sendRedirect(SERVER_PATH + "/controller?command=take_user_grades");
+            resp.sendRedirect(USER_GRADES_PAGE);
 
         } catch (ServiceException e) {
 

@@ -20,8 +20,8 @@ public class CommandProvider {
     private CommandProvider() {
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.REGISTRATION, new Registration());
-        repository.put(CommandName.GET_TESTS, new GetTests());
-        repository.put(CommandName.GET_MY_TESTS, new GetMyTest());
+        repository.put(CommandName.TAKE_TESTS, new TakeTests());
+        repository.put(CommandName.TAKE_MY_TESTS, new TakeMyTest());
         repository.put(CommandName.CREATE_TEST, new CreateTest());
         repository.put(CommandName.LOGOUT, new Logout());
         repository.put(CommandName.DELETE_TEST, new DeleteTest());
@@ -36,10 +36,10 @@ public class CommandProvider {
         repository.put(CommandName.CREATE_QUESTION, new CreateQuestion());
         repository.put(CommandName.CHANGE_TEST_NAME, new ChangeTestName());
         repository.put(CommandName.PUBLISH_TEST, new PublishTest());
-        repository.put(CommandName.TAKE_TEST, new TakeTest());
+        repository.put(CommandName.PREPARE_FOR_TEST, new PrepareForTest());
         repository.put(CommandName.START_TEST, new StartTest());
         repository.put(CommandName.MAKE_CHOICE, new MakeChoice());
-        repository.put(CommandName.GET_NEXT_QUESTION, new GetNextQuestion());
+        repository.put(CommandName.TAKE_NEXT_QUESTION, new TakeNextQuestion());
         repository.put(CommandName.FINISH_TEST, new FinishTest());
     }
 

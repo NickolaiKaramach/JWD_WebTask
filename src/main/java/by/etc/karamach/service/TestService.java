@@ -21,5 +21,5 @@ public interface TestService {
 
     void publishTest(int testId, int userId) throws ServiceException;
 
-    Test takeTest(int userId, int testId) throws ServiceException;
+    Test prepareForTest(int userId, int testId) throws ServiceException;
 }

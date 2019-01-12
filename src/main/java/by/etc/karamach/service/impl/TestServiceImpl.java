@@ -17,7 +17,7 @@ public class TestServiceImpl implements TestService {
     private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
 
     @Override
-    public Test takeTest(int userId, int testId) throws ServiceException {
+    public Test prepareForTest(int userId, int testId) throws ServiceException {
         boolean isValidData =
                 UserDataValidator.isValidUserId(userId) &&
                         TestDataValidator.isValidTestId(testId);

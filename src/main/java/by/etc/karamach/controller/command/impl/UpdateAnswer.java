@@ -17,11 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
 public class UpdateAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
-    private static final String ANSWER_PAGE_URL = SERVER_PATH + "/controller?command=edit_answer&answer_id=";
+    private static final String ANSWER_PAGE_URL = "controller?command=edit_answer&answer_id=";
     private static final String IS_CHECKED_STATUS = "on";
     private static final transient Logger logger = LogManager.getLogger();
 

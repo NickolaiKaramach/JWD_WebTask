@@ -17,12 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
 public class DeleteTest implements Command {
 
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
-    private static final String USER_TESTS_PAGE_URL = SERVER_PATH + "/controller?command=get_my_tests";
+    private static final String USER_TESTS_PAGE_URL = "controller?command=take_my_tests";
     private static final transient Logger logger = LogManager.getLogger();
 
     @Override

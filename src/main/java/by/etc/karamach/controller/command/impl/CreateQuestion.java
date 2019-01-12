@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
-
 public class CreateQuestion implements Command {
     private static final QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
 
@@ -27,7 +25,7 @@ public class CreateQuestion implements Command {
         return JspPageName.TEST_PAGE;
     }
 
-    private static final String TEST_PAGE_URL = SERVER_PATH + "/controller?command=edit_test&test_id=";
+    private static final String TEST_PAGE_URL = "controller?command=edit_test&test_id=";
     private static final transient Logger logger = LogManager.getLogger();
 
 

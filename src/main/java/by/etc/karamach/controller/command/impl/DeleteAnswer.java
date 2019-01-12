@@ -17,11 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.etc.karamach.controller.Controller.SERVER_PATH;
 
 public class DeleteAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
-    private static final String QUESTION_PAGE_URL = SERVER_PATH + "/controller?command=edit_question&question_id=";
+    private static final String QUESTION_PAGE_URL = "controller?command=edit_question&question_id=";
 
     private static final transient Logger logger = LogManager.getLogger();
 
