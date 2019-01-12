@@ -70,7 +70,7 @@ public class CommandSecurityFilter implements Filter {
 
         if (isGuest(existingSession)) {
 
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
+            resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE);
 
             return;
         }

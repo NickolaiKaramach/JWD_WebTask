@@ -43,7 +43,7 @@ public class UrlSecurityFilter implements Filter {
 
         if (userEmail == null) {
 
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.LOGIN_PAGE);
+            resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE);
 
         } else {
             filterChain.doFilter(req, resp);
