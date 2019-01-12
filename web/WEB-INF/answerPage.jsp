@@ -41,7 +41,7 @@ ${requestScope.answer.description}
 
 <br>
 
-<form action="../controller" method="post">
+<form action="controller" method="post">
     <input type="hidden" name="answer_id" value="${requestScope.answer.id}">
 
     <input type="hidden" name="command" value="update_answer">

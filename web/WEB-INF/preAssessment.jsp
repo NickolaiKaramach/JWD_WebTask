@@ -24,7 +24,7 @@
         key="locale.additional.minutes"/>
 
 <br>
-<a href="../controller?command=start_test&test_id=${requestScope.test.id}"><fmt:message
+<a href="controller?command=start_test&test_id=${requestScope.test.id}"><fmt:message
         key="locale.test.preassessment.details.begin.button"/> </a>
 </body>
 </html>
