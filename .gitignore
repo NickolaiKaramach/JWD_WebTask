@@ -1,3 +1,9 @@
+.DS_Store
+.idea/
+node_modules/
+out/
+package-lock.json
+target/
+web/.DS_Store
+web/jsp/.DS_Store
 *.iml
-./target
-./out
