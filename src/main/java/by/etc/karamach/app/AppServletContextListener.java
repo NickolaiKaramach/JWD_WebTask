@@ -10,7 +10,7 @@ public class AppServletContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
+       ConnectionPool.getInstance();
     }
 
     @Override

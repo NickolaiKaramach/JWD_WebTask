@@ -21,7 +21,7 @@
             ${currentTest.name}
 
 
-        <a href="../controller?command=prepare_for_test&test_id=${currentTest.id}">
+        <a href="controller?command=prepare_for_test&test_id=${currentTest.id}">
             <fmt:message key="locale.tests.details.button"/>
         </a>
 
