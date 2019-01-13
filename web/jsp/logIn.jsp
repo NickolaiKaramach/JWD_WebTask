@@ -42,6 +42,8 @@
             key="locale.signin.action"/></button>
 </form>
 
+
+
 <script type="text/javascript">
     function cypherText(text) {
         var cypherText = "";
@@ -79,5 +81,6 @@
         }
     }
 </script>
+
 </body>
 </html>

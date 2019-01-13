@@ -12,9 +12,11 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
     <title><fmt:message key="locale.answer.page.title"/></title>
 </head>
 <body>
+<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
 <c:if test="${requestScope.error != null}">
     <%
         Exception exception = (Exception) request.getAttribute("error");
@@ -59,6 +61,6 @@ ${requestScope.answer.description}
 
     <input type="submit"/>
 </form>
-
+<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
 </body>
 </html>

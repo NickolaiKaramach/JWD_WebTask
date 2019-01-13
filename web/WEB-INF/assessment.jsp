@@ -13,9 +13,13 @@
 
 <html lang="${sessionScope.locale}">
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
     <title><fmt:message key="locale.test.assessment.page.title"/></title>
 </head>
 <body>
+<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
+
+
 <fmt:message key="locale.test.assessment.page.question"/> ${requestScope.question.description}
 <br>
 
@@ -37,6 +41,7 @@
 </form>
 
 <a href="controller?command=finish_test" <fmt:message key="locale.test.assessment.page.end"/>
+<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
 
 </body>
 </html>

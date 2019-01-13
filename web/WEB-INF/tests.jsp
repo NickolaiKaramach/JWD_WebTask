@@ -12,10 +12,11 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
     <title><fmt:message key="locale.tests.title"/></title>
 </head>
 <body>
-
+<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
 <c:forEach items="${requestScope.tests}" var="currentTest">
     <ul>
             ${currentTest.name}
@@ -27,6 +28,6 @@
 
     </ul>
 </c:forEach>
-
+<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
 </body>
 </html>

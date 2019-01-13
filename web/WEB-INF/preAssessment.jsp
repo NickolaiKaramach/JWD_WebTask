@@ -12,9 +12,12 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
     <title><fmt:message key="locale.test.preassessment.details.title"/></title>
 </head>
 <body>
+<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
+
 <fmt:message key="locale.test.preassessment.details.test.name.label"/> ${requestScope.test.name}
 
 <br>
@@ -26,5 +29,6 @@
 <br>
 <a href="controller?command=start_test&test_id=${requestScope.test.id}"><fmt:message
         key="locale.test.preassessment.details.begin.button"/> </a>
+<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
 </body>
 </html>
