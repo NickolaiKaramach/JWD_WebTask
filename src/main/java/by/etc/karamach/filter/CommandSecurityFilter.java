@@ -1,7 +1,10 @@
 package by.etc.karamach.filter;
 
 import by.etc.karamach.controller.command.CommandName;
-import by.etc.karamach.controller.util.*;
+import by.etc.karamach.controller.util.JspPageName;
+import by.etc.karamach.controller.util.RequestParameterName;
+import by.etc.karamach.controller.util.SessionAttributeName;
+import by.etc.karamach.controller.util.SessionHelper;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,6 +20,8 @@ import java.util.Set;
 
 public class CommandSecurityFilter implements Filter {
 
+    private static final String ERROR_MSG_PATH_PARAM = "?errmsg=";
+    private static final String LOGIN_REDIRECT_ERRMSG = "You should be logged in!";
     private Set<String> protectedCommands = new HashSet<>();
 
 
@@ -70,7 +75,7 @@ public class CommandSecurityFilter implements Filter {
 
         if (isGuest(existingSession)) {
 
-            resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE);
+            resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE + ERROR_MSG_PATH_PARAM + LOGIN_REDIRECT_ERRMSG);
 
             return;
         }

@@ -1,6 +1,5 @@
 package by.etc.karamach.filter;
 
-import by.etc.karamach.controller.util.DispatchAssistant;
 import by.etc.karamach.controller.util.JspPageName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -17,6 +16,8 @@ import java.util.Set;
 @WebFilter(filterName = "UrlSecurityFilter", urlPatterns = {"/*"})
 public class UrlSecurityFilter implements Filter {
 
+    private static final String ERROR_MSG_PATH_PARAM = "&errmsg=";
+    private static final String REDIRECT_TO_LOGIN_MESSAGE = "You should be logged in!";
     private Set<String> protectedUrl = new HashSet<>();
 
     @Override
@@ -43,7 +44,8 @@ public class UrlSecurityFilter implements Filter {
 
         if (userEmail == null) {
 
-            resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE);
+            //TODO: Add localization
+            resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE + ERROR_MSG_PATH_PARAM + REDIRECT_TO_LOGIN_MESSAGE);
 
         } else {
             filterChain.doFilter(req, resp);
