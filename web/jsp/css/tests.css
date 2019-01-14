@@ -1,0 +1,43 @@
+div.test_list {
+    font-family: Arial;
+}
+
+div.test_list > h1 {
+    margin-top: 30px;
+    margin-bottom: 0px;
+}
+
+div.test_list > h3 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: small;
+    font-weight: normal;
+}
+
+table.results > thead {
+    font-weight: bold;
+    background: rgba(200, 200, 200, 0.5);
+}
+
+td {
+    padding: 5px;
+}
+
+table.results > tbody > tr > td:first-child {
+    min-width: 300px;
+    padding-right: 50px;
+}
+
+table.results > tbody > tr > td:last-child {
+    text-align: center;
+}
+
+div.new_test {
+    font-family: Arial;
+}
+
+div.new_test > input {
+    font-weight: bold;
+    background: rgba(200, 200, 200, 0.5);
+}
+

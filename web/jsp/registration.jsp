@@ -16,6 +16,7 @@
     <title><fmt:message key="locale.registration.title"/></title>
     <script src="/jsp/js/registration.js"></script>
     <link href="/jsp/css/registration.css" rel="stylesheet">
+
 </head>
 <body>
 
