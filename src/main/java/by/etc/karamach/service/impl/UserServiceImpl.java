@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService {
 
             if (isBusyEmail) {
 
-                boolean saved = false;
-                return saved;
+                throw new ServiceException("Email is already taken!");
             }
 
 

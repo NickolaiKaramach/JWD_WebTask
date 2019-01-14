@@ -13,62 +13,33 @@
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 
 
-    <fmt:message key="locale.login.button" var="login_button"/>
-
-    <fmt:message key="locale.register.button" var="register_button"/>
-
-
-    <img src="../../jsp/images/logo.jpg" class="navbar-brand" href="#" width="48" height="48"/>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <c:if test="${sessionScope.id == null}">
-                <li class="nav-item active">
-                    <a class="nav-link" href="../../jsp/logIn.jsp"> <fmt:message key="locale.login.button"/> <span
-                            class="sr-only">(current)</span></a>
-                </li>
-            </c:if>
+<nav>
+    <div><fmt:message key="locale.header.title"/></div>
 
 
-            <c:if test="${sessionScope.id != null}">
-                <li class="nav-item active">
-                    <a class="nav-link" href="controller?command=logout"> <fmt:message key="locale.logout.button"/>
-                        <span
-                                class="sr-only">(current)</span></a>
-                </li>
+    <c:if test="${sessionScope.id != null}">
+        <a href="../../controller?command=logout"> <fmt:message key="locale.header.logout.button"/> </a>
+        <a href="../../jsp/userPage.jsp"><fmt:message key="locale.header.user.panel.button"/> </a>
+    </c:if>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../jsp/userPage.jsp"> <fmt:message
-                            key="locale.user.panel.button"/> </a>
-                </li>
-            </c:if>
+    <c:if test="${sessionScope.id == null}">
+        <a href="../../jsp/logIn.jsp"> <fmt:message key="locale.header.login.button"/> </a>
+        <a href="../../jsp/registration.jsp"><fmt:message key="locale.header.register.button"/> </a>
+    </c:if>
 
-            <li class="nav-item">
-                <a class="nav-link" href="../../jsp/registration.jsp"> <fmt:message key="locale.register.button"/> </a>
-            </li>
+    <a href="../../controller?command=take_tests"><fmt:message key="locale.header.tests.button"/> </a>
 
-            <li class="nav-item">
-                <a class="nav-link" href="controller?command=take_tests"> <fmt:message key="locale.tests.title"/> </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link"href="?locale=en"> <fmt:message key="locale.lang.en"/> </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="?locale=ru"> <fmt:message key="locale.lang.ru"/> </a>
-            </li>
-        </ul>
+    <div class="language">
+        <a href="../../?locale=en"><fmt:message key="locale.lang.en"/></a>
+        <a href="../../?locale=ru"><fmt:message key="locale.lang.ru"/></a>
     </div>
 </nav>
+
 
 </body>
 </html>

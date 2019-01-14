@@ -1,0 +1,35 @@
+
+form {
+    width: 400px;
+    padding-bottom: 40px;
+}
+
+section.form_fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+section.form_fields > * {
+    flex: 1 0 38%;
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14pt;
+    font-family: Arial;
+    border: 1px;
+}
+
+section.form_fields > *:nth-child(odd) {
+    border-color: white;
+    border-style: dotted;
+}
+
+section.form_fields > *:nth-child(even) {
+    border-color: gray;
+    border-style: solid;
+}
+
+div#error {
+    background: rgba(200, 0, 0, 0.5)
+}

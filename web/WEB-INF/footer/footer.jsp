@@ -11,7 +11,7 @@
 
 <footer class="footer">
     <div class="container">
-        <span class="text-muted">@Nickolai.karamach@gmail.com   </span>
+        <span class="text-muted">@Nickolai.Karamach@gmail.com   </span>
     </div>
 </footer>
 </body>
