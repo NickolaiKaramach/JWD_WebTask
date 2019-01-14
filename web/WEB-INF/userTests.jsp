@@ -29,7 +29,6 @@
     %>
 </c:if>
 
-<br>
 
 <div class="test_list">
     <h1><fmt:message key="locale.user.test.page.table.title"/></h1>
@@ -37,7 +36,7 @@
     <table class="results">
         <thead>
         <tr>
-            <td><fmt:message key="locale.user.test.page.column.name.titile"/></td>
+            <td><fmt:message key="locale.user.test.page.column.name.title"/></td>
             <td><fmt:message key="locale.user.test.page.column.action.title"/></td>
         </tr>
         </thead>

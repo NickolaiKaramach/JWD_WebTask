@@ -12,22 +12,40 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
     <title><fmt:message key="locale.tests.title"/></title>
+    <link href="/jsp/css/tests.css" rel="stylesheet">
 </head>
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
-<c:forEach items="${requestScope.tests}" var="currentTest">
-    <ul>
-            ${currentTest.name}
+<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
 
+<div class="test_list">
+    <h1><fmt:message key="locale.tests.page.table.title"/></h1>
+    <h3><fmt:message key="locale.tests.page.table.subtitle"/></h3>
+    <table class="results">
+        <thead>
+        <tr>
+            <td><fmt:message key="locale.tests.page.column.name.title"/></td>
+            <td><fmt:message key="locale.tests.page.column.action.title"/></td>
+        </tr>
+        </thead>
 
-        <a href="controller?command=prepare_for_test&test_id=${currentTest.id}">
-            <fmt:message key="locale.tests.details.button"/>
-        </a>
+        <tbody>
+        <c:forEach items="${requestScope.tests}" var="currentTest">
+            <tr>
+                <td> ${currentTest.name}</td>
+                <td>
+                    <a href="controller?command=prepare_for_test&test_id=${currentTest.id}">
+                        <fmt:message key="locale.tests.details.button"/>
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 
-    </ul>
-</c:forEach>
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
+<br>
+<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>
