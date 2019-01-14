@@ -28,7 +28,7 @@ public class SignIn implements Command {
     private static final transient Logger logger = LogManager.getLogger();
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.LOGIN_PAGE;
     }
 

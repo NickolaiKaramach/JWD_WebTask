@@ -3,7 +3,6 @@ package by.etc.karamach.controller.command.impl;
 import by.etc.karamach.bean.Test;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.JspPageName;
 import by.etc.karamach.controller.util.RequestParameterName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -23,6 +22,12 @@ public class CreateTest implements Command {
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
     private static final String USER_TESTS_PAGE = "controller?command=take_my_tests";
     private static final transient Logger logger = LogManager.getLogger();
+
+    @Override
+    public String getErrorPage() {
+        return USER_TESTS_PAGE;
+    }
+
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -58,11 +63,6 @@ public class CreateTest implements Command {
 
         }
 
-    }
-
-    @Override
-    public String getErrorJspPage() {
-        return JspPageName.TEST_PAGE;
     }
 
     private Test constructTestFromData(Integer userId, String testName) {

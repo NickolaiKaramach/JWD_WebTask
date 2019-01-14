@@ -58,7 +58,7 @@ public class DeleteTest implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.USER_TESTS;
     }
 

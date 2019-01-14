@@ -49,7 +49,7 @@ public class TakeTests implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.INDEX_JSP;
     }
 }

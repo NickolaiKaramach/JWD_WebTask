@@ -26,7 +26,7 @@ public class UpdateAnswer implements Command {
 
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.ANSWER_PAGE;
     }
 

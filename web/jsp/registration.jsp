@@ -13,6 +13,7 @@
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
     <title><fmt:message key="locale.registration.title"/></title>
     <script src="/jsp/js/registration.js"></script>
     <link href="/jsp/css/registration.css" rel="stylesheet">
@@ -21,6 +22,9 @@
 <body>
 
 <h1><fmt:message key="locale.signup.message"/></h1>
+
+<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+
 
 <c:if test="${requestScope.error != null}">
     <div id="error">

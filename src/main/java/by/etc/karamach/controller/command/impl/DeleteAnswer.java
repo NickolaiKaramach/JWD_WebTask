@@ -2,7 +2,6 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.JspPageName;
 import by.etc.karamach.controller.util.RequestParameterName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -23,6 +22,11 @@ public class DeleteAnswer implements Command {
     private static final String QUESTION_PAGE_URL = "controller?command=edit_question&question_id=";
 
     private static final transient Logger logger = LogManager.getLogger();
+
+    @Override
+    public String getErrorPage() {
+        return QUESTION_PAGE_URL;
+    }
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -52,8 +56,4 @@ public class DeleteAnswer implements Command {
         }
     }
 
-    @Override
-    public String getErrorJspPage() {
-        return JspPageName.QUESTION_PAGE;
-    }
 }

@@ -8,10 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="../../jsp/css/error.css"/>
     <title></title>
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <link href="../../jsp/css/header.css" rel="stylesheet">
+
 
 </head>
 <body>

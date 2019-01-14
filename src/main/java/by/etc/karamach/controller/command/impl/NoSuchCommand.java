@@ -29,7 +29,7 @@ public class NoSuchCommand implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.FATAL_ERROR_PAGE;
     }
 

@@ -14,20 +14,20 @@
 
 <html lang="${sessionScope.locale}">
 <head>
+    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
     <title><fmt:message key="locale.login.title"/></title>
     <script src="/jsp/js/login.js"></script>
     <link href="/jsp/css/registration.css" rel="stylesheet">
+    <link href="/jsp/css/error.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- TODO: Create another showing case!!! -->
-<c:if test="${requestScope.error != null}">
-    <%
-        Exception exception = (Exception) request.getAttribute("error");
-        out.print(exception.getMessage());
-    %>
-</c:if>
+
+
 <h1><fmt:message key="locale.login.message"/></h1>
+
+<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <form method="POST" id="form" action="../controller">
     <input type="hidden" name="command" value="sign_in">

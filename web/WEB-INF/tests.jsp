@@ -18,6 +18,7 @@
 </head>
 <body>
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
+<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <div class="test_list">
     <h1><fmt:message key="locale.tests.page.table.title"/></h1>

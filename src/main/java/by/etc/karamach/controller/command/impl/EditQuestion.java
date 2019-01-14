@@ -50,7 +50,7 @@ public class EditQuestion implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.TEST_PAGE;
     }
 }

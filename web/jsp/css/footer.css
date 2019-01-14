@@ -1,0 +1,14 @@
+footer#footer {
+    margin-top: 10px;
+    font-style: italic;
+    font-family: "Arial Hebrew", sans-serif;
+}
+
+hr {
+    color: #645f5f;
+    size: auto;
+}
+
+span#footer_text {
+    text-align: center;
+}

@@ -53,7 +53,7 @@ public class MakeChoice implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return null;
     }
 }

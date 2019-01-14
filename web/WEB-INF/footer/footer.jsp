@@ -6,12 +6,14 @@
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
+    <link href="/jsp/css/footer.css" rel="stylesheet">
 </head>
 <body>
 
-<footer class="footer">
+<footer id="footer" class="footer">
+    <hr/>
     <div class="container">
-        <span class="text-muted">@Nickolai.Karamach@gmail.com   </span>
+        <span id="footer_text" class="text-muted">@Nickolai.Karamach@gmail.com   </span>
     </div>
 </footer>
 </body>

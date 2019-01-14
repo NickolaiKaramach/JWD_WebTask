@@ -22,7 +22,7 @@ public class EditAnswer implements Command {
 
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return JspPageName.QUESTION_PAGE;
     }
 

@@ -1,0 +1,6 @@
+div#error {
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 160%;
+    background: rgba(200, 0, 0, 0.5)
+}

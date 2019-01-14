@@ -80,7 +80,7 @@ public class TakeNextQuestion implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return null;
     }
 }

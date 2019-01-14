@@ -49,7 +49,7 @@ public class PrepareForTest implements Command {
     }
 
     @Override
-    public String getErrorJspPage() {
+    public String getErrorPage() {
         return null;
     }
 }
