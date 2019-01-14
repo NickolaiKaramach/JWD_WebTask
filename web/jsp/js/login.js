@@ -6,20 +6,24 @@ function cypherText(text) {
     return cypherText;
 }
 
-function holdRegForm() {
-    //TODO: Implement it
+function showError(container, errorMessage) {
+    container.className = 'error';
+    var msgElem = document.createElement('span');
+    msgElem.className = "error-message";
+    msgElem.innerHTML = errorMessage;
+    container.appendChild(msgElem);
+}
 
+function holdForm() {
     var message = "Invalid data:\n";
     var noErrors = true;
-    if (!document.getElementById("name")) {
-        noErrors = false;
-        message += "*   Name cannot be empty!\n";
-    }
+
     if (!document.getElementById("email")) {
         noErrors = false;
         message += "*   Email cannot be empty!\n";
     } else {
         if (!validateEmail(document.getElementById("email").value)) {
+            noErrors = false;
             message += "*   Invalid email!\n"
         }
     }
@@ -27,20 +31,14 @@ function holdRegForm() {
         noErrors = false;
         message += "*   Password cannot be empty!\n";
     } else {
-        //TODO: Validate: is simple pass?
-    }
-    if (!document.getElementById("re_pass")) {
-        noErrors = false;
-        message += "*   Repeated password cannot be empty!\n";
-    }
-
-    if (!noErrors) {
-        alert(message);
-    } else {
         document.getElementById("pass").value = cypherText(document.getElementById("pass").value);
-        document.getElementById("form").submit();
     }
 
+    if (noErrors) {
+        document.getElementById("form").submit();
+    } else {
+        alert(message);
+    }
 }
 
 function validateEmail(email) {
