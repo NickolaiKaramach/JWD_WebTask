@@ -20,12 +20,6 @@ public class EditAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
     private static final transient Logger logger = LogManager.getLogger();
 
-
-    @Override
-    public String getErrorPage() {
-        return JspPageName.QUESTION_PAGE;
-    }
-
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession existingSession = SessionHelper.getExistingSession(req);

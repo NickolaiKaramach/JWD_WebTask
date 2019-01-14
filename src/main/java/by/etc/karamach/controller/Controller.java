@@ -46,14 +46,11 @@ public final class Controller extends HttpServlet {
 
             logger.error(ExceptionUtils.getStackTrace(e));
 
-
-            //TODO: Place error msg at jsp
-            //TODO: Show easy-to-understand message to user
-            redirectToErrorPage(req, resp, command.getErrorPage(), e.getMessage());
+            redirectToErrorPage(req, resp, e.getMessage());
         }
     }
 
-    private void redirectToErrorPage(HttpServletRequest req, HttpServletResponse resp, String page, String message) throws ServletException, IOException {
+    private void redirectToErrorPage(HttpServletRequest req, HttpServletResponse resp, String message) throws ServletException, IOException {
 
 
         HttpSession session = SessionHelper.getExistingSession(req);
@@ -65,22 +62,26 @@ public final class Controller extends HttpServlet {
 
         } else {
 
-            String lastUrl = (String) session.getAttribute(SessionAttributeName.LAST_URL);
-            String pathMessageParameter;
-
-            if (!lastUrl.contains(PATH_PARAM_MARKER)) {
-
-                pathMessageParameter = PATH_PARAM_MARKER + RequestParameterName.ERROR_MSG + EQUAL + message;
-
-            } else {
-
-                pathMessageParameter = ADDING_PATH_PARAM_MARKER + RequestParameterName.ERROR_MSG + EQUAL + message;
-
-            }
-
-            resp.sendRedirect(lastUrl + pathMessageParameter);
+            redirectToLastUrl(resp, message, session);
 
         }
+    }
+
+    private void redirectToLastUrl(HttpServletResponse resp, String message, HttpSession session) throws IOException {
+        String lastUrl = (String) session.getAttribute(SessionAttributeName.LAST_URL);
+        String pathMessageParameter;
+
+        if (!lastUrl.contains(PATH_PARAM_MARKER)) {
+
+            pathMessageParameter = PATH_PARAM_MARKER + RequestParameterName.ERROR_MSG + EQUAL + message;
+
+        } else {
+
+            pathMessageParameter = ADDING_PATH_PARAM_MARKER + RequestParameterName.ERROR_MSG + EQUAL + message;
+
+        }
+
+        resp.sendRedirect(lastUrl + pathMessageParameter);
     }
 
 }

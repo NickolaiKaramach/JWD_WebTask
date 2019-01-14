@@ -22,12 +22,6 @@ public class DeleteQuestion implements Command {
     private static final transient Logger logger = LogManager.getLogger();
 
     @Override
-    public String getErrorPage() {
-        return TEST_PAGE_URL;
-    }
-
-
-    @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
 

@@ -11,6 +11,7 @@ public final class RequestAttributeName {
     public static final String QUESTION_LIST = "question_list";
     public static final String QUESTION_NUM = "question_num";
     public static final String ANSWER_LIST = "answer_list";
+    public static final String GRADES = "grades";
 
     private RequestAttributeName() {
     }

@@ -15,16 +15,20 @@ public class Grade implements Serializable {
     private Timestamp finishTime;
     private boolean isFinished;
 
+
+    private transient Test test;
+
     public Grade() {
     }
 
-    public Grade(int id, int testId, int userId, int mark, Timestamp finishTime, boolean isFinished) {
+    public Grade(int id, int testId, int userId, int mark, Timestamp finishTime, boolean isFinished, Test test) {
         this.id = id;
         this.testId = testId;
         this.userId = userId;
         this.mark = mark;
         this.finishTime = finishTime;
         this.isFinished = isFinished;
+        this.test = test;
     }
 
     public int getId() {
@@ -75,6 +79,14 @@ public class Grade implements Serializable {
         isFinished = finished;
     }
 
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,12 +104,13 @@ public class Grade implements Serializable {
                 getUserId() == grade.getUserId() &&
                 getMark() == grade.getMark() &&
                 isFinished() == grade.isFinished() &&
-                Objects.equals(getFinishTime(), grade.getFinishTime());
+                Objects.equals(getFinishTime(), grade.getFinishTime()) &&
+                Objects.equals(getTest(), grade.getTest());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTestId(), getUserId(), getMark(), getFinishTime(), isFinished());
+        return Objects.hash(getId(), getTestId(), getUserId(), getMark(), getFinishTime(), isFinished(), getTest());
     }
 
     @Override
@@ -109,6 +122,7 @@ public class Grade implements Serializable {
                 .add("mark=" + mark)
                 .add("finishTime=" + finishTime)
                 .add("isFinished=" + isFinished)
+                .add("test=" + test)
                 .toString();
     }
 }

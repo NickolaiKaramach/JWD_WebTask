@@ -24,12 +24,6 @@ public class CreateTest implements Command {
     private static final transient Logger logger = LogManager.getLogger();
 
     @Override
-    public String getErrorPage() {
-        return USER_TESTS_PAGE;
-    }
-
-
-    @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         HttpSession session = SessionHelper.getExistingSession(req);

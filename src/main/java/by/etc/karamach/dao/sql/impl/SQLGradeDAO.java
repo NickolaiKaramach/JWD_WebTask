@@ -1,16 +1,20 @@
 package by.etc.karamach.dao.sql.impl;
 
 import by.etc.karamach.bean.Grade;
+import by.etc.karamach.bean.Test;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.GradeDAO;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.CreateQuestion;
 import by.etc.karamach.dao.sql.query.SaveNewGrade;
+import by.etc.karamach.dao.sql.query.TakeGradesByUserId;
 import by.etc.karamach.dao.sql.query.UpdateGradeOnFinish;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLGradeDAO implements GradeDAO {
 
@@ -18,6 +22,67 @@ public class SQLGradeDAO implements GradeDAO {
 
     private static final boolean AUTO_COMMIT_FALSE = false;
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    @Override
+    public List<Grade> takeUserGrades(Integer userId) throws DAOException {
+
+        List<Grade> grades;
+
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+            preparedStatement = connection.prepareStatement(TakeGradesByUserId.STATEMENT);
+
+            preparedStatement.setInt(TakeGradesByUserId.GRADE_USER_ID_INPUT_INDEX, userId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            grades = new ArrayList<>();
+            while (resultSet.next()) {
+                Grade grade = new Grade();
+
+                fillGradeFromResultSet(resultSet, grade);
+
+                grades.add(grade);
+            }
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement, resultSet);
+        }
+
+
+        return grades;
+    }
+
+    private void fillGradeFromResultSet(ResultSet resultSet, Grade grade) throws SQLException {
+        int mark = resultSet.getInt(TakeGradesByUserId.GRADE_DEGREE_RESULT_INDEX);
+        Timestamp finishTime = resultSet.getTimestamp(TakeGradesByUserId.GRADE_FINISH_TIME_RESULT_INDEX);
+        String testName = resultSet.getString(TakeGradesByUserId.TEST_NAME_RESULT_INDEX);
+
+        Test test = new Test();
+        test.setName(testName);
+
+        grade.setMark(mark);
+        grade.setFinishTime(finishTime);
+        grade.setTest(test);
+    }
 
     @Override
     public void finishGrade(int finishingGrade, Timestamp currentTimestamp, int gradeId) throws DAOException {

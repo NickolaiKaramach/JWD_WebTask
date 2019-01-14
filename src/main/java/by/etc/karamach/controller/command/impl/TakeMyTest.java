@@ -56,10 +56,4 @@ public class TakeMyTest implements Command {
             throw new RuntimeException(e);
         }
     }
-
-    @Override
-    public String getErrorPage() {
-        return JspPageName.USER_PAGE;
-    }
-
 }

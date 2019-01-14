@@ -78,9 +78,4 @@ public class TakeNextQuestion implements Command {
 
 
     }
-
-    @Override
-    public String getErrorPage() {
-        return null;
-    }
 }

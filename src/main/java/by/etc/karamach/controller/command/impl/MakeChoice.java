@@ -51,9 +51,4 @@ public class MakeChoice implements Command {
 
 
     }
-
-    @Override
-    public String getErrorPage() {
-        return null;
-    }
 }

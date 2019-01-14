@@ -21,14 +21,14 @@
 <br>
 
 <div>
-    <c:if test="${requestScope.msg != null}}">
-        ${requestScope.msg}
-    </c:if>
+    <br>
+    <a href="../controller?command=take_my_tests"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
+    <br>
 </div>
 
 <div>
     <br>
-    <a href="../controller?command=take_my_tests"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
+    <a href="../controller?command=take_user_grades"> <fmt:message key="locale.user.panel.mygrades.button"/> </a>
     <br>
 </div>
 

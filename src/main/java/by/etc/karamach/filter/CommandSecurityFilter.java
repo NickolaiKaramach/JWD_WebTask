@@ -44,6 +44,7 @@ public class CommandSecurityFilter implements Filter {
 
         protectedCommands.add(CommandName.TAKE_MY_TESTS.toString());
         protectedCommands.add(CommandName.TAKE_NEXT_QUESTION.toString());
+        protectedCommands.add(CommandName.TAKE_USER_GRADES.toString());
 
         protectedCommands.add(CommandName.UPDATE_ANSWER.toString());
         protectedCommands.add(CommandName.PUBLISH_TEST.toString());

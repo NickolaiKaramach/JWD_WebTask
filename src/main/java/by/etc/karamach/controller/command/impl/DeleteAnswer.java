@@ -23,10 +23,6 @@ public class DeleteAnswer implements Command {
 
     private static final transient Logger logger = LogManager.getLogger();
 
-    @Override
-    public String getErrorPage() {
-        return QUESTION_PAGE_URL;
-    }
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

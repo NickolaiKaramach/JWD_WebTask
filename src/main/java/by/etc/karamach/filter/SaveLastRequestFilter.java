@@ -16,6 +16,7 @@ public class SaveLastRequestFilter implements Filter {
     private static final String JS_FILE_REGEX = "(.*)\\.js$";
     private static final String CSS_FILE_REGEX = "(.*)\\.css$";
     private static final String COMMAND_PATH_PARAM = "?command=";
+    private static final String LOCALE_REQUEST = "?locale=";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -28,7 +29,9 @@ public class SaveLastRequestFilter implements Filter {
 
         StringBuffer requestURL = request.getRequestURL();
 
-        if ((!requestURL.toString().matches(JS_FILE_REGEX)) && (!requestURL.toString().matches(CSS_FILE_REGEX))) {
+        if (((!requestURL.toString().matches(JS_FILE_REGEX)) &&
+                (!requestURL.toString().matches(CSS_FILE_REGEX))) &&
+                (!requestURL.toString().contains(LOCALE_REQUEST))) {
 
             String lastCommand = request.getParameter(RequestParameterName.COMMAND_NAME);
 

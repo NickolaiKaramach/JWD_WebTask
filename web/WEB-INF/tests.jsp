@@ -46,7 +46,6 @@
     </table>
 </div>
 
-<br>
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

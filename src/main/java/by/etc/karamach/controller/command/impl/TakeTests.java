@@ -47,9 +47,4 @@ public class TakeTests implements Command {
         }
 
     }
-
-    @Override
-    public String getErrorPage() {
-        return JspPageName.INDEX_JSP;
-    }
 }

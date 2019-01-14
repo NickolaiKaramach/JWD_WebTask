@@ -41,6 +41,7 @@ public class CommandProvider {
         repository.put(CommandName.MAKE_CHOICE, new MakeChoice());
         repository.put(CommandName.TAKE_NEXT_QUESTION, new TakeNextQuestion());
         repository.put(CommandName.FINISH_TEST, new FinishTest());
+        repository.put(CommandName.TAKE_USER_GRADES, new TakeUserGrades());
     }
 
     public static CommandProvider getInstance() {

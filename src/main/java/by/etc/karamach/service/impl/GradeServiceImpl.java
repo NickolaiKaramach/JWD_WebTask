@@ -11,6 +11,7 @@ import by.etc.karamach.service.validator.TestDataValidator;
 import by.etc.karamach.service.validator.UserDataValidator;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class GradeServiceImpl implements GradeService {
 
@@ -21,6 +22,29 @@ public class GradeServiceImpl implements GradeService {
     private static final int MINUTES = 60 * SECOND;
     private static final int TIME_FOR_TEST = MINUTES * 60;
     private static final double PERCENTS = 100.0;
+
+    @Override
+    public List<Grade> takeUserGrades(Integer userId) throws ServiceException {
+        boolean isValidUserId = UserDataValidator.isValidUserId(userId);
+
+        if (!isValidUserId) {
+            throw new ServiceException("Illegal data found!");
+        }
+
+        List<Grade> gradeList;
+
+        try {
+
+            gradeList = gradeDAO.takeUserGrades(userId);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+
+        return gradeList;
+    }
 
     @Override
     public void finishTest(Grade grade, int userId) throws ServiceException {

@@ -58,9 +58,4 @@ public class CreateAnswer implements Command {
 
         }
     }
-
-    @Override
-    public String getErrorPage() {
-        return QUESTION_PAGE;
-    }
 }

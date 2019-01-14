@@ -69,9 +69,4 @@ public class EditTest implements Command {
         }
 
     }
-
-    @Override
-    public String getErrorPage() {
-        return JspPageName.USER_TESTS;
-    }
 }
