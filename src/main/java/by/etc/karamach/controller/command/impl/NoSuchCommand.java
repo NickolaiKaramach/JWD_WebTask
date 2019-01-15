@@ -18,7 +18,7 @@ public class NoSuchCommand implements Command {
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) {
         try {
 
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.UNKNOWN_COMMAND_PAGE);
+            DispatchAssistant.redirectToJsp(req, resp, JspPageName.INDEX_JSP);
 
         } catch (ServletException | IOException e) {
 

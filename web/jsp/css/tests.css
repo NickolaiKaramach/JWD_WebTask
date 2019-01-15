@@ -41,3 +41,20 @@ div.new_test > input {
     background: rgba(200, 200, 200, 0.5);
 }
 
+div.new_question {
+    font-family: Arial;
+}
+
+div.new_question > input {
+    font-weight: bold;
+    background: rgba(200, 200, 200, 0.5);
+}
+
+div.new_test_name {
+    font-family: Arial;
+}
+
+div.new_test_name > input {
+    font-weight: bold;
+    background: rgba(200, 200, 200, 0.5);
+}

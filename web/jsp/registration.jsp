@@ -26,17 +26,6 @@
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 
-<c:if test="${requestScope.error != null}">
-    <div id="error">
-        <h1 id="error_title">
-            <%
-                Exception exception = (Exception) request.getAttribute("error");
-                out.print(exception.getMessage());
-            %>
-        </h1>
-    </div>
-</c:if>
-
 <form method="POST" id="form" action="../controller">
     <input type="hidden" name="command" value="registration">
 

@@ -23,12 +23,6 @@
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
-<c:if test="${requestScope.error != null}">
-    <%
-        Exception exception = (Exception) request.getAttribute("error");
-        out.print(exception.getMessage());
-    %>
-</c:if>
 
 
 <div class="test_list">

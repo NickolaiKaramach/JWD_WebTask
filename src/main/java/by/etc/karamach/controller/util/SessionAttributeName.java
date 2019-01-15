@@ -11,5 +11,4 @@ public class SessionAttributeName {
     public static final String GRADE = "grade";
     public static final String CURRENT_QUESTION = "current_question";
     public static final String LAST_URL = "last_url";
-    public static final String LAST_COMMAND = "last_command";
 }
