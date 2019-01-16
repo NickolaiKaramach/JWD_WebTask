@@ -8,20 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="by.etc.karamach.bean.Answer" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
+<fmt:bundle basename="locale">
+    <fmt:message key="locale.answer.page.title" var="title" scope="request"/>
+</fmt:bundle>
+
 <html lang="${sessionScope.locale}">
+
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
-    <title><fmt:message key="locale.answer.page.title"/></title>
-    <link href="/jsp/css/tests.css" rel="stylesheet">
-    <link href="/jsp/css/registration.css" rel="stylesheet">
-    <script src="/jsp/js/testPage.js"></script>
 </head>
+
 <body>
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
+<fmt:bundle basename="locale">
 <div class="test_list">
     <h1><fmt:message key="locale.answer.page.currentDescription"/></h1>
     <table class="results">
@@ -52,30 +55,30 @@
     </table>
 </div>
 
+    <br>
 <br>
-<br>
 
-<button onclick="change_display_type('update_answer')"><fmt:message
-        key="locale.answer.page.new.answer.hide.button"/></button>
+    <button onclick="change_display_type('update_answer')"><fmt:message
+            key="locale.answer.page.new.answer.hide.button"/></button>
 
-<div id="update_answer" style="display:none">
-    <form action="controller" method="post">
-        <input type="hidden" name="answer_id" value="${requestScope.answer.id}">
-        <input type="hidden" name="command" value="update_answer">
+    <div id="update_answer" style="display:none">
+        <form action="controller" method="post">
+            <input type="hidden" name="answer_id" value="${requestScope.answer.id}">
+            <input type="hidden" name="command" value="update_answer">
 
-        <section id="section" class="form_fields">
-            <label for="description"><fmt:message key="locale.answer.page.new.Description"/></label>
-            <input id="description" type="text" name="description"/>
+            <section id="section" class="form_fields">
+                <label for="description"><fmt:message key="locale.answer.page.new.Description"/></label>
+                <input id="description" type="text" name="description"/>
 
-            <label for="isRight"> <fmt:message key="locale.answer.page.new.isRight"/> </label>
-            <input id="isRight" type="checkbox" name="isRight"/>
+                <label for="isRight"> <fmt:message key="locale.answer.page.new.isRight"/> </label>
+                <input id="isRight" type="checkbox" name="isRight"/>
 
-        </section>
+            </section>
 
-        <input type="submit" id="button" value="<fmt:message key="locale.answer.page.new.answer.confirm.button"/>"/>
-    </form>
+            <input type="submit" id="button" value="<fmt:message key="locale.answer.page.new.answer.confirm.button"/>"/>
+        </form>
 </div>
-
+</fmt:bundle>
 
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
 </body>

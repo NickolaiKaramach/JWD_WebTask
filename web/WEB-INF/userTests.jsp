@@ -8,22 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
+<fmt:bundle basename="locale">
+    <fmt:message key="locale.tests.title" var="title" scope="request"/>
+</fmt:bundle>
+
 <html lang="${sessionScope.locale}">
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
-    <title><fmt:message key="locale.tests.title"/></title>
-    <link href="/jsp/css/tests.css" rel="stylesheet">
-    <link href="/jsp/css/registration.css" rel="stylesheet">
-    <script src="/jsp/js/userTests.js"></script>
 </head>
 
 <body>
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
-
+<fmt:bundle basename="locale">
 
 <div class="test_list">
     <h1><fmt:message key="locale.user.test.page.table.title"/></h1>
@@ -59,7 +59,8 @@
 <br/>
 <br/>
 
-<button onclick="change_display_type()"><fmt:message key="locale.user.test.page.new.test.hide.button"/></button>
+    <button onclick="change_display_type('new_test')"><fmt:message
+            key="locale.user.test.page.new.test.hide.button"/></button>
 
 <div id="new_test" style="display:none">
     <%--TODO: Make check on FE--%>
@@ -76,6 +77,9 @@
         <input type="submit" value="<fmt:message key="locale.user.test.page.new.test.add.button"/> ">
     </form>
 </div>
+
+</fmt:bundle>
+
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

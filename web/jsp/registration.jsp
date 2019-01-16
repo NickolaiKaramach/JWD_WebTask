@@ -9,23 +9,24 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
+<fmt:bundle basename="locale">
+    <fmt:message key="locale.registration.title" var="title" scope="request"/>
+</fmt:bundle>
+
 <html lang="${sessionScope.locale}">
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
-    <title><fmt:message key="locale.registration.title"/></title>
-    <script src="/jsp/js/registration.js"></script>
-    <link href="/jsp/css/registration.css" rel="stylesheet">
-
 </head>
 <body>
 
-<h1><fmt:message key="locale.signup.message"/></h1>
-
+<fmt:bundle basename="locale">
+    <h1><fmt:message key="locale.signup.message"/></h1>
+</fmt:bundle>
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
-
+<fmt:bundle basename="locale">
 <form method="POST" id="form" action="../controller">
     <input type="hidden" name="command" value="registration">
 
@@ -51,5 +52,6 @@
     <fmt:message key="locale.registration.already.message"/> <a href="/jsp/logIn.jsp"><fmt:message
         key="locale.registration.click.to.login"/> </a>
 </p>
+</fmt:bundle>
 </body>
 </html>

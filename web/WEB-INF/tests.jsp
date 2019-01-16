@@ -8,18 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
+<fmt:bundle basename="locale">
+    <fmt:message key="locale.tests.title" var="title" scope="request"/>
+</fmt:bundle>
+
 <html lang="${sessionScope.locale}">
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
-    <title><fmt:message key="locale.tests.title"/></title>
-    <link href="/jsp/css/tests.css" rel="stylesheet">
 </head>
+
 <body>
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
+<fmt:bundle basename="locale">
 <div class="test_list">
     <h1><fmt:message key="locale.tests.page.table.title"/></h1>
     <h3><fmt:message key="locale.tests.page.table.subtitle"/></h3>
@@ -45,7 +49,7 @@
         </tbody>
     </table>
 </div>
-
+</fmt:bundle>
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

@@ -8,76 +8,79 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
+<fmt:bundle basename="locale">
+    <fmt:message key="locale.test.page.title" var="title" scope="session"/>
+</fmt:bundle>
+
 <html lang="${sessionScope.locale}">
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
-    <title><fmt:message key="locale.test.page.title"/></title>
-    <link href="/jsp/css/tests.css" rel="stylesheet">
-    <link href="/jsp/css/registration.css" rel="stylesheet">
-    <script src="/jsp/js/testPage.js"></script>
 </head>
+
 <body>
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+
+<fmt:bundle basename="locale">
 <h1 style="margin: 30px 10px 0px 10px">
     <fmt:message key="locale.user.test.page.test.name.label"/>
 </h1>
 <h1 style="margin: 30px 10px 0px 35px">
-    ${requestScope.test.name}
+        ${requestScope.test.name}
 </h1>
 
-<button style="margin: 0px 10px 0px 30px" onclick="change_display_type('new_test_name')"><fmt:message
-        key="locale.test.page.newName.button.hider.name"/></button>
+    <button style="margin: 0px 10px 0px 30px" onclick="change_display_type('new_test_name')"><fmt:message
+            key="locale.test.page.newName.button.hider.name"/></button>
 
-<div id="new_test_name" style="display:none">
-    <form action="controller" method="post">
-        <input type="hidden" name="command" value="change_test_name">
-        <input type="hidden" name="test_id" value="${requestScope.test.id}">
+    <div id="new_test_name" style="display:none">
+        <form action="controller" method="post">
+            <input type="hidden" name="command" value="change_test_name">
+            <input type="hidden" name="test_id" value="${requestScope.test.id}">
 
-        <section class="form_fields">
-            <label for="name"> <fmt:message key="locale.test.page.newName"/> </label>
-            <input type="text" name="name" id="name"/>
-        </section>
+            <section class="form_fields">
+                <label for="name"> <fmt:message key="locale.test.page.newName"/> </label>
+                <input type="text" name="name" id="name"/>
+            </section>
 
-        <input type="submit" id="submit" value="<fmt:message key="locale.test.page.newName.button"/>">
-    </form>
+            <input type="submit" id="submit" value="<fmt:message key="locale.test.page.newName.button"/>">
+        </form>
 </div>
 
-<br>
+    <br>
 
-<div class="test_list">
-    <h1><fmt:message key="locale.test.page.table.title"/></h1>
-    <h3><fmt:message key="locale.test.page.table.subtitle"/></h3>
-    <table class="results">
-        <thead>
-        <tr>
-            <td><fmt:message key="locale.test.page.column.question.name"/></td>
-            <td><fmt:message key="locale.test.page.column.action.name"/></td>
-        </tr>
-        </thead>
-
-        <tbody>
-        <c:forEach items="${requestScope.test.questionList}" var="question">
+    <div class="test_list">
+        <h1><fmt:message key="locale.test.page.table.title"/></h1>
+        <h3><fmt:message key="locale.test.page.table.subtitle"/></h3>
+        <table class="results">
+            <thead>
             <tr>
-                <td>${question.description}</td>
-                <td>
-                    <a href="controller?command=edit_question&question_id=${question.id}">
-                        <fmt:message key="locale.question.edit.button"/>
-                    </a>
-                    <br>
-                    <a href="controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
-                        <fmt:message key="locale.question.delete.button"/>
-                    </a>
-                </td>
+                <td><fmt:message key="locale.test.page.column.question.name"/></td>
+                <td><fmt:message key="locale.test.page.column.action.name"/></td>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+            <c:forEach items="${requestScope.test.questionList}" var="question">
+                <tr>
+                    <td>${question.description}</td>
+                    <td>
+                        <a href="controller?command=edit_question&question_id=${question.id}">
+                            <fmt:message key="locale.question.edit.button"/>
+                        </a>
+                        <br>
+                        <a href="controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
+                            <fmt:message key="locale.question.delete.button"/>
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 </div>
 
-<br>
+    <br>
 <br>
 <button onclick="change_display_type('new_question')"><fmt:message
         key="locale.test.page.newQuestion.button.name"/></button>
@@ -96,10 +99,12 @@
     </form>
 </div>
 
-<br>
+    <br>
 <br>
 <a href="controller?command=publish_test&test_id=${requestScope.test.id}"><fmt:message
         key="locale.test.page.publish.test.button"/> </a>
+</fmt:bundle>
+
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

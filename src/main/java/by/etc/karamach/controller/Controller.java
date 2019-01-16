@@ -16,9 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-//TODO: 1. Logger hierarchy
-
-
 public final class Controller extends HttpServlet {
 
     private static final long serialVersionUID = -4642709576494909869L;

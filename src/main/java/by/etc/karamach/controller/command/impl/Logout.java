@@ -3,6 +3,7 @@ package by.etc.karamach.controller.command.impl;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.util.DispatchAssistant;
 import by.etc.karamach.controller.util.JspPageName;
+import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,12 +17,16 @@ import java.io.IOException;
 public class Logout implements Command {
 
     private static final transient Logger logger = LogManager.getLogger();
+    private static final String DEFAULT_LANG = "en";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = SessionHelper.getExistingSession(req);
 
         session.invalidate();
+
+        HttpSession newSession = SessionHelper.createOrGetSession(req);
+        newSession.setAttribute(SessionAttributeName.LOCALE, DEFAULT_LANG);
 
         try {
 

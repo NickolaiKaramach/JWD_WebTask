@@ -9,26 +9,24 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
+<fmt:bundle basename="locale">
+    <fmt:message key="locale.login.title" var="title" scope="request"/>
+</fmt:bundle>
 
 <html lang="${sessionScope.locale}">
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
-    <title><fmt:message key="locale.login.title"/></title>
-    <script src="/jsp/js/login.js"></script>
-    <link href="/jsp/css/registration.css" rel="stylesheet">
-    <link href="/jsp/css/error.css" rel="stylesheet">
 </head>
 <body>
-
-<!-- TODO: Create another showing case!!! -->
-
-
+<fmt:bundle basename="locale">
 <h1><fmt:message key="locale.login.message"/></h1>
+</fmt:bundle>
 
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
+<fmt:bundle basename="locale">
 <form method="POST" id="form" action="../controller">
     <input type="hidden" name="command" value="sign_in">
 
@@ -45,6 +43,7 @@
     <input type="button" value="<fmt:message key="locale.signin.action"/>" onclick="holdForm()"/>
 
 </form>
+</fmt:bundle>
 
 
 </body>
