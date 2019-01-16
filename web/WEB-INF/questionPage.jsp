@@ -14,80 +14,98 @@
 <head>
     <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
     <title><fmt:message key="locale.question.page.tittle"/></title>
+    <link href="/jsp/css/tests.css" rel="stylesheet">
+    <link href="/jsp/css/registration.css" rel="stylesheet">
+    <script src="/jsp/js/testPage.js"></script>
 </head>
 <body>
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
-
+<h1 style="margin: 30px 10px 0px 10px">
+    <fmt:message key="locale.question.page.question.name.label"/>
+</h1>
 <br>
 
 
-<h1>
+<h1 style="margin: 30px 10px 0px 35px">
     ${requestScope.question.description}
 </h1>
 
-<form action="controller" method="post">
-    <input type="hidden" name="command" value="change_question_name">
-    <input type="hidden" name="question_id" value="${requestScope.question.id}">
+<button style="margin: 0px 10px 0px 30px" onclick="change_display_type('new_question_name')"><fmt:message
+        key="locale.question.page.change.name.hide.button"/></button>
 
-    <ul>
-        <li>
-            <label for="name"> <fmt:message key="locale.question.page.newName"/> </label>
+<div id="new_question_name" style="display:none">
+    <form action="controller" method="post">
+        <input type="hidden" name="command" value="change_question_name">
+        <input type="hidden" name="question_id" value="${requestScope.question.id}">
+
+        <section class="form_fields">
+            <label for="name"> <fmt:message key="locale.question.page.newName"/></label>
             <input type="text" name="name" id="name"/>
+        </section>
 
-        </li>
-        <li>
-            <label for="submit"> <fmt:message key="locale.question.page.newName.button"/> </label>
-            <input type="submit" id="submit">
-        </li>
-    </ul>
-</form>
-<br>
-------------------------------------------
-<br>
-
-<div>
-    <c:forEach items="${requestScope.question.answerList}" var="answer">
-
-        <div>
-                ${answer.description}
-        </div>
-        <div>
-            <a href="controller?command=edit_answer&answer_id=${answer.id}">
-                <fmt:message key="locale.question.page.edit.button"/>
-            </a>
-        </div>
-
-        <div>
-            <a href="controller?command=delete_answer&answer_id=${answer.id}&question_id=${requestScope.question.id}">
-                <fmt:message key="locale.question.page.delete.button"/>
-            </a>
-        </div>
-
-        <br>
-    </c:forEach>
+        <input type="submit" id="submit" value=" <fmt:message key="locale.question.page.newName.button"/>">
+    </form>
 </div>
 
-<form action="controller" method="post">
-    <input type="hidden" name="question_id" value="${requestScope.question.id}">
+<br>
 
-    <input type="hidden" name="command" value="create_answer">
+<div class="test_list">
+    <h1><fmt:message key="locale.question.page.table.title"/></h1>
+    <h3><fmt:message key="locale.question.page.table.subtitle"/></h3>
+    <table class="results">
+        <thead>
+        <tr>
+            <td><fmt:message key="locale.question.page.column.answer.name"/></td>
+            <td><fmt:message key="locale.question.page.column.action.name"/></td>
+        </tr>
+        </thead>
 
-    <label for="description"><fmt:message key="locale.answer.page.new.Description"/></label>
-    <input id="description" type="text" name="description"/>
+        <tbody>
+        <c:forEach items="${requestScope.question.answerList}" var="answer">
 
-    <br>
+            <tr>
+                <td>${answer.description}</td>
+                <td>
+                    <a href="controller?command=edit_answer&answer_id=${answer.id}">
+                        <fmt:message key="locale.question.page.edit.button"/>
+                    </a>
+                    <br>
+                    <a href="controller?command=delete_answer&answer_id=${answer.id}&question_id=${requestScope.question.id}">
+                        <fmt:message key="locale.question.page.delete.button"/>
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+<br>
+<br>
+<button onclick="change_display_type('new_answer')"><fmt:message
+        key="locale.question.page.new.answer.hide.button"/></button>
+
+<div id="new_answer" style="display:none">
+    <form action="controller" method="post">
+        <input type="hidden" name="question_id" value="${requestScope.question.id}">
+        <input type="hidden" name="command" value="create_answer">
+
+        <section id="section" class="form_fields">
+            <label for="description"><fmt:message key="locale.question.page.new.answer.description"/></label>
+            <input id="description" type="text" name="description"/>
+
+            <label for="isRight"> <fmt:message key="locale.question.page.new.answer.isRight"/> </label>
+            <input id="isRight" type="checkbox" name="isRight"/>
+
+        </section>
+
+        <input type="submit" id="button" value="<fmt:message key="locale.question.page.new.answer.button"/>"/>
+    </form>
+</div>
 
 
-    <label for="isRight"> <fmt:message key="locale.answer.page.new.isRight"/> </label>
-    <input id="isRight" type="checkbox" name="isRight"/>
-
-    <br>
-
-    <label for="button"><fmt:message key="locale.question.page.new.button"/></label>
-    <input type="submit" id="button"/>
-</form>
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
 
 </body>
