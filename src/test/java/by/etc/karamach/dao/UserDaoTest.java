@@ -55,6 +55,28 @@ public class UserDaoTest {
         }
     }
 
+    @Test(description = "Register user in data source", groups = {"UserDao"})
+    public void saveUser() {
+        User userFound;
+        try {
+
+            userDao.register(testingUser);
+
+            userFound = userDao.findUserByEmail(testingUser.getEmail());
+
+        } catch (DAOException e) {
+
+            logger.error(e);
+            throw new RuntimeException(e);
+
+        }
+
+        boolean actual = (userFound == null);
+        boolean expected = false;
+
+        Assert.assertEquals(actual, expected);
+    }
+
     @Test(description = "Should return only one result", groups = {"UserDao"})
     public void findOneUserByEmail() {
 
