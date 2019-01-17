@@ -6,10 +6,7 @@ import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.GradeDAO;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
-import by.etc.karamach.dao.sql.query.CreateQuestion;
-import by.etc.karamach.dao.sql.query.SaveNewGrade;
-import by.etc.karamach.dao.sql.query.TakeGradesByUserId;
-import by.etc.karamach.dao.sql.query.UpdateGradeOnFinish;
+import by.etc.karamach.dao.sql.query.*;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
 
 import java.sql.*;
@@ -22,6 +19,36 @@ public class SQLGradeDAO implements GradeDAO {
 
     private static final boolean AUTO_COMMIT_FALSE = false;
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    @Override
+    public void deleteUnusedGrades() throws DAOException {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+            preparedStatement = connection.prepareStatement(DeleteUnusedGrades.STATEMENT);
+
+            preparedStatement.execute();
+
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement);
+        }
+    }
 
     @Override
     public List<Grade> takeUserGrades(Integer userId) throws DAOException {

@@ -24,6 +24,21 @@ public class GradeServiceImpl implements GradeService {
     private static final double PERCENTS = 100.0;
 
     @Override
+    public void deleteUnusedGrades() throws ServiceException {
+        try {
+
+            choiceDAO.deleteUnusedChoices();
+
+            gradeDAO.deleteUnusedGrades();
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+    }
+
+    @Override
     public List<Grade> takeUserGrades(Integer userId) throws ServiceException {
         boolean isValidUserId = UserDataValidator.isValidUserId(userId);
 

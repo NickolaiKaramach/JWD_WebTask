@@ -8,4 +8,6 @@ public interface ChoiceDAO {
     int getCountAllChoicesByGrade(Grade grade) throws DAOException;
 
     int getCountRightChoicesByGrade(Grade grade) throws DAOException;
+
+    void deleteUnusedChoices() throws DAOException;
 }

@@ -10,4 +10,6 @@ public interface GradeService {
     void finishTest(Grade grade, int userId) throws ServiceException;
 
     List<Grade> takeUserGrades(Integer userId) throws ServiceException;
+
+    void deleteUnusedGrades() throws ServiceException;
 }

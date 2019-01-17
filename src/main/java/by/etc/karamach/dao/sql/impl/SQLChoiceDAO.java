@@ -5,6 +5,7 @@ import by.etc.karamach.dao.ChoiceDAO;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
+import by.etc.karamach.dao.sql.query.DeleteUnusedChoices;
 import by.etc.karamach.dao.sql.query.GetCountAllChoicesByGrade;
 import by.etc.karamach.dao.sql.query.GetCountRightChoicesByGrade;
 import by.etc.karamach.dao.sql.query.SaveNewChoice;
@@ -20,6 +21,36 @@ public class SQLChoiceDAO implements ChoiceDAO {
 
     private static final boolean AUTO_COMMIT_FALSE = false;
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    @Override
+    public void deleteUnusedChoices() throws DAOException {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+            preparedStatement = connection.prepareStatement(DeleteUnusedChoices.STATEMENT);
+
+            preparedStatement.execute();
+
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement);
+        }
+    }
 
     @Override
     public int getCountRightChoicesByGrade(Grade grade) throws DAOException {

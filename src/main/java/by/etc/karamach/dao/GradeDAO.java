@@ -11,4 +11,6 @@ public interface GradeDAO {
     void finishGrade(int finishingGrade, Timestamp currentTimestamp, int gradeId) throws DAOException;
 
     List<Grade> takeUserGrades(Integer userId) throws DAOException;
+
+    void deleteUnusedGrades() throws DAOException;
 }
