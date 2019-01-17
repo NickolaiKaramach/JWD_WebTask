@@ -24,27 +24,22 @@
 <c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 <fmt:bundle basename="locale">
-    <h1 style="margin: 30px 10px 0px 10px">
+    <h2 style="margin: 30px 10px 0px 10px">
         <fmt:message key="locale.test.preassessment.details.test.name.label"/>
-    </h1>
-    <br>
+    </h2>
 
-
-    <h1 style="margin: 30px 10px 0px 35px">
+    <h2 style="margin: 30px 10px 0px 35px">
             ${requestScope.test.name}
-    </h1>
+    </h2>
 
-    <br>
-    <br>
-
-    <h2>
+    <h3>
         <fmt:message key="locale.test.preassessment.details.test.length.label"/> 60 <fmt:message
             key="locale.additional.minutes"/>
 
         <br>
         <a href="controller?command=start_test&test_id=${requestScope.test.id}"><fmt:message
                 key="locale.test.preassessment.details.begin.button"/> </a>
-    </h2>
+    </h3>
 </fmt:bundle>
 
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>

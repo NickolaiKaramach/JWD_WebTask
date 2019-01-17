@@ -22,27 +22,31 @@
 <c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
-    <fmt:message key="locale.test.assessment.page.question"/> ${requestScope.question.description}
-    <br>
 
-    <form action="controller" method="post">
+
+    <h3 style="font-family: Arial"><fmt:message
+            key="locale.test.assessment.page.question"/> ${requestScope.question.description}</h3>
+
+    <form method="POST" action="../controller">
         <input type="hidden" name="command" value="make_choice">
         <input type="hidden" name="question_id" value="${requestScope.question.id}">
 
-        <c:forEach items="${requestScope.answer_list}" var="answer">
-            <div>
+        <section id="section">
+            <c:forEach items="${requestScope.answer_list}" var="answer">
                 <input type="radio" id="${answer.id}" name="answer" value="${answer.id}" checked>
-                <label for="${answer.id}">${answer.description}</label>
-            </div>
-        </c:forEach>
+                <label for="${answer.id}" style="font-family: Arial;font-size: 25px">${answer.description}</label>
+                <br>
+            </c:forEach>
+        </section>
 
-        <div>
-            <label for="submit"><fmt:message key="locale.test.assessment.page.next"/> </label>
-            <input type="submit" name="submit" id="submit">
-        </div>
+        <input type="submit" name="submit" id="submit" style="font-size: 25px;"
+               value="<fmt:message key="locale.test.assessment.page.next"/>">
+        <input type="button" name="finish_test" id="finish_test" style="font-size: 25px;"
+               value=" <fmt:message key="locale.test.assessment.page.end"/>"
+               onclick="window.location='controller?command=finish_test'"/>
+
     </form>
 
-    <a href="controller?command=finish_test" <fmt:message key="locale.test.assessment.page.end"/>
 </fmt:bundle>
 
 <c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
