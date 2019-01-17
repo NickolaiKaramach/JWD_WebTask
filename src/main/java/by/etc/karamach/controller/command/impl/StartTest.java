@@ -4,8 +4,6 @@ import by.etc.karamach.bean.Grade;
 import by.etc.karamach.bean.Question;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.command.CommandName;
-import by.etc.karamach.controller.command.CommandProvider;
 import by.etc.karamach.controller.util.RequestParameterName;
 import by.etc.karamach.controller.util.SessionAttributeName;
 import by.etc.karamach.controller.util.SessionHelper;
@@ -19,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class StartTest implements Command {
@@ -30,6 +29,7 @@ public class StartTest implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private static final int FIRST_QUESTION_INDEX = 0;
+    private static final String TAKE_NEXT_QUESTION_COMMAND = "controller?command=take_next_question";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -52,15 +52,16 @@ public class StartTest implements Command {
             existingSession.setAttribute(SessionAttributeName.QUESTION_LIST, questionList);
             existingSession.setAttribute(SessionAttributeName.CURRENT_QUESTION, FIRST_QUESTION_INDEX);
 
-            Command nextCommandToExecute =
-                    CommandProvider.getInstance().getCommand(CommandName.TAKE_NEXT_QUESTION.toString());
-
-            nextCommandToExecute.executeTask(req, resp);
+            resp.sendRedirect(TAKE_NEXT_QUESTION_COMMAND);
 
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
+
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
 
         }
 

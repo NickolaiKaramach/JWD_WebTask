@@ -1,9 +1,11 @@
 package by.etc.karamach.service.impl;
 
+import by.etc.karamach.bean.Question;
 import by.etc.karamach.bean.Test;
 import by.etc.karamach.bean.TestStatus;
 import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.DAOFactory;
+import by.etc.karamach.dao.QuestionDAO;
 import by.etc.karamach.dao.TestDAO;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.TestService;
@@ -15,6 +17,9 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
 
     private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
+
+    private static final QuestionDAO questionDAO = DAOFactory.getInstance().getQuestionDAO();
+    private static final int ONE_ELEMENT_SIZE = 1;
 
     @Override
     public Test prepareForTest(int userId, int testId) throws ServiceException {
@@ -50,6 +55,13 @@ public class TestServiceImpl implements TestService {
         }
 
         try {
+            List<Question> questionList = questionDAO.getQuestionsByTestId(testId);
+
+            if ((questionList == null) || (questionList.size() < ONE_ELEMENT_SIZE)) {
+
+                throw new ServiceException("You cannot publish test without questions!");
+
+            }
 
             testDAO.changeTestStatus(testId, TestStatus.PUBLISHED);
 
