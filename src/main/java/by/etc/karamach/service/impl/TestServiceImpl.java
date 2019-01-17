@@ -161,6 +161,7 @@ public class TestServiceImpl implements TestService {
 
         try {
 
+
             testDAO.deleteTest(testId);
 
         } catch (DAOException e) {
