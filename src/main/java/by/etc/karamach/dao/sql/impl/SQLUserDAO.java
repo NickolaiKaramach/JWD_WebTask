@@ -5,6 +5,7 @@ import by.etc.karamach.dao.DAOException;
 import by.etc.karamach.dao.UserDAO;
 import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
+import by.etc.karamach.dao.sql.query.DeleteTestUserByEmail;
 import by.etc.karamach.dao.sql.query.FindUserByEmail;
 import by.etc.karamach.dao.sql.query.FindUserByLoginAndPassword;
 import by.etc.karamach.dao.sql.query.SaveUser;
@@ -20,6 +21,37 @@ public class SQLUserDAO implements UserDAO {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    @Override
+    public void deleteTestUser(String userEmail) throws DAOException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+            preparedStatement = connection.prepareStatement(DeleteTestUserByEmail.STATEMENT);
+
+            preparedStatement.setString(DeleteTestUserByEmail.USER_EMAIL_INPUT_INDEX, userEmail);
+
+            preparedStatement.executeUpdate();
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement);
+        }
+    }
 
     @Override
     public User findUserByEmail(String email) throws DAOException {

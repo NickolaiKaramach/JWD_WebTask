@@ -8,4 +8,6 @@ public interface UserDAO {
     void register(User user) throws DAOException;
 
     User findUserByEmail(String email) throws DAOException;
+
+    void deleteTestUser(String userEmail) throws DAOException;
 }
