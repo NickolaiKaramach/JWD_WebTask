@@ -15,20 +15,20 @@
 
 
         <c:if test="${sessionScope.id != null}">
-            <a href="../../controller?command=logout"> <fmt:message key="locale.header.logout.button"/> </a>
-            <a href="../../jsp/userPage.jsp"><fmt:message key="locale.header.user.panel.button"/> </a>
+            <a href="${path}controller?command=logout"> <fmt:message key="locale.header.logout.button"/> </a>
+            <a href="${path}jsp/userPage.jsp"><fmt:message key="locale.header.user.panel.button"/> </a>
         </c:if>
 
         <c:if test="${sessionScope.id == null}">
-            <a href="../../jsp/logIn.jsp"> <fmt:message key="locale.header.login.button"/> </a>
-            <a href="../../jsp/registration.jsp"><fmt:message key="locale.header.register.button"/> </a>
+            <a href="${path}jsp/logIn.jsp"> <fmt:message key="locale.header.login.button"/> </a>
+            <a href="${path}jsp/registration.jsp"><fmt:message key="locale.header.register.button"/> </a>
         </c:if>
 
-        <a href="../../controller?command=take_tests"><fmt:message key="locale.header.tests.button"/> </a>
+        <a href="${path}controller?command=take_tests"><fmt:message key="locale.header.tests.button"/> </a>
 
         <div class="language">
-            <a href="../../?locale=en"><fmt:message key="locale.lang.en"/></a>
-            <a href="../../?locale=ru"><fmt:message key="locale.lang.ru"/></a>
+            <a href="${path}?locale=en"><fmt:message key="locale.lang.en"/></a>
+            <a href="${path}?locale=ru"><fmt:message key="locale.lang.ru"/></a>
         </div>
     </fmt:bundle>
 </nav>

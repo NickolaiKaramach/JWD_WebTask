@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.test.user.grages.title" var="title" scope="request"/>
@@ -17,12 +18,12 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
 
@@ -58,7 +59,7 @@
                             <%=grades.get(i++).getFinishTime().toString()%>
                         </td>
                         <td>
-                            <a href="controller?command=take_grade&grade_id=${currentGrade.id}">
+                            <a href="${path}controller?command=take_grade&grade_id=${currentGrade.id}">
                                 <fmt:message key="locale.test.user.grades.details.button"/>
                             </a>
                         </td>
@@ -71,6 +72,6 @@
 </div>
 
 </fmt:bundle>
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

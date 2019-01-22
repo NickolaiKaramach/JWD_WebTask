@@ -9,17 +9,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="" scope="request"/>
 <fmt:bundle basename="locale">
     <fmt:message key="locale.test.assessment.page.title" var="title" scope="request"/>
 </fmt:bundle>
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
 
@@ -27,7 +28,7 @@
     <h3 style="font-family: Arial"><fmt:message
             key="locale.test.assessment.page.question"/> ${requestScope.question.description}</h3>
 
-    <form method="POST" action="../controller">
+    <form method="POST" action="${path}controller">
         <input type="hidden" name="command" value="make_choice">
         <input type="hidden" name="question_id" value="${requestScope.question.id}">
 
@@ -49,7 +50,7 @@
 
 </fmt:bundle>
 
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 
 </body>
 </html>

@@ -1,14 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kosoj_rus
-  Date: 12/20/18
-  Time: 14:01
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.tests.title" var="title" scope="request"/>
@@ -16,12 +11,12 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
 
@@ -42,11 +37,11 @@
             <tr>
                 <td>${test.name}</td>
                 <td>
-                    <a href="controller?command=edit_test&test_id=${test.id}">
+                    <a href="${path}controller?command=edit_test&test_id=${test.id}">
                         <fmt:message key="locale.test.page.edit.button"/>
                     </a>
                     <br>
-                    <a href="controller?command=delete_test&test_id=${test.id}">
+                    <a href="${path}controller?command=delete_test&test_id=${test.id}">
                         <fmt:message key="locale.user.panel.mytest.delete"/>
                     </a>
                 </td>
@@ -64,7 +59,7 @@
 
 <div id="new_test" style="display:none">
     <%--TODO: Make check on FE--%>
-    <form action="controller" method="post">
+    <form action="${path}controller" method="post">
         <input type="hidden" name="command" value="create_test">
 
         <section id="section" class="form_fields">
@@ -80,6 +75,6 @@
 
 </fmt:bundle>
 
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

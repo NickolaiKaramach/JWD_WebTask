@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="../" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.login.title" var="title" scope="request"/>
@@ -17,17 +18,17 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="${path}WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
 <fmt:bundle basename="locale">
 <h1><fmt:message key="locale.login.message"/></h1>
 </fmt:bundle>
 
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="${path}WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
-<form method="POST" id="form" action="../controller">
+    <form method="POST" id="form" action="${path}controller">
     <input type="hidden" name="command" value="sign_in">
 
     <section id="section" class="form_fields">

@@ -9,15 +9,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
+<c:set var="path" value="" scope="request"/>
+
 <fmt:setBundle basename="locale"/>
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
     <title><fmt:message key="locale.unknown.command.title"/></title>
 </head>
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
 <h2><fmt:message key="locale.unknown.command.description"/></h2>
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

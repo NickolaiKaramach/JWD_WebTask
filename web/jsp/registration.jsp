@@ -14,20 +14,20 @@
 <fmt:bundle basename="locale">
     <fmt:message key="locale.registration.title" var="title" scope="request"/>
 </fmt:bundle>
-
+<c:set var="path" value="../" scope="request"/>
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="${path}WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
 
 <fmt:bundle basename="locale">
     <h1><fmt:message key="locale.signup.message"/></h1>
 </fmt:bundle>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="${path}WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
-<form method="POST" id="form" action="../controller">
+    <form method="POST" id="form" action="${path}controller">
     <input type="hidden" name="command" value="registration">
 
     <section id="section" class="form_fields">
@@ -46,10 +46,10 @@
 
     <input type="button" value="<fmt:message key="locale.registration.register.button"/> " onclick="holdRegForm(this)"/>
     <input type="button" value="<fmt:message key="locale.registration.back.button"/> "
-           onclick="window.location='../index.jsp'"/>
+           onclick="window.location='${path}index.jsp'"/>
 </form>
 <p>
-    <fmt:message key="locale.registration.already.message"/> <a href="/jsp/logIn.jsp"><fmt:message
+    <fmt:message key="locale.registration.already.message"/> <a href="${path}jsp/logIn.jsp"><fmt:message
         key="locale.registration.click.to.login"/> </a>
 </p>
 </fmt:bundle>

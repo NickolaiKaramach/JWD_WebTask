@@ -14,15 +14,15 @@
 <meta charset="UTF-8" content="text/html">
 
 <!-- Styles-->
-    <link href="../../jsp/css/header.css" rel="stylesheet">
-<link href="../../jsp/css/footer.css" rel="stylesheet">
-<link href="../../jsp/css/error.css" rel="stylesheet">
-<link href="../../jsp/css/registration.css" rel="stylesheet">
-<link href="../../jsp/css/tests.css" rel="stylesheet">
+<link href="${path}jsp/css/header.css" rel="stylesheet">
+<link href="${path}jsp/css/footer.css" rel="stylesheet">
+<link href="${path}jsp/css/error.css" rel="stylesheet">
+<link href="${path}jsp/css/registration.css" rel="stylesheet">
+<link href="${path}jsp/css/tests.css" rel="stylesheet">
 
 <!-- Scripts-->
-<script src="../../jsp/js/login.js"></script>
-<script src="../../jsp/js/registration.js"></script>
-<script src="../../jsp/js/testPage.js"></script>
+<script src="${path}jsp/js/login.js"></script>
+<script src="${path}jsp/js/registration.js"></script>
+<script src="${path}jsp/js/testPage.js"></script>
 
 

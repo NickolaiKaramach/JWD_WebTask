@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="../" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.user.panel.title" var="title" scope="request"/>
@@ -17,27 +18,28 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="${path}WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="${path}WEB-INF/header/header.jsp" charEncoding="utf-8"/>
+<c:import url="${path}WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <br>
 <fmt:bundle basename="locale">
     <div>
         <br>
-        <a href="../controller?command=take_my_tests"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
+        <a href="${path}controller?command=take_my_tests"> <fmt:message key="locale.user.panel.mytests.button"/> </a>
         <br>
     </div>
 
     <div>
         <br>
-        <a href="../controller?command=take_user_grades"> <fmt:message key="locale.user.panel.mygrades.button"/> </a>
+        <a href="${path}controller?command=take_user_grades"> <fmt:message
+                key="locale.user.panel.mygrades.button"/> </a>
         <br>
     </div>
 </fmt:bundle>
 
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="${path}WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

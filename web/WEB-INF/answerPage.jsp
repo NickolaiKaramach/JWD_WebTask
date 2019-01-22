@@ -9,6 +9,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.answer.page.title" var="title" scope="request"/>
@@ -17,12 +18,12 @@
 <html lang="${sessionScope.locale}">
 
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8" />
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8" />
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
 <div class="test_list">
@@ -62,7 +63,7 @@
             key="locale.answer.page.new.answer.hide.button"/></button>
 
     <div id="update_answer" style="display:none">
-        <form action="controller" method="post">
+        <form action="${path}controller" method="post">
             <input type="hidden" name="answer_id" value="${requestScope.answer.id}">
             <input type="hidden" name="command" value="update_answer">
 
@@ -80,6 +81,6 @@
 </div>
 </fmt:bundle>
 
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8" />
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

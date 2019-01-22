@@ -9,6 +9,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.test.page.title" var="title" scope="session"/>
@@ -16,12 +17,12 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
 <h1 style="margin: 30px 10px 0px 10px">
@@ -35,7 +36,7 @@
             key="locale.test.page.newName.button.hider.name"/></button>
 
     <div id="new_test_name" style="display:none">
-        <form action="controller" method="post">
+        <form action="${path}controller" method="post">
             <input type="hidden" name="command" value="change_test_name">
             <input type="hidden" name="test_id" value="${requestScope.test.id}">
 
@@ -66,11 +67,11 @@
                 <tr>
                     <td>${question.description}</td>
                     <td>
-                        <a href="controller?command=edit_question&question_id=${question.id}">
+                        <a href="${path}controller?command=edit_question&question_id=${question.id}">
                             <fmt:message key="locale.question.edit.button"/>
                         </a>
                         <br>
-                        <a href="controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
+                        <a href="${path}controller?command=delete_question&question_id=${question.id}&test_id=${requestScope.test.id}">
                             <fmt:message key="locale.question.delete.button"/>
                         </a>
                     </td>
@@ -85,7 +86,7 @@
 <button onclick="change_display_type('new_question')"><fmt:message
         key="locale.test.page.newQuestion.button.name"/></button>
 <div id="new_question" style="display:none">
-    <form action="controller" method="post">
+    <form action="${path}controller" method="post">
         <input type="hidden" name="test_id" value="${requestScope.test.id}">
         <input type="hidden" name="command" value="create_question">
 
@@ -101,10 +102,10 @@
 
     <br>
 <br>
-<a href="controller?command=publish_test&test_id=${requestScope.test.id}"><fmt:message
+    <a href="${path}controller?command=publish_test&test_id=${requestScope.test.id}"><fmt:message
         key="locale.test.page.publish.test.button"/> </a>
 </fmt:bundle>
 
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

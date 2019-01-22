@@ -9,6 +9,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<c:set var="path" value="" scope="request"/>
 
 <fmt:bundle basename="locale">
     <fmt:message key="locale.tests.title" var="title" scope="request"/>
@@ -16,12 +17,12 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 
 <fmt:bundle basename="locale">
 <div class="test_list">
@@ -40,7 +41,7 @@
             <tr>
                 <td> ${currentTest.name}</td>
                 <td>
-                    <a href="controller?command=prepare_for_test&test_id=${currentTest.id}">
+                    <a href="${path}controller?command=prepare_for_test&test_id=${currentTest.id}">
                         <fmt:message key="locale.tests.details.button"/>
                     </a>
                 </td>
@@ -50,6 +51,6 @@
     </table>
 </div>
 </fmt:bundle>
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

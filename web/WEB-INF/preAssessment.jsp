@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="path" value="" scope="request"/>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 
@@ -18,11 +19,11 @@
 
 <html lang="${sessionScope.locale}">
 <head>
-    <c:import url="/WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
-<c:import url="/WEB-INF/header/header.jsp" charEncoding="utf-8"/>
-<c:import url="/WEB-INF/error-handler/error-handler.jsp" charEncoding="UTF-8"/>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<c:import url="error-handler/error-handler.jsp" charEncoding="UTF-8"/>
 <fmt:bundle basename="locale">
     <h2 style="margin: 30px 10px 0px 10px">
         <fmt:message key="locale.test.preassessment.details.test.name.label"/>
@@ -37,11 +38,11 @@
             key="locale.additional.minutes"/>
 
         <br>
-        <a href="controller?command=start_test&test_id=${requestScope.test.id}"><fmt:message
+        <a href="${path}controller?command=start_test&test_id=${requestScope.test.id}"><fmt:message
                 key="locale.test.preassessment.details.begin.button"/> </a>
     </h3>
 </fmt:bundle>
 
-<c:import url="/WEB-INF/footer/footer.jsp" charEncoding="utf-8"/>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>
