@@ -5,12 +5,7 @@ import by.etc.karamach.bean.Question;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.controller.util.*;
-import by.etc.karamach.service.GradeService;
-import by.etc.karamach.service.QuestionService;
-import by.etc.karamach.service.ServiceException;
-import by.etc.karamach.service.ServiceFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.etc.karamach.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +19,7 @@ public class StartTest implements Command {
 
     private static final GradeService gradeService = ServiceFactory.getInstance().getGradeService();
     private static final QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
-
-
-    private static final Logger logger = LogManager.getLogger();
+    private static final TestService testService = ServiceFactory.getInstance().getTestService();
 
     private static final int FIRST_QUESTION_INDEX = 0;
     private static final String TAKE_NEXT_QUESTION_COMMAND = "controller?command=take_next_question";

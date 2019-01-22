@@ -19,4 +19,6 @@ public interface TestDAO {
     void updateTestName(int testId, String newName) throws DAOException;
 
     void changeTestStatus(int testId, TestStatus published) throws DAOException;
+
+    String takeTestStatus(int testId) throws DAOException;
 }

@@ -190,6 +190,51 @@ public class SQLTestDAO implements TestDAO {
     }
 
     @Override
+    public String takeTestStatus(int testId) throws DAOException {
+        Connection connection = null;
+
+
+        PreparedStatement preparedStatement = null;
+
+        ResultSet resultSet = null;
+
+        String testStatus = null;
+
+        try {
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(AUTO_COMMIT_TRUE);
+
+
+            preparedStatement = connection.prepareStatement(TakeTestStatusByTestId.STATEMENT);
+
+            preparedStatement.setInt(TakeTestStatusByTestId.TEST_ID_INPUT_INDEX, testId);
+
+            resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+
+                testStatus = resultSet.getString(TakeTestStatusByTestId.TEST_STATUS_RESULT_INDEX);
+
+            }
+
+        } catch (ConnectionPoolException e) {
+
+            throw new DAOException("Couldn't take connection from connection pool", e);
+
+        } catch (SQLException e) {
+
+            throw new DAOException("Couldn't execute query to data source", e);
+
+        } finally {
+
+            ResourceDestroyer.closeAll(connection, preparedStatement, resultSet);
+        }
+
+        return testStatus;
+    }
+
+    @Override
     public void changeTestStatus(int testId, TestStatus published) throws DAOException {
         Connection connection = null;
 
@@ -203,7 +248,7 @@ public class SQLTestDAO implements TestDAO {
             preparedStatement = connection.prepareStatement(ChangeTestStatus.STATEMENT);
 
             preparedStatement.setInt(ChangeTestStatus.TEST_ID_INPUT_INDEX, testId);
-            preparedStatement.setString(ChangeTestStatus.TEST_STAUS_INPUT_INDEX, published.toString());
+            preparedStatement.setString(ChangeTestStatus.TEST_STATUS_INPUT_INDEX, published.toString());
 
             preparedStatement.execute();
 

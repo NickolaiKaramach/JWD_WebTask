@@ -1,10 +1,8 @@
 package by.etc.karamach.service.impl;
 
 import by.etc.karamach.bean.Grade;
-import by.etc.karamach.dao.ChoiceDAO;
-import by.etc.karamach.dao.DAOException;
-import by.etc.karamach.dao.DAOFactory;
-import by.etc.karamach.dao.GradeDAO;
+import by.etc.karamach.bean.TestStatus;
+import by.etc.karamach.dao.*;
 import by.etc.karamach.service.GradeService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.validator.TestDataValidator;
@@ -17,6 +15,7 @@ public class GradeServiceImpl implements GradeService {
 
     private static final GradeDAO gradeDAO = DAOFactory.getInstance().getGradeDAO();
     private static final ChoiceDAO choiceDAO = DAOFactory.getInstance().getChoiceDAO();
+    private static final TestDAO testDAO = DAOFactory.getInstance().getTestDAO();
 
     private static final int SECOND = 1000;
     private static final int MINUTES = 60 * SECOND;
@@ -104,7 +103,10 @@ public class GradeServiceImpl implements GradeService {
                 UserDataValidator.isValidUserId(userId) &&
                         TestDataValidator.isValidTestId(testId);
 
-        if (!isValidData) {
+        String testStatus = takeTestStatus(testId);
+        boolean isPublishedTest = ((testStatus != null) && (testStatus.equals(TestStatus.PUBLISHED.toString())));
+
+        if (!isValidData || !isPublishedTest) {
             throw new ServiceException("Please be logged in, and access only available tests!");
         }
 
@@ -129,5 +131,22 @@ public class GradeServiceImpl implements GradeService {
         }
 
         return grade;
+    }
+
+    private String takeTestStatus(int testId) throws ServiceException {
+
+        String testStatus;
+
+        try {
+
+            testStatus = testDAO.takeTestStatus(testId);
+
+        } catch (DAOException e) {
+
+            throw new ServiceException(e);
+
+        }
+
+        return testStatus;
     }
 }
