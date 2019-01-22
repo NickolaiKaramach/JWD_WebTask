@@ -16,7 +16,7 @@ import java.util.Set;
 @WebFilter(filterName = "UrlSecurityFilter", urlPatterns = {"/*"})
 public class UrlSecurityFilter implements Filter {
 
-    private static final String ERROR_MSG_PATH_PARAM = "&errmsg=";
+    private static final String ERROR_MSG_PATH_PARAM = "?errmsg=";
     private static final String REDIRECT_TO_LOGIN_MESSAGE = "You should be logged in!";
     private Set<String> protectedUrl = new HashSet<>();
 
