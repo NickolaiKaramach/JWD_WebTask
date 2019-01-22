@@ -75,7 +75,8 @@
                             <fmt:message key="locale.question.page.edit.button"/>
                         </a>
                         <br>
-                        <a href="${path}controller?command=delete_answer&answer_id=${answer.id}&question_id=${requestScope.question.id}">
+                        <a onclick="return confirm('Are you sure?')"
+                           href="${path}controller?command=delete_answer&answer_id=${answer.id}&question_id=${requestScope.question.id}">
                             <fmt:message key="locale.question.page.delete.button"/>
                         </a>
                     </td>

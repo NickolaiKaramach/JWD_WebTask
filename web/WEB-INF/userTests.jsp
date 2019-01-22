@@ -41,7 +41,8 @@
                         <fmt:message key="locale.test.page.edit.button"/>
                     </a>
                     <br>
-                    <a href="${path}controller?command=delete_test&test_id=${test.id}">
+                    <a onclick="return confirm('Are you sure?')"
+                       href="${path}controller?command=delete_test&test_id=${test.id}">
                         <fmt:message key="locale.user.panel.mytest.delete"/>
                     </a>
                 </td>

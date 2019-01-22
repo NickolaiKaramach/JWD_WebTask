@@ -44,7 +44,7 @@
                value="<fmt:message key="locale.test.assessment.page.next"/>">
         <input type="button" name="finish_test" id="finish_test" style="font-size: 25px;"
                value=" <fmt:message key="locale.test.assessment.page.end"/>"
-               onclick="window.location='controller?command=finish_test'"/>
+               onclick="confirm_test_finish()"/>
 
     </form>
 
