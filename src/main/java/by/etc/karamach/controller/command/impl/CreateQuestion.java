@@ -2,19 +2,19 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.RequestParameterName;
-import by.etc.karamach.controller.util.SessionAttributeName;
-import by.etc.karamach.controller.util.SessionHelper;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 public class CreateQuestion implements Command {
     private static final QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
@@ -28,21 +28,28 @@ public class CreateQuestion implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
+        Optional<Integer> testId = RequestDataExecutor.getIntegerByName(RequestParameterName.TEST_ID, req);
 
-        String description = req.getParameter(RequestParameterName.DESCRIPTION);
+        Optional<String> description = RequestDataExecutor.getStringByName(RequestParameterName.DESCRIPTION, req);
 
         try {
 
-            questionService.createQuestion(testId, description, userId);
+            if ((!testId.isPresent()) || (!description.isPresent())) {
 
-            resp.sendRedirect(TEST_PAGE_URL + testId);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                questionService.createQuestion(testId.get(), description.get(), userId);
+
+                resp.sendRedirect(TEST_PAGE_URL + testId.get());
+            }
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
 
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
 
             logger.error(e);
             throw new RuntimeException(e);

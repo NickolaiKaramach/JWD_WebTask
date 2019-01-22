@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class EditTest implements Command {
 
@@ -34,25 +35,30 @@ public class EditTest implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
-
+        Optional<Integer> testId = RequestDataExecutor.getIntegerByName(RequestParameterName.TEST_ID, req);
 
         Test test;
 
         try {
 
+            if (!testId.isPresent()) {
+
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+                return;
+            }
+
             boolean isTestOwner;
-            isTestOwner = testService.isTestOwner(userId, testId);
+            isTestOwner = testService.isTestOwner(userId, testId.get());
 
             if (!isTestOwner) {
                 throw new CommandException("You can't access not yours test page");
             }
 
 
-            test = testService.getTestById(testId);
+            test = testService.getTestById(testId.get());
 
 
-            List<Question> questions = questionService.getQuestionsByTestId(testId);
+            List<Question> questions = questionService.getQuestionsByTestId(testId.get());
             test.setQuestionList(questions);
 
             req.setAttribute(RequestAttributeName.TEST, test);

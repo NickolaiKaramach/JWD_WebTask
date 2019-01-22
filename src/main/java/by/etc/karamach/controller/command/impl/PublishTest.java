@@ -2,19 +2,19 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.RequestParameterName;
-import by.etc.karamach.controller.util.SessionAttributeName;
-import by.etc.karamach.controller.util.SessionHelper;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import by.etc.karamach.service.TestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class PublishTest implements Command {
@@ -30,19 +30,27 @@ public class PublishTest implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
+        Optional<Integer> testId = RequestDataExecutor.getIntegerByName(RequestParameterName.TEST_ID, req);
 
         try {
 
-            testService.publishTest(testId, userId);
+            if (!testId.isPresent()) {
 
-            resp.sendRedirect(USERS_TESTS_PAGE);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                testService.publishTest(testId.get(), userId);
+
+                resp.sendRedirect(USERS_TESTS_PAGE);
+
+            }
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
 
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
 
             logger.error(e);
             throw new RuntimeException(e);

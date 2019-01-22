@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 public class PrepareForTest implements Command {
     private static final TestService testService = ServiceFactory.getInstance().getTestService();
@@ -26,15 +27,24 @@ public class PrepareForTest implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
+        Optional<Integer> testId = RequestDataExecutor.getIntegerByName(RequestParameterName.TEST_ID, req);
 
 
         try {
-            Test test;
-            test = testService.prepareForTest(userId, testId);
 
-            req.setAttribute(RequestAttributeName.TEST, test);
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.PREASSESSMENT_PAGE);
+            if (!testId.isPresent()) {
+
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                Test test;
+                test = testService.prepareForTest(userId, testId.get());
+
+                req.setAttribute(RequestAttributeName.TEST, test);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.PREASSESSMENT_PAGE);
+
+            }
 
         } catch (ServiceException e) {
 

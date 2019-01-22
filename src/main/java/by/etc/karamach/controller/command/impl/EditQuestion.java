@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 public class EditQuestion implements Command {
 
@@ -27,13 +28,22 @@ public class EditQuestion implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int questionId = Integer.valueOf(req.getParameter(RequestParameterName.QUESTION_ID));
+        Optional<Integer> questionId = RequestDataExecutor.getIntegerByName(RequestParameterName.QUESTION_ID, req);
 
         try {
-            Question question = questionService.getQuestionById(questionId, userId);
 
-            req.setAttribute(RequestAttributeName.QUESTION, question);
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.QUESTION_PAGE);
+            if (!questionId.isPresent()) {
+
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                Question question = questionService.getQuestionById(questionId.get(), userId);
+
+                req.setAttribute(RequestAttributeName.QUESTION, question);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.QUESTION_PAGE);
+
+            }
 
         } catch (ServiceException e) {
 

@@ -12,10 +12,10 @@ public final class JspPageName {
     public static final String QUESTION_PAGE = "/WEB-INF/questionPage.jsp";
     public static final String ANSWER_PAGE = "/WEB-INF/answerPage.jsp";
     public static final String FATAL_ERROR_PAGE = "/WEB-INF/fatalError.jsp";
-    public static final String UNKNOWN_COMMAND_PAGE = "/WEB-INF/unknownCommand.jsp";
     public static final String PREASSESSMENT_PAGE = "/WEB-INF/preAssessment.jsp";
     public static final String ASSESSMENT_PAGE = "/WEB-INF/assessment.jsp";
     public static final String USER_GRADES = "/WEB-INF/userGrades.jsp";
+    public static final String INVALID_REQUEST_PARAMETER = "/WEB-INF/InvalidRequestParameter.jsp";
 
     private JspPageName() {
     }

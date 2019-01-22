@@ -5,6 +5,7 @@ import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
 import by.etc.karamach.controller.util.DispatchAssistant;
 import by.etc.karamach.controller.util.JspPageName;
+import by.etc.karamach.controller.util.RequestDataExecutor;
 import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 import static by.etc.karamach.controller.util.RequestParameterName.*;
 
@@ -85,21 +87,27 @@ public class Registration implements Command {
         return nextPage;
     }
 
-    private User createUserFromRequest(HttpServletRequest req) {
-        String name;
-        String email;
-        String password;
+    private User createUserFromRequest(HttpServletRequest req) throws CommandException {
+        Optional<String> name;
+        Optional<String> email;
+        Optional<String> password;
 
-        name = req.getParameter(NAME);
-        email = req.getParameter(EMAIL);
-        password = req.getParameter(PASSWORD);
+        name = RequestDataExecutor.getStringByName(NAME, req);
+        email = RequestDataExecutor.getStringByName(EMAIL, req);
+        password = RequestDataExecutor.getStringByName(PASSWORD, req);
 
         User user = new User();
 
-        user.setEmail(email);
-        user.setPassword(password);
+        if ((((!name.isPresent()) || (!email.isPresent()))) || (!password.isPresent())) {
+
+            throw new CommandException("Invalid registration request");
+
+        }
+
+        user.setEmail(email.get());
+        user.setPassword(password.get());
         user.setAccessLevel(ACCESS_LEVEL_USER);
-        user.setName(name);
+        user.setName(name.get());
 
         return user;
     }

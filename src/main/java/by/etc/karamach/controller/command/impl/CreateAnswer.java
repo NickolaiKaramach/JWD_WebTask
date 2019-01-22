@@ -2,19 +2,19 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.RequestParameterName;
-import by.etc.karamach.controller.util.SessionAttributeName;
-import by.etc.karamach.controller.util.SessionHelper;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.AnswerService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class CreateAnswer implements Command {
@@ -26,16 +26,11 @@ public class CreateAnswer implements Command {
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        int questionId = Integer.valueOf(req.getParameter(RequestParameterName.QUESTION_ID));
+        Optional<Integer> questionId = RequestDataExecutor.getIntegerByName(RequestParameterName.QUESTION_ID, req);
 
-        String description = req.getParameter(RequestParameterName.DESCRIPTION);
+        Optional<String> description = RequestDataExecutor.getStringByName(RequestParameterName.DESCRIPTION, req);
 
-        boolean isRight;
-
-        String checkBox = req.getParameter(RequestParameterName.IS_RIGHT);
-
-        isRight = (checkBox != null) && (checkBox.equals(IS_CHECKED_STATUS));
-
+        Optional<Boolean> isRight = RequestDataExecutor.getBooleanByName(RequestParameterName.IS_RIGHT, req);
 
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
@@ -43,15 +38,22 @@ public class CreateAnswer implements Command {
 
         try {
 
-            answerService.saveAnswer(questionId, description, isRight, userId);
+            if (((!questionId.isPresent()) || (!description.isPresent())) || (!isRight.isPresent())) {
 
-            resp.sendRedirect(QUESTION_PAGE + questionId);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                answerService.saveAnswer(questionId.get(), description.get(), isRight.get(), userId);
+
+                resp.sendRedirect(QUESTION_PAGE + questionId.get());
+            }
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
 
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
 
             logger.error(e);
             throw new RuntimeException(e);

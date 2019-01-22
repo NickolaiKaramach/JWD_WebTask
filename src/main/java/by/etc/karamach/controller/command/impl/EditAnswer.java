@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 public class EditAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
@@ -25,13 +26,21 @@ public class EditAnswer implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int answerId = Integer.valueOf(req.getParameter(RequestParameterName.ANSWER_ID));
+        Optional<Integer> answerId = RequestDataExecutor.getIntegerByName(RequestParameterName.ANSWER_ID, req);
 
         try {
-            Answer answer = answerService.getAnswerById(answerId, userId);
+            if (!answerId.isPresent()) {
 
-            req.setAttribute(RequestAttributeName.ANSWER, answer);
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.ANSWER_PAGE);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                Answer answer = answerService.getAnswerById(answerId.get(), userId);
+
+                req.setAttribute(RequestAttributeName.ANSWER, answer);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.ANSWER_PAGE);
+
+            }
 
         } catch (ServiceException e) {
 

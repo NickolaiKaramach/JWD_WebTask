@@ -4,9 +4,7 @@ import by.etc.karamach.bean.Grade;
 import by.etc.karamach.bean.Question;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.RequestParameterName;
-import by.etc.karamach.controller.util.SessionAttributeName;
-import by.etc.karamach.controller.util.SessionHelper;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.GradeService;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
@@ -14,11 +12,13 @@ import by.etc.karamach.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class StartTest implements Command {
 
@@ -37,16 +37,22 @@ public class StartTest implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int testId = Integer.valueOf(req.getParameter(RequestParameterName.TEST_ID));
+        Optional<Integer> testId = RequestDataExecutor.getIntegerByName(RequestParameterName.TEST_ID, req);
 
 
         try {
 
+            if (!testId.isPresent()) {
+
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+                return;
+            }
+
             Grade grade;
-            grade = gradeService.startTest(userId, testId);
+            grade = gradeService.startTest(userId, testId.get());
 
             List<Question> questionList;
-            questionList = questionService.getQuestionsByTestId(testId);
+            questionList = questionService.getQuestionsByTestId(testId.get());
 
             existingSession.setAttribute(SessionAttributeName.GRADE, grade);
             existingSession.setAttribute(SessionAttributeName.QUESTION_LIST, questionList);
@@ -59,7 +65,7 @@ public class StartTest implements Command {
 
             throw new CommandException(e);
 
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
 
             throw new RuntimeException(e);
 

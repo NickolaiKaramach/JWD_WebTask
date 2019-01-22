@@ -2,19 +2,19 @@ package by.etc.karamach.controller.command.impl;
 
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.RequestParameterName;
-import by.etc.karamach.controller.util.SessionAttributeName;
-import by.etc.karamach.controller.util.SessionHelper;
+import by.etc.karamach.controller.util.*;
 import by.etc.karamach.service.QuestionService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 public class ChangeQuestionName implements Command {
 
@@ -27,21 +27,28 @@ public class ChangeQuestionName implements Command {
         HttpSession existingSession = SessionHelper.getExistingSession(req);
         int userId = (int) existingSession.getAttribute(SessionAttributeName.ID);
 
-        int questionId = Integer.valueOf(req.getParameter(RequestParameterName.QUESTION_ID));
+        Optional<Integer> questionId = RequestDataExecutor.getIntegerByName(RequestParameterName.QUESTION_ID, req);
 
-        String newName = req.getParameter(RequestParameterName.NAME);
+        Optional<String> newName = RequestDataExecutor.getStringByName(RequestParameterName.NAME, req);
 
         try {
 
-            questionService.updateQuestionName(questionId, newName, userId);
+            if ((!questionId.isPresent()) || (!newName.isPresent())) {
 
-            resp.sendRedirect(QUESTION_PAGE_URL + questionId);
+                DispatchAssistant.redirectToJsp(req, resp, JspPageName.INVALID_REQUEST_PARAMETER);
+
+            } else {
+
+                questionService.updateQuestionName(questionId.get(), newName.get(), userId);
+
+                resp.sendRedirect(QUESTION_PAGE_URL + questionId.get());
+            }
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
 
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
 
             logger.error(e);
             throw new RuntimeException(e);
