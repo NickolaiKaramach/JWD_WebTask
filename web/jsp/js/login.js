@@ -6,14 +6,6 @@ function cypherText(text) {
     return cypherText;
 }
 
-function showError(container, errorMessage) {
-    container.className = 'error';
-    var msgElem = document.createElement('span');
-    msgElem.className = "error-message";
-    msgElem.innerHTML = errorMessage;
-    container.appendChild(msgElem);
-}
-
 function holdForm() {
     var message = "Invalid data:\n";
     var noErrors = true;
