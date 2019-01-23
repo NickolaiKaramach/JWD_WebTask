@@ -20,12 +20,10 @@ import java.util.Optional;
 public class UpdateAnswer implements Command {
     private static final AnswerService answerService = ServiceFactory.getInstance().getAnswerService();
     private static final String ANSWER_PAGE_URL = "controller?command=edit_answer&answer_id=";
-    private static final String IS_CHECKED_STATUS = "on";
     private static final transient Logger logger = LogManager.getLogger();
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-
 
         Optional<Integer> answerId = RequestDataExecutor.getIntegerByName(RequestParameterName.ANSWER_ID, req);
 

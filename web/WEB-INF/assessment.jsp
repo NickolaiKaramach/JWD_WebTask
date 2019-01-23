@@ -28,6 +28,11 @@
     <h3 style="font-family: Arial"><fmt:message
             key="locale.test.assessment.page.question"/> ${requestScope.question.description}</h3>
 
+    <span style="font-family: Arial">
+        <fmt:message key="locale.test.assessment.page.question.counter"/> ${sessionScope.current_question}
+    </span>
+
+
     <form method="POST" action="${path}controller">
         <input type="hidden" name="command" value="make_choice">
         <input type="hidden" name="question_id" value="${requestScope.question.id}">
