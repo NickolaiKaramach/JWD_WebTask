@@ -51,7 +51,7 @@ public class UpdateAnswer implements Command {
 
             if (isSuccessful) {
 
-                resp.sendRedirect(ANSWER_PAGE_URL + answerId);
+                resp.sendRedirect(ANSWER_PAGE_URL + answerId.get());
 
             } else {
 

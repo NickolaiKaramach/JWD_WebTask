@@ -5,7 +5,7 @@ public final class TestDataValidator {
     }
 
     public static boolean isValidTestName(String testName) {
-        return (testName != null) && (!testName.isEmpty());
+        return (((testName != null) && (!testName.isEmpty())) && (testName.length() < 200));
     }
 
     public static boolean isValidTestId(int testId) {

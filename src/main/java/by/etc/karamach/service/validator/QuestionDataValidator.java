@@ -9,6 +9,6 @@ public final class QuestionDataValidator {
     }
 
     public static boolean isValidDescription(String description) {
-        return (((description != null) && (!description.isEmpty())) && (description.length() < 30));
+        return (((description != null) && (!description.isEmpty())) && (description.length() < 200));
     }
 }
