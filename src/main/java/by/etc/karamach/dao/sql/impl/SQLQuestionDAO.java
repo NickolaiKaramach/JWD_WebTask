@@ -7,6 +7,8 @@ import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.*;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +21,8 @@ public class SQLQuestionDAO implements QuestionDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final boolean AUTO_COMMIT_FALSE = false;
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public void createQuestion(int testId, String description, int userId) throws DAOException {
@@ -146,7 +150,6 @@ public class SQLQuestionDAO implements QuestionDAO {
 
         } finally {
 
-            //TODO: QUESTION: Is it possible?(2 try-catch) AND autoCommit changes inside method
 
             try {
 
@@ -154,6 +157,7 @@ public class SQLQuestionDAO implements QuestionDAO {
 
             } catch (SQLException e) {
 
+                logger.error(e);
                 throw new RuntimeException(e);
 
             }

@@ -8,6 +8,8 @@ import by.etc.karamach.dao.pool.ConnectionPool;
 import by.etc.karamach.dao.pool.ConnectionPoolException;
 import by.etc.karamach.dao.sql.query.*;
 import by.etc.karamach.dao.sql.util.ResourceDestroyer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ public class SQLGradeDAO implements GradeDAO {
 
     private static final boolean AUTO_COMMIT_FALSE = false;
     private static final boolean AUTO_COMMIT_TRUE = true;
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public void deleteUnusedGrades() throws DAOException {
@@ -194,8 +198,8 @@ public class SQLGradeDAO implements GradeDAO {
 
             } catch (SQLException e) {
 
-                //Todo: move to catch block!
 
+                logger.error(e);
                 throw new RuntimeException(e);
 
             }

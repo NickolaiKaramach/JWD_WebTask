@@ -45,7 +45,6 @@ public class TakeNextQuestion implements Command {
         try {
 
             if (currentQuestionNum >= questions.size()) {
-                //TODO: Mock to Finish
                 resp.sendRedirect(FINISH_TEST_PAGE);
                 return;
             }

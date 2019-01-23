@@ -244,7 +244,6 @@ public class ConnectionPool {
             }
 
             if (connection.isReadOnly()) {
-                //TODO: Do we need to extract it to constants?
                 connection.setReadOnly(false);
             }
 

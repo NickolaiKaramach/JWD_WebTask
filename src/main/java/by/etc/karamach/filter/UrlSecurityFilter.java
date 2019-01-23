@@ -44,7 +44,6 @@ public class UrlSecurityFilter implements Filter {
 
         if (userEmail == null) {
 
-            //TODO: Add localization
             resp.sendRedirect(req.getContextPath() + JspPageName.LOGIN_PAGE + ERROR_MSG_PATH_PARAM + REDIRECT_TO_LOGIN_MESSAGE);
 
         } else {

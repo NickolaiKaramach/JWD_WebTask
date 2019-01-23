@@ -185,7 +185,6 @@ public class SQLUserDAO implements UserDAO {
 
     private void fillUserWithResultSet(User user, ResultSet resultSet) throws SQLException {
 
-        //TODO: Use different INDEXES, from different classes
         int idIndex = FindUserByLoginAndPassword.ID_RESULT_INDEX;
         int accessLevelIndex = FindUserByLoginAndPassword.ACCESS_LEVEL_RESULT_INDEX;
         int emailIndex = FindUserByLoginAndPassword.EMAIL_RESULT_INDEX;

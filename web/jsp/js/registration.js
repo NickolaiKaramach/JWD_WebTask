@@ -7,7 +7,6 @@ function cypherText(text) {
 }
 
 function holdRegForm() {
-    //TODO: Implement it
 
     var message = "Invalid data:\n";
     var noErrors = true;
@@ -26,8 +25,6 @@ function holdRegForm() {
     if (!document.getElementById("pass")) {
         noErrors = false;
         message += "*   Password cannot be empty!\n";
-    } else {
-        //TODO: Validate: is simple pass?
     }
     if (!document.getElementById("re_pass")) {
         noErrors = false;
