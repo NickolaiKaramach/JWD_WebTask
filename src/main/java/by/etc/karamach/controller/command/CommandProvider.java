@@ -42,6 +42,7 @@ public class CommandProvider {
         repository.put(CommandName.TAKE_NEXT_QUESTION, new TakeNextQuestion());
         repository.put(CommandName.FINISH_TEST, new FinishTest());
         repository.put(CommandName.TAKE_USER_GRADES, new TakeUserGrades());
+        repository.put(CommandName.GET_CURRENT_ASSESSMENT, new GetCurrentAssessmentPage());
     }
 
     public static CommandProvider getInstance() {

@@ -59,7 +59,7 @@
             key="locale.user.test.page.new.test.hide.button"/></button>
 
 <div id="new_test" style="display:none">
-
+    цццццц
     <form action="${path}controller" method="post">
         <input type="hidden" name="command" value="create_test">
 

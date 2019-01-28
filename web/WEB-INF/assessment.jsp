@@ -26,7 +26,7 @@
 
 
     <h3 style="font-family: Arial"><fmt:message
-            key="locale.test.assessment.page.question"/> ${requestScope.question.description}</h3>
+            key="locale.test.assessment.page.question"/> ${sessionScope.question.description}</h3>
 
     <span style="font-family: Arial">
         <fmt:message key="locale.test.assessment.page.question.counter"/> ${sessionScope.current_question}
@@ -35,10 +35,10 @@
 
     <form method="POST" action="${path}controller">
         <input type="hidden" name="command" value="make_choice">
-        <input type="hidden" name="question_id" value="${requestScope.question.id}">
+        <input type="hidden" name="question_id" value="${sessionScope.question.id}">
 
         <section id="section">
-            <c:forEach items="${requestScope.answer_list}" var="answer">
+            <c:forEach items="${sessionScope.answer_list}" var="answer">
                 <input type="radio" id="${answer.id}" name="answer" value="${answer.id}" checked>
                 <label for="${answer.id}" style="font-family: Arial;font-size: 25px">${answer.description}</label>
                 <br>

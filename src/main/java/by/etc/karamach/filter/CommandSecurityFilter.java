@@ -53,6 +53,7 @@ public class CommandSecurityFilter implements Filter {
         protectedCommands.add(CommandName.MAKE_CHOICE.toString());
         protectedCommands.add(CommandName.FINISH_TEST.toString());
         protectedCommands.add(CommandName.LOGOUT.toString());
+        protectedCommands.add(CommandName.GET_CURRENT_ASSESSMENT.toString());
 
     }
 

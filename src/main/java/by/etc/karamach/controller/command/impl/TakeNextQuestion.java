@@ -4,14 +4,14 @@ import by.etc.karamach.bean.Answer;
 import by.etc.karamach.bean.Question;
 import by.etc.karamach.controller.command.Command;
 import by.etc.karamach.controller.command.CommandException;
-import by.etc.karamach.controller.util.*;
+import by.etc.karamach.controller.util.SessionAttributeName;
+import by.etc.karamach.controller.util.SessionHelper;
 import by.etc.karamach.service.AnswerService;
 import by.etc.karamach.service.ServiceException;
 import by.etc.karamach.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +23,7 @@ public class TakeNextQuestion implements Command {
 
     private static final Logger logger = LogManager.getLogger();
     private static final String FINISH_TEST_PAGE = "controller?command=finish_test";
+    private static final String GET_CURRENT_ASSESSMENT_URL = "controller?command=get_current_assessment";
 
     @Override
     public void executeTask(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -57,19 +58,19 @@ public class TakeNextQuestion implements Command {
             answerList =
                     answerService.getAnswersByQuestionId(question.getId(), question.getOwnerId());
 
-            req.setAttribute(RequestAttributeName.QUESTION, question);
-            req.setAttribute(RequestAttributeName.ANSWER_LIST, answerList);
+            existingSession.setAttribute(SessionAttributeName.QUESTION, question);
+            existingSession.setAttribute(SessionAttributeName.ANSWER_LIST, answerList);
 
             currentQuestionNum++;
             existingSession.setAttribute(SessionAttributeName.CURRENT_QUESTION, currentQuestionNum);
 
-            DispatchAssistant.redirectToJsp(req, resp, JspPageName.ASSESSMENT_PAGE);
+            resp.sendRedirect(GET_CURRENT_ASSESSMENT_URL);
 
         } catch (ServiceException e) {
 
             throw new CommandException(e);
 
-        } catch (ServletException | IOException e) {
+        } catch (IOException e) {
 
             logger.error(e);
             throw new RuntimeException(e);
